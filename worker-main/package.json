@@ -34,6 +34,7 @@
     "nodemon": "^2.0.22",
     "puppeteer": "^16.2.0",
     "temp": "^0.9.4",
+    "ts-node": "^10.9.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
