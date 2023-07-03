@@ -1,0 +1,61 @@
+<div
+  style="
+    position: fixed;
+    bottom: 30%;
+    left: 39%;
+    z-index: 0;
+    font-size: 100px;
+    color: gray;
+    opacity: 0.3;
+  ">
+  <img src="./logo.png" />
+</div>
+<div class="pt-8">
+  <div class="border border-black bg-white">
+    {{#ifvalue ../index value="0"}}
+    <div class="py-3 px-4 text-base font-semibold text-center">
+      {{category}}
+    </div>
+    {{else}}
+    <div class="border-2 border-black bg-white">
+      <div class="py-2 px-4 text-lg font-semibold">
+        {{../index}}- {{category}}
+      </div>
+    </div>
+    {{/ifvalue}}
+  </div>
+
+  <div class="mt-4 border border-black bg-white flex flex-col pr-16">
+    {{#ifvalue ../index value="0"}}
+    <div></div>
+    {{else}}
+    <div class="flex flex-row justify-between">
+      <div
+        class="p-4 text-sm font-semibold text-justify break-words w-96"></div>
+      <div class="p-4 text-sm font-semibold text-justify break-words w-96">
+        Résultat
+      </div>
+      <div class="p-4 text-sm font-semibold text-justify break-words w-96">
+        Commentaire
+      </div>
+    </div>
+    {{/ifvalue}} {{#reponses}}
+    <div class="flex flex-row justify-between">
+      <div class="px-4 py-2 text-sm font-medium text-justify break-words w-96">
+        {{question}}
+      </div>
+      <div class="px-4 py-2 text-sm font-medium text-justify break-words w-96">
+        {{reponse}}
+      </div>
+      {{#ifvalue ../../index value="0"}}
+      <div
+        class="px-4 py-2 text-sm font-medium text-justify break-words w-16"></div>
+      {{else}}
+      <div class="px-4 py-2 text-sm font-medium text-justify break-words w-96">
+        {{comment}}
+      </div>
+      {{/ifvalue}}
+    </div>
+    {{/reponses}}
+  </div>
+</div>

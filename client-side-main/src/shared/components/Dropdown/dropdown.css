@@ -1,0 +1,76 @@
+@keyframes slideAndFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+div[data-radix-popper-content-wrapper] {
+  left: -100px !important;
+}
+
+.rx-dropdown-trigger div {
+  left: -100px;
+}
+
+.rx-dropdown {
+  z-index: 2002;
+  min-width: 220px;
+  max-width: 440px;
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 5px;
+  box-shadow: 0px 10px 38px -10px rgba(22, 23, 24, 0.35),
+    0px 10px 20px -15px rgba(22, 23, 24, 0.2);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rx-dropdown {
+    animation-duration: 0.4s;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+  }
+  .rx-dropdown[data-state='open'] {
+    animation-name: slideAndFade;
+  }
+}
+
+.rx-dropdown-item {
+  all: unset;
+  font-size: 13px;
+  line-height: 1;
+  color: #333;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  min-height: 25px;
+  padding: 10px 5px;
+  position: relative;
+  padding-left: 25px;
+  user-select: none;
+  max-width: 100%;
+}
+
+.rx-dropdown-item[data-highlighted] {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+/* 
+const contentStyles = {
+    '@media ()': {
+      animationDuration: '400ms',
+      animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+      willChange: 'transform, opacity',
+      '&[data-state="open"]': {
+        '&[data-side="top"]': { animationName: slideDownAndFade },
+        '&[data-side="right"]': { animationName: slideLeftAndFade },
+        '&[data-side="bottom"]': { animationName: slideUpAndFade },
+        '&[data-side="left"]': { animationName: slideRightAndFade },
+      },
+    },
+  }; */

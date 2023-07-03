@@ -1,0 +1,23 @@
+export const PATH_ORIGIN = "/";
+export const PATH_LOGIN = "/auth/login";
+export const PATH_REGISTRATION = "/auth/registration";
+export const PATH_RESET_PAGE = "/auth/reset/:token";
+export const PATH_FORGOT_PASSWORD = "/auth/forgot-password";
+export const PATH_DASHBOARD = "/dashboard";
+export const PATH_ARTICLES = "/dash/articles";
+export const PATH_MARKS = "/dash/marques";
+export const PATH_CATEGORIES_ADD = "/dash/categories/:_id/add";
+export const PATH_MARKS_ADD = "/dash/marks/:_id/add";
+export const PATH_QUESTIONS_RAPPORT =
+  "/dash/questionsrapport/categories/:_id/add";
+export const PATH_QUESTIONS = "/dash/questions";
+export const PATH_EXPERTS = "/dash/experts";
+export const PATH_MODERATORS = "/dash/moderators";
+export const PATH_RAPPORST = "/dash/rapports";
+export const PATH_RECLAMATIONS = "/dash/reclamations";
+export const PATH_ASSISTANCES = "/dash/assistances";
+export const PATH_PACKS = "/dash/packs";
+export const PATH_ADS = "/dash/ads";
+export const PATH_AVIS = "/dash/avis";
+export const PATH_CLIENTS = "/dash/clients";
+export const PATH_RESERVATIONS = "/dash/reservations";

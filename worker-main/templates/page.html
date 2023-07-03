@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Auto Sans Risque</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .text-smaller {
+        font-size: 10px;
+      }
+    </style>
+  </head>
+
+  <body class="p-8 text-xs">
+    <div
+      style="
+        position: fixed;
+        bottom: 30%;
+        left: 39%;
+        z-index: 0;
+        font-size: 100px;
+        color: gray;
+        opacity: 0.3;
+      ">
+      <img src="./logo.png" />
+    </div>
+    <div class="grid grid-cols-2 gap-5">
+      <div class="border border-black bg-white">
+        <div
+          class="border-b border-black py-2 px-4 text-sm font-extrabold text-center">
+          IDENTIFICATION DU L'EXPERT
+        </div>
+        <div
+          class="px-2 py-1 bg-white flex items-center text-smaller space-x-2">
+          <div class="uppercase">
+            <div class="py-1 font-bold">N° IDENTIFIANT</div>
+            <div class="py-1 font-bold">Nom de l'expert</div>
+            <div class="py-1 font-bold">Telephone</div>
+            <div class="py-1 font-bold">Adresse</div>
+          </div>
+          <div class="flex-1">
+            <div class="py-1 font-medium">: {{expertId}}</div>
+            <div class="py-1 font-medium">: {{expertFullname}}</div>
+            <div class="py-1 font-medium">: {{expertTel}}</div>
+            <div class="py-1 font-medium">
+              : {{expertAdresse}}, {{expertVille}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border border-black bg-white">
+        <div
+          class="border-b border-black py-2 px-4 text-base font-extrabold text-center">
+          IDENTIFICATION DU CLIENT
+        </div>
+        <div
+          class="px-2 py-1 bg-white flex items-center text-smaller space-x-2">
+          <div class="uppercase">
+            <div class="py-1 font-bold">N° IDENTIFIANT</div>
+            <div class="py-1 font-bold">Nom du Client</div>
+            <div class="py-1 font-bold">Telephone</div>
+            <div class="py-1 font-bold">Adresse</div>
+          </div>
+          <div class="flex-1">
+            <div class="py-1 font-medium">: {{clientId}}</div>
+            <div class="py-1 font-medium">: {{clientFullname}}</div>
+            <div class="py-1 font-medium">: {{clientTel}}</div>
+            <div class="py-1 font-medium">
+              : {{clientAdresse}}, {{clientVille}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border border-black bg-white col-span-2">
+        <div
+          class="border-b border-black py-2 px-4 text-sm font-extrabold text-center">
+          IDENTIFICATION DU VEHICULE
+        </div>
+        <div
+          class="px-2 py-1 bg-white flex items-center text-smaller space-x-2">
+          <div class="uppercase">
+            <div class="py-1 font-bold">Vehicule</div>
+            <div class="py-1 font-bold">Raison</div>
+            <div class="py-1 font-bold">Date de Reservation</div>
+          </div>
+          <div class="flex-1">
+            <div class="py-1 font-medium">: {{reservationCar}}</div>
+            <div class="py-1 font-medium">: {{reservationRaison}}</div>
+            <div class="py-1 font-medium">: {{reservationDate}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{#each data}}
+
+    <div class="pt-5">
+      <div
+        class="py-3 px-4 text-base font-bold bg-slate-500 text-white capitalize">
+        {{category}}
+      </div>
+
+      <div class="mt-4 bg-white flex flex-col px-4">
+        {{#reponses}}
+        <div class="py-2 border-b">
+          <div class="flex justify-between px-4 py-2 text-xs">
+            <div class="capitalize font-medium text-justify break-words">
+              {{question}}
+            </div>
+            <div
+              class="capitalize font-semibold text-justify break-words text-[{{color}}]">
+              {{reponse}}
+            </div>
+          </div>
+          {{#if comment}}
+          <div
+            class="mx-4 px-4 pt-2 pb-1 text-xs font-normal text-justify break-words border-l-4 italic">
+            {{comment}}
+          </div>
+          {{/if}}
+        </div>
+        {{/reponses}}
+      </div>
+    </div>
+
+    {{/each}}
+  </body>
+</html>

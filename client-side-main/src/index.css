@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html{
+  scroll-behavior: smooth;
+}
+@layer components {
+  .button {
+    @apply focus:outline-none text-white text-sm hover:text-white shadow-xl bg-primary rounded-md font-medium p-2 sm:py-2 sm:px-4 block min-h-[3rem] disabled:bg-gray-400;
+  }
+
+  .font-mulish {
+    font-family: 'Mulish', sans-serif;
+  }
+
+  .font-roboto {
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .font-rubik {
+    font-family: 'Rubik', sans-serif;
+  }
+}
+
+body {
+  pointer-events: auto !important;
+}
+
+.custom-inner-shadow {
+  box-shadow: inset 1px 0px 11px 14px rgba(255, 255, 255, 0.25);
+}
+
+.ant-picker-input input {
+  font-size: unset !important;
+}
+.overlay.overlay-block {
+  cursor: unset !important;
+}
+
+.pagination__link--disabled a {
+  background-color: #f1f4f6 !important;
+  color: rgb(198, 197, 202) !important;
+}
+.pagination__link--disabled {
+  background-color: #f1f4f6 !important;
+}
+
+#marks-map .react-dropdown-tree-select .dropdown .dropdown-trigger,
+#marks-map .react-dropdown-tree-select .dropdown .dropdown-trigger {
+  border: none !important;
+  border-radius: unset !important;
+  border-color: unset !important;
+}
+
+.ant-picker-input input {
+  height: 100% !important;
+}
+
+::-webkit-scrollbar {
+  z-index: 10;
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: linear-gradient(90deg, #f8f8f8 0%, #fafafa 50.51%, #fafafa 100%);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #919eab;
+  border-radius: 4px;
+  width: 8px;
+}
+
+.react-multi-carousel-list {
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+  height: 450px;
+}
+
+.react-multiple-carousel__arrow {
+  top: 90%;
+  background-color: white !important;
+  box-shadow: -1px 13px 20px #f0f2f4 !important;
+}
+
+.react-multiple-carousel__arrow::before {
+  color: #8aa1ac !important;
+}
+/* 
+.dt-picker input {
+  border: none !important;
+}
+
+.dt-picker input:focus,
+.dt-picker input:active {
+  border: none;
+  box-shadow: none;
+}
+
+.dt-picker div {
+  width: 100%;
+} */
+
+.dt-picker div {
+  height: 100%;
+}
+
+.dt-picker input,
+.dt-picker-2 input {
+  border: none;
+  height: 100%;
+}
+
+.dt-picker input:focus,
+.dt-picker input:active,
+.dt-picker-2 input:focus,
+.dt-picker-2 input:active {
+  border: none !important;
+  box-shadow: none;
+}
+
+.dt-picker div,
+.dt-picker-2 div {
+  width: 100%;
+}
+
+.dt-picker-2 input {
+  background-color: transparent !important;
+  padding: 0rem !important;
+}
+
+.dt-picker-2 div {
+  padding: 0 !important;
+}
+
+.ant-pagination-item {
+  border-radius: 3px;
+}
+
+.ant-pagination-item-link {
+  border-radius: 3px;
+  display: grid !important;
+  place-content: center;
+}
+
+.ant-pagination-item-active,
+.ant-pagination-item:hover {
+  border: 1px solid rgba(78, 173, 255, 1) !important;
+}
+
+.ant-pagination-item-active a {
+  color: #4eadff !important;
+}

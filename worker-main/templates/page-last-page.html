@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Auto Sans Risque</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .text-smaller {
+        font-size: 10px;
+      }
+    </style>
+  </head>
+
+  <body class="p-8 text-xs">
+    <div
+      style="
+        position: fixed;
+        bottom: 30%;
+        left: 39%;
+        z-index: 0;
+        font-size: 100px;
+        color: gray;
+        opacity: 0.3;
+      ">
+      <img src="./logo.png" />
+    </div>
+    <div class="pt-10">
+      <h1 class="font-extrabold">Images de la voiture</h1>
+      <div class="grid grid-cols-3 gap-1">
+        {{#each images}}
+        <img src="{{this}}" alt="images" class="p-2 h-40 w-full" />
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="flex justify-end w-full pt-10">
+      <div class="w-72 border border-black">
+        <h1 class="border-b border-black text-center">Signature de l'expert</h1>
+        <img src="{{expertSignature}}" alt="signature" class="p-2" />
+      </div>
+    </div>
+  </body>
+</html>

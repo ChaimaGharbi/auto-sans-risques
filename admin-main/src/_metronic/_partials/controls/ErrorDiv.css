@@ -1,0 +1,12 @@
+.errorDiv{
+    color: white;
+    width: 100%;
+    font-size: 12px;
+    background-color: #F35A6C;
+    margin: 8px;
+    font-weight: 700;
+    padding: 8px;
+}
+#errorId {
+    margin: 8px auto;
+}
