@@ -1,14 +1,14 @@
-POST http://localhost:3009/ads
+POST http://localhost:8080/ads
 content-type: application/json
 Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsTmFtZSI6ImFsaSIsImVtYWlsIjoiYWxpLmtvdWJhYWFAZ21haWwudG4iLCJyb2xlIjpbXSwiaWF0IjoxNjMyNDcyMTAzLCJleHAiOjE2MzM3NjgxMDN9.iifDorbbFerLKd2LS_vpGoxf3yefyDm4U_ImnL3dh5A
 
 {
-    "title":"helooo 222 ",
-    "body":"bodyy helooo 22 ",
-    "img":"http://imggggg",
-    "url":"http://dfdfdssdf",
-    "userId":"614d0685d48a45b853235215",
-    "isActive":true,
+  "title": "helooo 222 ",
+  "body": "bodyy helooo 22 ",
+  "img": "http://imggggg",
+  "url": "http://dfdfdssdf",
+  "userId": "614d0685d48a45b853235215",
+  "isActive": true,
     "lng":10.213254558,
     "lat":12.26354558
 }

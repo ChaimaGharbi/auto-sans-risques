@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, Put, Param, Delete, ValidationPipe } from 
 import { NotificationService } from './notification.service';
 import { NotificationDto } from './dto/notification.dto';
 import { filterNotificationDto } from './dto/filterNotification.dto';
-import { ObjectId } from 'mongoose';
 
 @Controller('notification')
 export class NotificationController {
@@ -10,7 +9,7 @@ export class NotificationController {
 
   @Post()
   create(@Body() notificationDto: NotificationDto) {
-    return this.notificationsService.create(notificationDto);
+    return this.notificationsService.createNotification(notificationDto);
   }
 
   /* @Get()
@@ -20,9 +19,7 @@ export class NotificationController {
 
   @Post('/paginate')
   async fetchNotificationsPaginate(@Body(ValidationPipe) filterNotificationDto: filterNotificationDto) {
-    console.log(filterNotificationDto);
-    
-    return await this.notificationsService.findAll(filterNotificationDto);
+      return await this.notificationsService.fetchNotificationsPaginate(filterNotificationDto);
   }
 
   @Get(':id')
@@ -42,10 +39,5 @@ export class NotificationController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.notificationsService.remove(+id);
-  }
-
-  @Put('/updates/:id')
-  async updateNotificationById(@Param('id') id:string) {
-    return await this.notificationsService.updateNotificationById(id);
   }
 }

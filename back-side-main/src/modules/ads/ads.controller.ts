@@ -30,7 +30,7 @@ export class AdsController {
       fileUrl = await uploadImage(img);
       AdsDto.img = fileUrl;
     }
-    return this.adsService.create(AdsDto);
+    return this.adsService.createAds(AdsDto);
   }
 
   /* @Get()
@@ -40,12 +40,12 @@ export class AdsController {
 
   @Post('/paginate')
   async fetchAdssPaginate(@Body(ValidationPipe) filterAdsDto: filterAdsDto) {
-    return await this.adsService.findAll(filterAdsDto);
+      return await this.adsService.fetchAdssPaginate(filterAdsDto);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.adsService.findOne(id);
+      return this.adsService.getAdById(id);
   }
 
   @Put(':id')
@@ -59,12 +59,12 @@ export class AdsController {
       
       AdsDto.img = fileUrl;
     }
-    return this.adsService.update(id, AdsDto);
+      return this.adsService.updateAd(id, AdsDto);
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return this.adsService.remove(id);
+      return this.adsService.deleteAdById(id);
   }
 
   @Post('/delete')

@@ -14,7 +14,6 @@ import { MailerService } from 'src/config/mailer/mailer.service';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PassportModule } from '@nestjs/passport';
-import { UserRepository } from 'src/repositories/user.repository';
 
 @Module({
   imports: [
@@ -28,17 +27,17 @@ import { UserRepository } from 'src/repositories/user.repository';
         expiresIn: 1296000
       }
     }),
-    MongooseModule.forFeature([
-      { name: User.name, schema: UserSchema },
-      { name: Client.name, schema: ClientSchema },
-      { name: Expert.name, schema: ExpertSchema },
-      { name: Admin.name, schema: AdminSchema },
-      { name: Moderator.name, schema: ModeratorSchema },
-      { name: Token.name, schema: TokenSchema }
-    ])
+      MongooseModule.forFeature([
+          {name: User.name, schema: UserSchema},
+          {name: Client.name, schema: ClientSchema},
+          {name: Expert.name, schema: ExpertSchema},
+          {name: Admin.name, schema: AdminSchema},
+          {name: Moderator.name, schema: ModeratorSchema},
+          {name: Token.name, schema: TokenSchema}
+      ])
   ],
-  controllers: [AuthController],
-  providers: [AuthService, UserRepository, JwtStrategy, MailerService],
-  exports: [AuthService, UserRepository, JwtStrategy, PassportModule]
+    controllers: [AuthController],
+    providers: [AuthService, JwtStrategy, MailerService],
+    exports: [AuthService, JwtStrategy, PassportModule]
 })
 export class AuthModule {}

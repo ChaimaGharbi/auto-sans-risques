@@ -1,8 +1,8 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { UserRepository } from 'src/repositories/user.repository';
 import * as jwt from 'jsonwebtoken';
+import {AuthService} from "./auth.service";
 export class JwtHandlerCzIHateDI {
   private secret = 'KLDMMMD12333';
   async validate(token) {
@@ -16,17 +16,18 @@ export class JwtHandlerCzIHateDI {
 }
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private userRepository: UserRepository) {
-    super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: 'KLDMMMD12333'
-    });
-  }
-  async validate(payload) {
-    const { email, role } = payload;
+    constructor(private userService: AuthService) {
+        super({
+            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            secretOrKey: 'KLDMMMD12333'
+        });
+    }
 
-    const user = await this.userRepository.getUserByEmail(email);
-    if (!user) {
+    async validate(payload) {
+        const {email, role} = payload;
+
+        const user = await this.userService.getUserByEmail(email);
+        if (!user) {
       throw new HttpException("You don't have access", HttpStatus.BAD_REQUEST);
     }
     return user;

@@ -44,6 +44,7 @@ export const niemandsUploadImage = async (file, filename, ext) => {
   }
 };
 
+// TOD0 : this function does not return anything (wrong implementation)
 export const uploadImage = file => {
   new Promise(async (resolve, reject) => {
     const bucket = admin.storage().bucket(); // should be your bucket name

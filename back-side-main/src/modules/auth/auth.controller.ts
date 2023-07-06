@@ -2,42 +2,40 @@ import {
   Body,
   Controller,
   Get,
-  Param,
-  Post,
-  Put,
-  Redirect,
-  Req,
-  Request,
-  Res,
-  UploadedFile,
-  UploadedFiles,
-  UseGuards,
-  UseInterceptors,
-  ValidationPipe
+    Param,
+    Post,
+    Put,
+    Redirect,
+    UploadedFile,
+    UploadedFiles,
+    UseGuards,
+    UseInterceptors,
+    ValidationPipe
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { FileFieldsInterceptor, FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { Role } from 'src/entities/user.roles.enum';
-import { imageFileFilter, uploadImage, niemandsUploadImage } from 'src/utils/upload.files';
-import { AuthService } from './auth.service';
-import { SignInCredentialsDto } from './dto/signin-credentials.dto';
-import { SignupCredentialsDto } from './dto/signup-credentials.dto';
-import { UpdateClientCredentialsDto } from './dto/updateClient-credentials.dto';
-import { UpdateExpertCredentialsDto } from './dto/updateExpert-credentials.dto';
-import { GetUser } from './get-user.decorator';
-import { Roles } from './role.decorator';
-import { RolesGuard } from './roles.guard';
+import {AuthGuard} from '@nestjs/passport';
+import {FileFieldsInterceptor, FileInterceptor, FilesInterceptor} from '@nestjs/platform-express';
+import {Role} from 'src/entities/user.roles.enum';
+import {imageFileFilter, uploadImage} from 'src/utils/upload.files';
+import {AuthService} from './auth.service';
+import {SignInCredentialsDto} from './dto/signin-credentials.dto';
+import {SignupCredentialsDto} from './dto/signup-credentials.dto';
+import {UpdateClientCredentialsDto} from './dto/updateClient-credentials.dto';
+import {UpdateExpertCredentialsDto} from './dto/updateExpert-credentials.dto';
+import {GetUser} from './get-user.decorator';
 import 'dotenv/config';
-import { UpdatePasswordDto } from './dto/update-password.dto';
+import {UpdatePasswordDto} from './dto/update-password.dto';
+
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
-  /*   @Post('/signup/expert')
-  signupExpert(@Body(ValidationPipe) signupCredentialsDto: SignupCredentialsDto) {
-    return this.authService.signUp(signupCredentialsDto, Role.EXPERT);
-  } */
-  @Get('/client/:id')
-  getClientById(@Param() params) {
+    constructor(private authService: AuthService) {
+    }
+
+    /*   @Post('/signup/expert')
+    signupExpert(@Body(ValidationPipe) signupCredentialsDto: SignupCredentialsDto) {
+      return this.authService.signUp(signupCredentialsDto, Role.EXPERT);
+    } */
+    @Get('/client/:id')
+    getClientById(@Param() params) {
     return this.authService.getClientById(params.id);
   }
   /*  @Post('/signup/client')
@@ -90,18 +88,15 @@ export class AuthController {
     for (let i = 0; i < Object.keys(files).length; i++) {
       const file = files[Object.keys(files)[i]][0];
       file;
+        // TODO : upload files to firebase fix the bug
       const fileUrl = await uploadImage(file);
       filesUrls[Object.keys(files)[i]] = fileUrl;
     }
-    return this.authService.updateExpertProfile(
-      updateExpertCredentialsDto,
-      filesUrls.profile,
-      filesUrls.cin,
-      filesUrls.identFiscale,
-      filesUrls.atelier,
-      filesUrls.diplome,
-      filesUrls.signature
-    );
+      return this.authService.updateProfile(
+          updateExpertCredentialsDto,
+          filesUrls,
+          Role.EXPERT
+      );
   }
   @Put('/updateClient')
   @UseInterceptors(FileInterceptor('file', { fileFilter: imageFileFilter }))
@@ -109,11 +104,15 @@ export class AuthController {
     @Body(ValidationPipe) updateClientCredentialsDto: UpdateClientCredentialsDto,
     @UploadedFile() file: Express.Multer.File
   ) {
-    let fileUrl;
-    if (file) {
-      fileUrl = await uploadImage(file);
-    }
-    return this.authService.updateClientProfile(updateClientCredentialsDto, fileUrl);
+      let fileUrl;
+      if (file) {
+          fileUrl = await uploadImage(file);
+      }
+      return this.authService.updateProfile(
+          updateClientCredentialsDto,
+          [...fileUrl],
+          Role.CLIENT
+      );
   }
   @Put('/update-password/:role')
   @UseGuards(AuthGuard())

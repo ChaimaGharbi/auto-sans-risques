@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Disponibilite, DisponibiliteSchema } from 'src/entities/disponibilite.entity';
 import { Expert, ExpertSchema } from 'src/entities/expert.entity';
-import { DisponibiliteRepository } from 'src/repositories/disponibilte.repository';
 import { DisponibiliteController } from './disponibilite.controller';
 import { DisponibiliteService } from './disponibilite.service';
 import { PassportModule } from '@nestjs/passport';
@@ -18,6 +17,6 @@ import { PassportModule } from '@nestjs/passport';
     ])
   ],
   controllers: [DisponibiliteController],
-  providers: [DisponibiliteService, DisponibiliteRepository]
+  providers: [DisponibiliteService]
 })
 export class DisponibiliteModule {}

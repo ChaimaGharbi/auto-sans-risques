@@ -10,32 +10,32 @@ export class MarkController {
 
   @Post()
   create(@Body() markDto: MarkDto) {
-    return this.marksService.create(markDto);
+    return this.marksService.createMark(markDto);
   }
 
   @Post('paginate')
   findAll(@Body(ValidationPipe) filterMarkDto:filterMarkDto) {
-    
-    return this.marksService.findAll(filterMarkDto);
+
+      return this.marksService.getMarks(filterMarkDto);
   }
   @Post('model/:id')
   findAllByModelId(@Param('id') modelId: string,@Body(ValidationPipe) filterMarkDto:filterMarkDto) {
-    
-    return this.marksService.findAllByModelId(modelId,filterMarkDto);
+
+      return this.marksService.getMarksByModelId(modelId, filterMarkDto);
   }
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.marksService.findOne(id);
+      return this.marksService.getMarkById(id);
   }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() markDto: MarkDto) {
-    return this.marksService.update(id, markDto);
+      return this.marksService.updateMarkById(id, markDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.marksService.remove(id);
+      return this.marksService.deleteMarkById(id);
   }
 
   @Post('/delete')
