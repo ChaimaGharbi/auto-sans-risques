@@ -94,8 +94,8 @@ export class ArticleController {
   }
 
   @Post('/category/deleteCategories')
-  async deleteCategories(@Body() ids) {
-    return await this.articleService.deleteCategories(ids);
+  async deleteCategories(@Body("ids") ids) {
+      return await this.articleService.deleteCategories(ids);
   }
 
   @Get('/category/fetch/6')

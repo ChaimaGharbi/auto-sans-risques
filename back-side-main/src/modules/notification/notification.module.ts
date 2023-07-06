@@ -7,7 +7,6 @@ import { Expert, ExpertSchema } from 'src/entities/expert.entity'; */
 import { NotificationService } from './notification.service';
 import { NotificationController } from './notification.controller';
 import { NotificationSchema, Notification } from 'src/entities/notification.entity';
-import { NotificationRepository } from 'src/repositories/notification.repository';
 import { Reservation, ReservationSchema } from 'src/entities/reservation.entity';
 import { SmsService } from 'src/config/sms/sms.service';
 import { MailerService } from 'src/config/mailer/mailer.service';
@@ -18,17 +17,17 @@ import { Client, ClientSchema } from 'src/entities/client.entity';
 @Module({
   imports: [
     PassportModule.register({
-      defaultStrategy: 'jwt'
+        defaultStrategy: 'jwt'
     }),
-    MongooseModule.forFeature([
-      { name: Notification.name, schema: NotificationSchema },
-      { name: Reservation.name, schema: ReservationSchema },
-      { name: Expert.name, schema: ExpertSchema },
-      { name: Client.name, schema: ClientSchema }
-    ])
+      MongooseModule.forFeature([
+          {name: Notification.name, schema: NotificationSchema},
+          {name: Reservation.name, schema: ReservationSchema},
+          {name: Expert.name, schema: ExpertSchema},
+          {name: Client.name, schema: ClientSchema}
+      ])
   ],
-  controllers: [NotificationController],
-  providers: [NotificationService, NotificationRepository, SmsService, MailerService, NotificationGateway],
-  exports: [NotificationRepository]
+    controllers: [NotificationController],
+    providers: [NotificationService, SmsService, MailerService, NotificationGateway],
+    exports: [NotificationService]
 })
 export class NotificationModule {}

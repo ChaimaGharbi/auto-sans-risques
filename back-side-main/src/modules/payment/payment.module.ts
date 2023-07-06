@@ -3,7 +3,6 @@ import { MongooseModule, getConnectionToken } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
 import { Expert, ExpertSchema } from 'src/entities/expert.entity';
 import { Payment, PaymentSchema } from 'src/entities/payment.entity';
-import { PaymentRepository } from 'src/repositories/payment.repository';
 import { PaymentController } from './payment.controller';
 import { PaymentService } from './payment.service';
 import * as AutoIncrementFactory from 'mongoose-sequence';
@@ -35,6 +34,6 @@ import { BullModule } from '@nestjs/bull';
     })
   ],
   controllers: [PaymentController],
-  providers: [PaymentService, PaymentRepository]
+  providers: [PaymentService]
 })
 export class PaymentModule {}

@@ -13,28 +13,28 @@ export class ModelController {
   } */
   @Post()
   async createModel(@Body(ValidationPipe) modelDto: ModelDto) {
-    return await this.modelsService.create(modelDto);
+    return await this.modelsService.createModel(modelDto);
   }
 
   @Post('paginate')
   findAll(@Body(ValidationPipe) filterModelDto: filterModelDto) {
-    return this.modelsService.findAll(filterModelDto);
+      return this.modelsService.getModels(filterModelDto);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.modelsService.findOne(id);
+      return this.modelsService.getModelById(id);
   }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() modelDto: ModelDto) {
-    
-    return this.modelsService.update(id, modelDto);
+
+      return this.modelsService.updateModel(id, modelDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.modelsService.remove(id);
+      return this.modelsService.deleteModelById(id);
   }
 
   @Post('/delete')

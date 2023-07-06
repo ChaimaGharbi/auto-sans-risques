@@ -84,32 +84,35 @@ export class RapportController {
   //////////////Question Category Crud///////////
   @Post('/questionCtg')
   async createQuestionCtg(@Body(ValidationPipe) questionCategoryDto: questionCategoryDto) {
-    return await this.rapportService.createQuestionCtg(questionCategoryDto);
+    return await this.rapportService.createQuestionCategory(questionCategoryDto);
   }
   @Put('/questionCtg/:id')
   async updateQuestionCtg(@Body(ValidationPipe) questionCategoryDto: questionCategoryDto, @Param() params) {
-    return await this.rapportService.updateQuestionCtg(questionCategoryDto, params.id);
+      return await this.rapportService.updateQuestionCategory(questionCategoryDto, params.id);
   }
   @Get('/questionCtg/:id')
   async findQuestionCtgById(@Param() params) {
-    return await this.rapportService.findQuestionCtgById(params.id);
+      return await this.rapportService.findQuestionCategoryById(params.id);
   }
   @Delete('/questionCtg/:id')
   async deleteQuestionCtgById(@Param() params) {
-    return await this.rapportService.deleteQuestionCtgById(params.id);
+      return await this.rapportService.deleteQuestionCategoryById(params.id);
   }
-  @Get('/questionCtg')
-  async findAllQuestionCtg() {
-    return await this.rapportService.findAllQuestionCtg();
-  }
-  @Post('/questionCtg/ids')
-  async deleteQuestionCategories(@Body() ids: any) {
-    return await this.rapportService.deleteQuestionCategories(ids);
-  }
-  @Post('/questionCtg/paginate')
-  async fetchQuestionCategoriesPaginate(@Body() filterQuestionCtgDto: FilterQuestionCtgDto) {
-    return await this.rapportService.fetchQuestionCategoriesPaginate(filterQuestionCtgDto);
-  }
+
+    @Get('/questionCtg')
+    async findAllQuestionCtg() {
+        return await this.rapportService.findAllQuestionCategory();
+    }
+
+    @Post('/questionCtg/ids')
+    async deleteQuestionCategories(@Body("ids") ids: any) {
+        return await this.rapportService.deleteQuestionCategories(ids);
+    }
+
+    @Post('/questionCtg/paginate')
+    async fetchQuestionCategoriesPaginate(@Body() filterQuestionCtgDto: FilterQuestionCtgDto) {
+        return await this.rapportService.fetchQuestionCategoriesPaginate(filterQuestionCtgDto);
+    }
   //////////////Question Crud///////////
   @Post('/question')
   async createQuestion(@Body(ValidationPipe) questionDto: questionDto) {

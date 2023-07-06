@@ -32,7 +32,7 @@ export class ExpertController {
 
   @Get('/:id')
   async fetchExpertById(@Param() params) {
-    return await this.expertService.fetchExpertById(params.id);
+    return await this.expertService.fetchExpertId(params.id);
   }
 
   @Put('/')
@@ -58,7 +58,7 @@ export class ExpertController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.expertService.remove(id);
+    return this.expertService.deleteExpertById(id);
   }
 
   @Put('/upload/metadata')

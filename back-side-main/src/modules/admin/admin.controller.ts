@@ -24,7 +24,7 @@ export class AdminController {
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return this.adminService.remove(id);
+    return this.adminService.deleteAdminById(id);
   }
 
   @Post('/delete')

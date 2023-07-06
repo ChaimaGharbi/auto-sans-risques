@@ -24,7 +24,7 @@ export class ModeratorController {
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return this.moderatorService.remove(id);
+    return this.moderatorService.deleteModeratorById(id);
   }
 
   @Post('/delete')

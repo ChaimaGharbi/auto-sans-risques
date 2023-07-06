@@ -1,7 +1,6 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Rapport, RapportSchema } from 'src/entities/rapport.entity';
-import { RapportRepository } from 'src/repositories/rapport.repository';
 import { RapportController } from './rapport.controller';
 import { RapportService } from './rapport.service';
 import { router } from 'bull-board';
@@ -22,18 +21,18 @@ import { RapportGateway } from './rapport.gateway';
     }),
     MongooseModule.forFeature([
       { name: Rapport.name, schema: RapportSchema },
-      { name: Reponse.name, schema: ReponseSchema },
-      { name: QuestionCategory.name, schema: QuestionCategorySchema },
-      { name: Question.name, schema: QuestionSchema },
-      { name: Reservation.name, schema: ReservationSchema }
+        {name: Reponse.name, schema: ReponseSchema},
+        {name: QuestionCategory.name, schema: QuestionCategorySchema},
+        {name: Question.name, schema: QuestionSchema},
+        {name: Reservation.name, schema: ReservationSchema}
     ]),
-    BullModule.registerQueue({
-      name: 'pdfjob'
-    })
+      BullModule.registerQueue({
+          name: 'pdfjob'
+      })
   ],
-  controllers: [RapportController],
-  providers: [RapportService, RapportRepository, RapportGateway],
-  exports: [RapportRepository]
+    controllers: [RapportController],
+    providers: [RapportService, RapportGateway],
+    exports: [RapportService]
 })
 export class RapportModule {
   configure(consumer: MiddlewareConsumer): void {

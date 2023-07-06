@@ -9,7 +9,7 @@ export class NotificationController {
 
   @Post()
   create(@Body() notificationDto: NotificationDto) {
-    return this.notificationsService.create(notificationDto);
+    return this.notificationsService.createNotification(notificationDto);
   }
 
   /* @Get()
@@ -19,7 +19,7 @@ export class NotificationController {
 
   @Post('/paginate')
   async fetchNotificationsPaginate(@Body(ValidationPipe) filterNotificationDto: filterNotificationDto) {
-    return await this.notificationsService.findAll(filterNotificationDto);
+      return await this.notificationsService.fetchNotificationsPaginate(filterNotificationDto);
   }
 
   @Get(':id')

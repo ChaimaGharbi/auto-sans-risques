@@ -1,20 +1,27 @@
-import { Injectable } from '@nestjs/common';
-import { getHtml } from 'src/config/mailer/mailer.helper';
-import { MailerService } from 'src/config/mailer/mailer.service';
-import { ContactRepository } from 'src/repositories/contact.repository';
+import {Injectable} from '@nestjs/common';
+import {getHtml} from 'src/config/mailer/mailer.helper';
+import {MailerService} from 'src/config/mailer/mailer.service';
+import {InjectModel} from "@nestjs/mongoose";
+import {Contact} from "../../entities/contact.entity";
+import {Model} from "mongoose";
+import {GenericRepository} from "../../shared/generic.repository";
 
 @Injectable()
 export class ContactService {
-  constructor(private contactRepository: ContactRepository, private mailerService: MailerService) {}
+    private readonly contactRepository: GenericRepository<Contact>;
 
-  async sendContactUs(contactDto: any) {
-    await this.contactRepository.createContact(contactDto);
-    const html = await getHtml(contactDto.message);
-    await this.mailerService.sendMail(
-      process.env.FROM_EMAIL,
-      contactDto.name,
-      contactDto.subject + '  from ' + contactDto.email,
-      html
-    );
+    constructor(@InjectModel(Contact.name) private readonly contactModel: Model<Contact>, private mailerService: MailerService) {
+        this.contactRepository = new GenericRepository(contactModel);
+    }
+
+    async sendContactUs(contactDto: any) {
+        await this.contactRepository.create(contactDto);
+        const html = await getHtml(contactDto.message);
+        await this.mailerService.sendMail(
+            process.env.FROM_EMAIL,
+            contactDto.name,
+            contactDto.subject + '  from ' + contactDto.email,
+            html
+        );
   }
 }
