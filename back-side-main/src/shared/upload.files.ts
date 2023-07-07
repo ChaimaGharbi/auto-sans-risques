@@ -1,4 +1,4 @@
-import { BadRequestException } from '@nestjs/common';
+import {BadRequestException} from '@nestjs/common';
 import * as admin from 'firebase-admin';
 import * as util from 'util';
 import * as fs from 'fs';
@@ -9,6 +9,7 @@ import * as imagemin from 'gulp-imagemin';
 import * as gulp from 'gulp';
 
 import * as imageminJpegtran from 'imagemin-jpegtran';
+
 const imageminPngquant = require('imagemin-pngquant');
 
 export const imageFileFilter = (req, file, callback) => {
