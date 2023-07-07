@@ -1,16 +1,16 @@
 export const pagination = (pipelines,options)=>{
-  const limit = options.limit ? options.limit : 10
-  const page = options.page ? options.page : 1
-    pipelines.push({ 
-      $facet: {
-        metadata: [
-          {
-              $count: 'totalCount'
-          }
-        ], 
-        entities: [
-          {
-            $skip: (page - 1 ) * limit //(selectedPage - 1 ) * pageSize
+  const limit = options.pageSize ? parseInt(options.pageSize) : 10;
+  const page = options.pageNumber ? parseInt(options.pageNumber) : 1;
+  pipelines.push({
+    $facet: {
+      metadata: [
+        {
+          $count: 'totalCount'
+        }
+      ],
+      entities: [
+        {
+          $skip: (page - 1) * limit //(selectedPage - 1 ) * pageSize
           }, {
             $limit: limit
           }
@@ -34,5 +34,5 @@ export const pagination = (pipelines,options)=>{
         page:page
       }
     })
-    return pipelines;
+  return pipelines
 }
