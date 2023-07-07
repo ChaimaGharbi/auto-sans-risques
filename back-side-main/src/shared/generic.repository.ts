@@ -1,5 +1,10 @@
-import {InternalServerErrorException, NotFoundException} from '@nestjs/common';
+import {NotFoundException} from '@nestjs/common';
+import * as mongoose from 'mongoose';
 import {Model, UpdateQuery} from 'mongoose';
+import sort from "./aggregation/sort";
+import {matching} from "./aggregation/matching";
+import {sorting} from "./aggregation/sorting";
+import {pagination} from "./aggregation/pagination";
 
 export class GenericRepository<T> {
     private readonly model: Model<T>;
@@ -10,7 +15,10 @@ export class GenericRepository<T> {
 
     async findById(id: string): Promise<T> {
         try {
-            const result = this.model.findById(id);
+            if (!mongoose.Types.ObjectId.isValid(id)) {
+                throw new NotFoundException('Invalid ID');
+            }
+            const result = await this.model.findById(id);
             if (!result) {
                 throw new NotFoundException('Not found');
             }
@@ -22,7 +30,7 @@ export class GenericRepository<T> {
 
     async findAll(): Promise<T[]> {
         try {
-            return this.model.find();
+            return await this.model.find();
         } catch (error) {
             throw error;
         }
@@ -38,6 +46,9 @@ export class GenericRepository<T> {
 
     async update(id: string, data: UpdateQuery<T>): Promise<T> {
         try {
+            if (!mongoose.Types.ObjectId.isValid(id)) {
+                throw new NotFoundException('Invalid ID');
+            }
             return await this.model.findByIdAndUpdate(id, data, {new: true}).exec();
         } catch (error) {
             throw error;
@@ -65,6 +76,9 @@ export class GenericRepository<T> {
 
     async delete(id: string): Promise<T> {
         try {
+            if (!mongoose.Types.ObjectId.isValid(id)) {
+                throw new NotFoundException('Invalid ID');
+            }
             const result = await this.model.findByIdAndDelete(id).exec();
             if (!result) {
                 throw new NotFoundException('Not found');
@@ -83,9 +97,19 @@ export class GenericRepository<T> {
         }
     }
 
-    async aggregate(pipeline: any[]): Promise<any[]> {
+    async aggregate(dto, sortObject = null, match = {}): Promise<any[]> {
         try {
-            return await this.model.aggregate(pipeline).exec();
+            let pipelines
+            if (sortObject) {
+                pipelines = [...sortObject]
+            } else {
+                pipelines = [...sort]
+            }
+            matching(pipelines, {...dto.filter, ...match});
+            sorting(pipelines, dto);
+            pipelines = pagination(pipelines, dto);
+            const aggregation = await this.model.aggregate(pipelines);
+            return aggregation[0];
         } catch (error) {
             throw error;
         }
