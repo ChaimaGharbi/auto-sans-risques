@@ -28,6 +28,7 @@ export class ReservationService {
     this.notificationRepository = new GenericRepository(notificationModel)
   }
 
+  // TODO : see what is this function's role and consulting the commented code
   async _createNotification(receiver, sender, reservationId, message) {
     // try {
     //   let html;
@@ -164,79 +165,32 @@ export class ReservationService {
 
   async fetchReservationsPaginate(filterReservationDto: filterReservationDto, group: any) {
     try {
-      const aggregate_options = [];
 
-      const options = {
-        page: filterReservationDto.pageNumber,
-        limit: filterReservationDto.pageSize,
-        collation: {locale: 'en'},
-        customLabels: {
-          totalDocs: 'totalCount',
-          docs: 'entities'
+        const aggregate_options: any[] = [
+            {
+                $lookup: {from: 'experts', localField: 'expertId', foreignField: '_id', as: 'expert'}
+            },
+            {
+                $lookup: {from: 'clients', localField: 'clientId', foreignField: '_id', as: 'client'}
+            },
+            {
+                $addFields: {
+                    _id: {$toString: '$_id'},
+                    expertId: {$toString: '$expertId'},
+                    clientId: {$toString: '$clientId'}
+                }
+            }
+        ];
+        if (group !== false && parseInt(group) !== 0) {
+            const group = {
+                _id: {$dateToString: {format: '%Y-%m-%d', date: '$date'}}, // Group By Expression
+                data: {$push: '$$ROOT'}
+            };
+
+            aggregate_options.push({$group: group});
         }
-      };
+        return await this.reservationRepository.aggregate(filterReservationDto, aggregate_options);
 
-      aggregate_options.push({
-        $lookup: {from: 'experts', localField: 'expertId', foreignField: '_id', as: 'expert'}
-      });
-
-      aggregate_options.push({
-        $lookup: {from: 'clients', localField: 'clientId', foreignField: '_id', as: 'client'}
-      });
-
-      aggregate_options.push({
-        $addFields: {
-          _id: {$toString: '$_id'},
-          expertId: {$toString: '$expertId'},
-          clientId: {$toString: '$clientId'}
-        }
-      });
-
-      //FILTERING AND PARTIAL TEXT SEARCH -- FIRST STAGE
-      const {clientId, expertId, status, _id} = filterReservationDto.filter;
-
-      interface IMatch {
-        clientId?: any;
-        expertId?: any;
-        status?: any;
-        _id?: any;
-      }
-
-      const match: IMatch = {};
-
-      //filter by name - use $regex in mongodb - add the 'i' flag if you want the search to be case insensitive.
-      if (clientId) match.clientId = {$regex: clientId, $options: 'i'};
-      if (expertId) match.expertId = {$regex: expertId, $options: 'i'};
-      if (status) match.status = {$regex: status, $options: 'i'};
-      if (_id) match._id = {$regex: _id, $options: 'i'};
-
-      aggregate_options.push({$match: match});
-
-      //GROUPING -- SECOND STAGE
-      if (group !== false && parseInt(group) !== 0) {
-        const group = {
-          _id: {$dateToString: {format: '%Y-%m-%d', date: '$date'}}, // Group By Expression
-          data: {$push: '$$ROOT'}
-        };
-
-        aggregate_options.push({$group: group});
-      }
-
-      //SORTING -- THIRD STAGE
-      const sortOrderU = filterReservationDto.sortField && filterReservationDto.sortOrder === 'desc' ? -1 : 1;
-      if (filterReservationDto.sortField === 'date') {
-        aggregate_options.push({$sort: {date: sortOrderU}});
-      } else {
-        aggregate_options.push({$sort: {_id: sortOrderU}});
-      }
-
-      //LOOKUP/JOIN -- FOURTH STAGE
-      // aggregate_options.push({$lookup: {from: 'interested', localField: "_id", foreignField: "eventId", as: "interested"}});
-
-      // Set up the aggregation
-      const myAggregate = this.reservationModel.aggregate(aggregate_options);
-
-      return await this.reservationModel.aggregatePaginate(myAggregate, options, null);
     } catch (error) {
       return new InternalServerErrorException(error);
     }

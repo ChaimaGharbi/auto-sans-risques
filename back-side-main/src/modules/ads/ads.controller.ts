@@ -11,9 +11,9 @@ import {
   UploadedFiles,
   UploadedFile
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { imageFileFilter, uploadImage } from 'src/utils/upload.files';
-import { AdsService } from './ads.service';
+import {FileInterceptor} from '@nestjs/platform-express';
+import {imageFileFilter, uploadImage} from 'src/shared/upload.files';
+import {AdsService} from './ads.service';
 import { AdsDto } from './dto/ads.dto';
 import { filterAdsDto } from './dto/filterAds.dto';
 
@@ -40,7 +40,7 @@ export class AdsController {
 
   @Post('/paginate')
   async fetchAdssPaginate(@Body(ValidationPipe) filterAdsDto: filterAdsDto) {
-      return await this.adsService.fetchAdssPaginate(filterAdsDto);
+      return await this.adsService.fetchAdsPaginate(filterAdsDto);
   }
 
   @Get(':id')

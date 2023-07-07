@@ -1,12 +1,11 @@
-import {Injectable, InternalServerErrorException, NotFoundException} from '@nestjs/common';
+import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {filterMarkDto} from './dto/filterMark.dto';
 import {MarkDto} from './dto/mark.dto';
 import {InjectModel} from "@nestjs/mongoose";
 import {Mark} from "../../entities/mark.entity";
 import {IMarkModel} from "../../entities/mark.interface";
 import {Model as ModelCar} from "../../entities/model.entity";
-import {Model, Types} from "mongoose";
-import {pagination} from "../../shared/pagination";
+import {Model} from "mongoose";
 import {GenericRepository} from "../../shared/generic.repository";
 
 @Injectable()
@@ -49,9 +48,7 @@ export class MarkService {
             };
             const myAggregate = await this.markModel.find().populate('modelId').sort({priority: -1});
 
-            const markCar = await this.markModel.aggregatePaginate(myAggregate, options, null);
-
-            return markCar;
+            return await this.markModel.aggregatePaginate(myAggregate, options, null);
         } catch (error) {
             throw new InternalServerErrorException(error);
         }
@@ -59,32 +56,7 @@ export class MarkService {
 
     async getMarksByModelId(modelId: any, filterMarkDto: filterMarkDto) {
         try {
-            const pipelines = [];
-            const options = {
-                page: filterMarkDto.pageNumber,
-                limit: filterMarkDto.pageSize
-            };
-            const {name} = filterMarkDto.filter;
-
-            interface IMatch {
-                name?: any;
-                modelId?: any;
-            }
-
-            const match: IMatch = {};
-            if (modelId) match.modelId = Types.ObjectId(modelId);
-            pipelines.push({$match: match});
-            if (name) match.name = {$regex: name, $options: 'i'};
-
-            //filter by date
-            const sortOrderU = filterMarkDto.sortOrder === 'desc' ? -1 : 1;
-
-            pipelines.push({$sort: {createdAt: sortOrderU}});
-            const myAgregate = pagination(pipelines, options);
-            const mypipeline = await this.markModel.aggregate(myAgregate);
-
-            return mypipeline[0];
-            // return markCar;
+            return await this.markRepository.aggregate(filterMarkDto, [], {modelId})
         } catch (error) {
             throw new InternalServerErrorException(error);
         }

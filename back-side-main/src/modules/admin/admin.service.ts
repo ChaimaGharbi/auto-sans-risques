@@ -1,7 +1,6 @@
 import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {AdminDto} from './dto/admin.dto';
 import {filterAdminDto} from './dto/filterAdmin.dto';
-import {pagination} from "../../shared/pagination";
 import {GenericRepository} from "../../shared/generic.repository";
 import {Admin} from "../../entities/admin.entity";
 import {InjectModel} from "@nestjs/mongoose";
@@ -20,44 +19,7 @@ export class AdminService {
 
     async fetchAdmins(filterAdminDto: filterAdminDto) {
         try {
-            const pipelines = [];
-            const options = {
-                page: filterAdminDto.pageNumber,
-                limit: filterAdminDto.pageSize
-            };
-            pipelines.push({
-                $addFields: {
-                    _id: {$toString: '$_id'}
-                }
-            });
-            pipelines.push({
-                $project: {
-                    salt: 0,
-                    password: 0
-                }
-            });
-            const {fullName, _id, email} = filterAdminDto.filter;
-
-            interface IMatch {
-                fullName?: any;
-                _id?: any;
-                email?: any;
-            }
-
-            const match: IMatch = {};
-            if (fullName) match.fullName = {$regex: fullName, $options: 'i'};
-            if (_id) match._id = {$regex: _id, $options: 'i'};
-            if (email) match.email = {$regex: email, $options: 'i'};
-            pipelines.push({$match: match});
-
-            //filter by date
-            const sortOrderU = filterAdminDto.sortOrder === 'desc' ? -1 : 1;
-
-            pipelines.push({$sort: {createdAt: sortOrderU}});
-            const myAgregate = pagination(pipelines, options);
-            const mypipeline = await this.adminRepository.aggregate(myAgregate);
-
-            return mypipeline[0];
+            return await this.adminRepository.aggregate(filterAdminDto);
         } catch (error) {
             return new InternalServerErrorException(error);
         }

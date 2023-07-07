@@ -63,81 +63,26 @@ export class ReclamationService {
 
   async fetchReclamations(filterReclamationDto: FilterReclamationDto) {
       try {
-          const aggregate_options = [];
-
-          const options = {
-              page: filterReclamationDto.pageNumber,
-              limit: filterReclamationDto.pageSize,
-              collation: {locale: 'en'},
-              customLabels: {
-                  totalDocs: 'totalCount',
-                  docs: 'entities'
+          const aggregate_options: any[] = [
+              {
+                  $lookup: {from: 'experts', localField: 'expertId', foreignField: '_id', as: 'expert'}
+              },
+              {
+                  $lookup: {from: 'clients', localField: 'clientId', foreignField: '_id', as: 'client'}
+              },
+              {
+                  $lookup: {from: 'reservations', localField: 'reservationId', foreignField: '_id', as: 'reservation'}
+              },
+              {
+                  $addFields: {
+                      _id: {$toString: '$_id'},
+                      expertId: {$toString: '$expertId'},
+                      clientId: {$toString: '$clientId'},
+                      reservationId: {$toString: '$reservationId'},
+                  }
               }
-          };
-
-          aggregate_options.push({
-              $lookup: {from: 'experts', localField: 'expertId', foreignField: '_id', as: 'expert'}
-          });
-
-          aggregate_options.push({
-              $lookup: {from: 'clients', localField: 'clientId', foreignField: '_id', as: 'client'}
-          });
-
-          aggregate_options.push({
-              $lookup: {from: 'reservations', localField: 'reservationId', foreignField: '_id', as: 'reservation'}
-          });
-
-          aggregate_options.push({
-              $addFields: {
-                  _id: {$toString: '$_id'},
-                  expertId: {$toString: '$expertId'},
-                  reservationId: {$toString: '$reservationId'},
-                  clientId: {$toString: '$clientId'}
-              }
-          });
-
-          //FILTERING AND PARTIAL TEXT SEARCH -- FIRST STAGE
-          const {_id, reservationId, email, fullName, etat, clientId} = filterReclamationDto.filter;
-
-          interface IMatch {
-              reservationId?: any;
-              etat?: any;
-              fullName?: any;
-              email?: any;
-              _id?: any;
-              clientId?: any;
-          }
-
-          const match: IMatch = {};
-
-          //filter by name - use $regex in mongodb - add the 'i' flag if you want the search to be case insensitive.
-          if (_id) match._id = {$regex: _id, $options: 'i'};
-          if (reservationId) match.reservationId = {$regex: reservationId, $options: 'i'};
-          if (email) match.email = {$regex: email, $options: 'i'};
-          if (fullName) match.fullName = {$regex: fullName, $options: 'i'};
-          if (etat) match.etat = {$regex: etat, $options: 'i'};
-          if (clientId) match.clientId = {$regex: clientId, $options: 'i'};
-
-          //filter by date
-
-
-          aggregate_options.push({$match: match});
-
-          //SORTING -- THIRD STAGE
-          const sortOrderU = filterReclamationDto.sortField && filterReclamationDto.sortOrder === 'desc' ? -1 : 1;
-          if (filterReclamationDto.sortField === 'date') {
-              aggregate_options.push({$sort: {date: sortOrderU}});
-          } else {
-              aggregate_options.push({$sort: {_id: sortOrderU}});
-          }
-
-          //LOOKUP/JOIN -- FOURTH STAGE
-          // aggregate_options.push({$lookup: {from: 'interested', localField: "_id", foreignField: "eventId", as: "interested"}});
-
-          // Set up the aggregation
-          const myAggregate = this.reclamationModel.aggregate(aggregate_options);
-
-          return await this.reclamationModel.aggregatePaginate(myAggregate, options, null);
+          ];
+          return await this.reclamationRepository.aggregate(filterReclamationDto, aggregate_options);
       } catch (error) {
           return new InternalServerErrorException(error);
       }

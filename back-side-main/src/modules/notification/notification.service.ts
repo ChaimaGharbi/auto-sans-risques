@@ -13,7 +13,7 @@ import {MailerService} from "../../config/mailer/mailer.service";
 import {NotificationGateway} from "./notification.gateway";
 import {getHtml} from "../../config/mailer/mailer.helper";
 import {ReservationStatus} from "../../entities/reservation.status.enum";
-import {pagination} from "../../shared/pagination";
+import {pagination} from "../../shared/aggregation/pagination";
 import moment = require('moment');
 import 'moment/locale/fr';
 import demandeRendezVous from "./htmlTemplates/demande-rendez-vous";
@@ -27,6 +27,7 @@ export class NotificationService {
     private readonly expertRepository: GenericRepository<Expert>;
     private readonly clientRepository: GenericRepository<Client>;
     private readonly reservationRepository: GenericRepository<Reservation>;
+    private readonly notificationRepository: GenericRepository<Notification>;
 
     constructor(
         @InjectModel(Notification.name) private notificationModel: INotificationModel,
@@ -40,6 +41,7 @@ export class NotificationService {
         this.expertRepository = new GenericRepository<Expert>(expertModel);
         this.clientRepository = new GenericRepository<Client>(clientModel);
         this.reservationRepository = new GenericRepository<Reservation>(reservationModel);
+        this.notificationRepository = new GenericRepository<Notification>(notificationModel);
     }
 
     async createNotification(notificationDto: NotificationDto) {
@@ -100,19 +102,9 @@ export class NotificationService {
 
     async fetchNotificationsPaginate(filterNotificationDto: filterNotificationDto) {
         try {
-
             const aggregate_options = [];
-            let fromSender = filterNotificationDto.role !== 'EXPERT' ? 'experts' : 'clients';
-            let fromReceiver = filterNotificationDto.role == 'EXPERT' ? 'experts' : 'clients';
-            const options = {
-                page: filterNotificationDto.pageNumber,
-                limit: filterNotificationDto.pageSize,
-                collation: {locale: 'en'},
-                customLabels: {
-                    totalDocs: 'totalCount',
-                    docs: 'entities'
-                }
-            };
+            const fromSender = filterNotificationDto.role !== 'EXPERT' ? 'experts' : 'clients';
+            const fromReceiver = filterNotificationDto.role == 'EXPERT' ? 'experts' : 'clients';
             aggregate_options.push({
                 $lookup: {from: 'reservations', localField: 'reservationId', foreignField: '_id', as: 'reservation'}
             });
@@ -130,41 +122,7 @@ export class NotificationService {
                     //reservationId: { $toString: '$reservationId' },
                 }
             });
-            const {receiverId} = filterNotificationDto.filter;
-
-            interface IMatch {
-                _id?: any;
-                senderId?: any;
-                //reservationId?:any;
-                receiverId?: any;
-                is_read?: any;
-            }
-
-            const match: IMatch = {};
-            //filter by name - use $regex in mongodb - add the 'i' flag if you want the search to be case insensitive.
-            //match.sender = { $regex: sender, $options: 'i' };
-            match.receiverId = {$regex: receiverId, $options: 'i'};
-            //match.reservationId = { $regex: reservationId, $options: 'i' };
-            if (filterNotificationDto.filter.hasOwnProperty('is_read')) {
-
-                const is_read = filterNotificationDto.filter.is_read;
-                match.is_read = {$eq: is_read};
-            }
-            aggregate_options.push({$match: match});
-            /*   // Set up the aggregation
-
-            const myAggregate = this.notificationModel.aggregate(aggregate_options);
-            const notifications = await this.notificationModel.aggregatePaginate(myAggregate, options, null);
-            return notifications; */
-            //filter by date
-            const sortOrderU = filterNotificationDto.sortOrder === 'desc' ? -1 : 1;
-
-            aggregate_options.push({$sort: {createdAt: sortOrderU}});
-            const myAgregate = pagination(aggregate_options, options);
-            const notifications = await this.notificationModel.aggregate(myAgregate);
-
-
-            return notifications[0];
+            return await this.notificationRepository.aggregate(filterNotificationDto, aggregate_options)
         } catch (error) {
             return new InternalServerErrorException(error);
         }

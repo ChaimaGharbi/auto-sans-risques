@@ -8,7 +8,7 @@ import {Reservation} from "../../entities/reservation.entity";
 import {IReservationModel} from "../../entities/reservation.interface";
 import * as moment from "moment-timezone";
 import {ReservationStatus} from "../../entities/reservation.status.enum";
-
+// TODO :Understand The stats service
 @Injectable()
 export class StatsService {
   constructor(

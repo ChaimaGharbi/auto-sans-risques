@@ -13,9 +13,9 @@ import {
   ValidationPipe
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { FileFieldsInterceptor } from '@nestjs/platform-express';
-import { niemandsUploadImage } from 'src/utils/upload.files';
-import { GetUser } from '../auth/get-user.decorator';
+import {FileFieldsInterceptor} from '@nestjs/platform-express';
+import {niemandsUploadImage} from 'src/shared/upload.files';
+import {GetUser} from '../auth/get-user.decorator';
 import { ExpertDto } from './dto/expert.dto';
 import { filterExpertDto } from './dto/filterExpert.dto';
 import { UpdateExpertDto } from './dto/update.dto';
