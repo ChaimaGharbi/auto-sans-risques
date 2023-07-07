@@ -1,7 +1,7 @@
 import {Injectable, InternalServerErrorException, NotFoundException} from '@nestjs/common';
 import {avisDto} from './dto/avis.dto';
 import {FilterAvisDto} from './dto/filterAvis.dto';
-import {uploadImage} from "../../utils/upload.files";
+import {uploadImage} from "../../shared/upload.files";
 import {Model, Types} from "mongoose";
 import {GenericRepository} from "../../shared/generic.repository";
 import {InjectModel} from "@nestjs/mongoose";
@@ -9,6 +9,7 @@ import {Avis} from "../../entities/avis.entity";
 import {ImageAvis} from "../../entities/image_avis.entity";
 import {Expert} from "../../entities/expert.entity";
 import {IAvisModel} from "../../entities/avis.interface";
+import avisSort from "./avis-sort";
 
 @Injectable()
 export class AvisService {
@@ -169,70 +170,9 @@ export class AvisService {
 
     async fetchAvisPaginate(filterAvisDto: FilterAvisDto) {
         try {
-            const aggregate_options = [];
-
-            const options = {
-                page: filterAvisDto.pageNumber,
-                limit: filterAvisDto.pageSize,
-                collation: {locale: 'en'},
-                customLabels: {
-                    totalDocs: 'totalCount',
-                    docs: 'entities'
-                }
-            };
-
-            aggregate_options.push({
-                $lookup: {from: 'experts', localField: 'expertId', foreignField: '_id', as: 'expert'}
-            });
-
-            aggregate_options.push({
-                $lookup: {from: 'clients', localField: 'clientId', foreignField: '_id', as: 'client'}
-            });
-
-            aggregate_options.push({
-                $addFields: {
-                    _id: {$toString: '$_id'},
-                    expertId: {$toString: '$expertId'},
-                    clientId: {$toString: '$clientId'}
-                }
-            });
-
-            //FILTERING AND PARTIAL TEXT SEARCH -- FIRST STAGE
-            const {_id, expertId, clientId} = filterAvisDto.filter;
-
-            interface IMatch {
-                expertId?: any;
-                clientId?: any;
-                _id?: any;
-            }
-
-            const match: IMatch = {};
-
-            //filter by name - use $regex in mongodb - add the 'i' flag if you want the search to be case insensitive.
-            if (_id) match._id = {$regex: _id, $options: 'i'};
-            if (expertId) match.expertId = {$regex: expertId, $options: 'i'};
-            if (clientId) match.clientId = {$regex: clientId, $options: 'i'};
-
-            //filter by date
-
-            aggregate_options.push({$match: match});
-
-            //SORTING -- THIRD STAGE
-            const sortOrderU = filterAvisDto.sortField && filterAvisDto.sortOrder === 'desc' ? -1 : 1;
-            if (filterAvisDto.sortField === 'date') {
-                aggregate_options.push({$sort: {date: sortOrderU}});
-            } else {
-                aggregate_options.push({$sort: {_id: sortOrderU}});
-            }
-
+            return await this.avisRepository.aggregate(filterAvisDto, avisSort)
             //LOOKUP/JOIN -- FOURTH STAGE
             // aggregate_options.push({$lookup: {from: 'interested', localField: "_id", foreignField: "eventId", as: "interested"}});
-
-            // Set up the aggregation
-            const myAggregate = this.avisModel.aggregate(aggregate_options);
-            // TODO : handle aggregate error
-            // const avis = await this.avisModel.aggregatePaginate(myAggregate, options, null);
-            return "error";
         } catch (error) {
             return new InternalServerErrorException(error);
         }

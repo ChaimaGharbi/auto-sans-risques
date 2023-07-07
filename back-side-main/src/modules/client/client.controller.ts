@@ -11,9 +11,9 @@ import {
   ValidationPipe
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { FileFieldsInterceptor } from '@nestjs/platform-express';
-import { niemandsUploadImage } from 'src/utils/upload.files';
-import { GetUser } from '../auth/get-user.decorator';
+import {FileFieldsInterceptor} from '@nestjs/platform-express';
+import {niemandsUploadImage} from 'src/shared/upload.files';
+import {GetUser} from '../auth/get-user.decorator';
 import { ClientService } from './client.service';
 import { ClientDto } from './dto/client.dto';
 import { filterClientDto } from './dto/filterClient.dto';

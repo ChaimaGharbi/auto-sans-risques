@@ -4,7 +4,7 @@ import {filterModeratorDto} from './dto/filterModerator.dto';
 import {InjectModel} from "@nestjs/mongoose";
 import {Moderator} from "../../entities/moderator.entity";
 import {Model} from "mongoose";
-import {pagination} from "../../shared/pagination";
+import {pagination} from "../../shared/aggregation/pagination";
 import {GenericRepository} from "../../shared/generic.repository";
 
 @Injectable()
@@ -17,45 +17,7 @@ export class ModeratorService {
 
     async fetchModerators(filterModeratorDto: filterModeratorDto) {
         try {
-            const pipelines = [];
-            const options = {
-                page: filterModeratorDto.pageNumber,
-                limit: filterModeratorDto.pageSize,
-            };
-            pipelines.push({
-                $addFields: {
-                    _id: {$toString: '$_id'}
-                }
-            });
-            pipelines.push({
-                $project: {
-                    salt: 0,
-                    password: 0,
-                }
-            });
-            const {fullName, _id, email} = filterModeratorDto.filter;
-
-            interface IMatch {
-                fullName?: any;
-                _id?: any;
-                email?: any;
-            }
-
-            const match: IMatch = {};
-            if (fullName) match.fullName = {$regex: fullName, $options: 'i'};
-            if (_id) match._id = {$regex: _id, $options: 'i'};
-            if (email) match.email = {$regex: email, $options: 'i'};
-            pipelines.push({$match: match});
-
-            //filter by date
-            const sortOrderU = filterModeratorDto.sortOrder === 'desc' ? -1 : 1;
-
-            pipelines.push({$sort: {createdAt: sortOrderU}});
-            const myAgregate = pagination(pipelines, options)
-            const mypipeline = await this.moderatorRepository.aggregate(myAgregate)
-
-
-            return mypipeline[0];
+            return await this.moderatorRepository.aggregate(filterModeratorDto)
         } catch (error) {
             return new InternalServerErrorException(error);
         }

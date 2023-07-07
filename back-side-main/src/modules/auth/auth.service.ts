@@ -27,7 +27,7 @@ import {GenericRepository} from "../../shared/generic.repository";
 import {User} from "../../entities/user.entity";
 import {getHtml} from "../../config/mailer/mailer.helper";
 import verifyEmail from "./htmlTemplates/verifyEmail";
-import {getPositionFromAddress} from "../../shared/getPositionFromAddress";
+import {getPositionFromAddress} from "../../shared/utils";
 import resetPasswordConfirmation from "./htmlTemplates/resetPasswordConfirmation";
 
 
@@ -97,6 +97,7 @@ export class AuthService {
   }
 
   // Authentication
+  // TODO : correct bug :  expert and client can have the same email
   async signUp(signupCredentials: SignupCredentialsDto, role: Role) {
     try {
       signupCredentials.email = signupCredentials.email.toLowerCase();

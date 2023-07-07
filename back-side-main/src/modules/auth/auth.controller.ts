@@ -15,7 +15,7 @@ import {
 import {AuthGuard} from '@nestjs/passport';
 import {FileFieldsInterceptor, FileInterceptor, FilesInterceptor} from '@nestjs/platform-express';
 import {Role} from 'src/entities/user.roles.enum';
-import {imageFileFilter, uploadImage} from 'src/utils/upload.files';
+import {imageFileFilter, uploadImage} from 'src/shared/upload.files';
 import {AuthService} from './auth.service';
 import {SignInCredentialsDto} from './dto/signin-credentials.dto';
 import {SignupCredentialsDto} from './dto/signup-credentials.dto';

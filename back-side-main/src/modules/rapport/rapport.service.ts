@@ -115,64 +115,27 @@ export class RapportService {
 
     async fetchRapports(filterRapportDto: filterRapportDto, group: any) {
         try {
-            const aggregate_options = [];
-
-            const options = {
-                page: filterRapportDto.pageNumber,
-                limit: filterRapportDto.pageSize,
-                collation: {locale: 'en'},
-                customLabels: {
-                    totalDocs: 'totalCount',
-                    docs: 'entities'
+            const aggregate_options: any[] = [
+                {
+                    $lookup: {from: 'experts', localField: 'expertId', foreignField: '_id', as: 'expert'}
+                },
+                {
+                    $lookup: {from: 'clients', localField: 'clientId', foreignField: '_id', as: 'client'}
+                },
+                {
+                    $lookup: {from: 'reservations', localField: 'reservationId', foreignField: '_id', as: 'reservation'}
+                },
+                {
+                    $lookup: {from: 'reponses', localField: 'reponses', foreignField: '_id', as: 'reponses'}
+                },
+                {
+                    $addFields: {
+                        _id: {$toString: '$_id'},
+                        expertId: {$toString: '$expertId'},
+                        clientId: {$toString: '$clientId'}
+                    }
                 }
-            };
-
-            aggregate_options.push({
-                $lookup: {from: 'experts', localField: 'expertId', foreignField: '_id', as: 'expert'}
-            });
-
-            aggregate_options.push({
-                $lookup: {from: 'clients', localField: 'clientId', foreignField: '_id', as: 'client'}
-            });
-
-            aggregate_options.push({
-                $lookup: {from: 'reservations', localField: 'reservationId', foreignField: '_id', as: 'reservation'}
-            });
-            aggregate_options.push({
-                $lookup: {from: 'reponses', localField: 'reponses', foreignField: '_id', as: 'reponses'}
-            });
-
-            aggregate_options.push({
-                $addFields: {
-                    _id: {$toString: '$_id'},
-                    expertId: {$toString: '$expertId'},
-                    clientId: {$toString: '$clientId'}
-                }
-            });
-
-            //FILTERING AND PARTIAL TEXT SEARCH -- FIRST STAGE
-            const {_id, clientId, expertId, etat} = filterRapportDto.filter;
-
-            interface IMatch {
-                clientId?: any;
-                expertId?: any;
-                etat?: any;
-                _id?: any;
-            }
-
-            const match: IMatch = {};
-
-            //filter by name - use $regex in mongodb - add the 'i' flag if you want the search to be case insensitive.
-            if (_id) match._id = {$regex: _id, $options: 'i'};
-            if (clientId) match.clientId = {$regex: clientId, $options: 'i'};
-            if (expertId) match.expertId = {$regex: expertId, $options: 'i'};
-            if (etat) match.etat = {$regex: etat, $options: 'i'};
-
-            //filter by date
-
-            aggregate_options.push({$match: match});
-
-            //GROUPING -- SECOND STAGE
+            ];
             if (group !== 'false' && parseInt(group) !== 0) {
                 const group = {
                     _id: {$dateToString: {format: '%Y-%m-%d', date: '$date'}}, // Group By Expression
@@ -181,22 +144,7 @@ export class RapportService {
 
                 aggregate_options.push({$group: group});
             }
-
-            //SORTING -- THIRD STAGE
-            const sortOrderU = filterRapportDto.sortField && filterRapportDto.sortOrder === 'desc' ? -1 : 1;
-            if (filterRapportDto.sortField === 'date') {
-                aggregate_options.push({$sort: {createdAt: sortOrderU}});
-            } else {
-                aggregate_options.push({$sort: {_id: sortOrderU}});
-            }
-
-            //LOOKUP/JOIN -- FOURTH STAGE
-            // aggregate_options.push({$lookup: {from: 'interested', localField: "_id", foreignField: "eventId", as: "interested"}});
-
-            // Set up the aggregation
-            const myAggregate = this.rapportModel.aggregate(aggregate_options);
-
-            return await this.rapportModel.aggregatePaginate(myAggregate, options, null);
+            return await this.rapportRepository.aggregate(filterRapportDto, aggregate_options);
         } catch (error) {
             return new InternalServerErrorException(error);
         }
@@ -263,56 +211,11 @@ export class RapportService {
 
     async fetchQuestionCategoriesPaginate(filterQuestionCtgDto: FilterQuestionCtgDto) {
         try {
-            const aggregate_options = [];
-
-            const options = {
-                page: filterQuestionCtgDto.pageNumber,
-                limit: filterQuestionCtgDto.pageSize,
-                collation: {locale: 'en'},
-                customLabels: {
-                    totalDocs: 'totalCount',
-                    docs: 'entities'
-                }
-            };
-
-            aggregate_options.push({
+            return await this.questionCategoryRepository.aggregate(filterQuestionCtgDto, [{
                 $addFields: {
                     _id: {$toString: '$_id'}
                 }
-            });
-
-            //FILTERING AND PARTIAL TEXT SEARCH -- FIRST STAGE
-            const {_id, category_name} = filterQuestionCtgDto.filter;
-
-            interface IMatch {
-                _id?: any;
-                category_name?: any;
-            }
-
-            const match: IMatch = {};
-
-            //filter by name - use $regex in mongodb - add the 'i' flag if you want the search to be case insensitive.
-            if (_id) match._id = {$regex: _id, $options: 'i'};
-            if (category_name) match.category_name = {$regex: category_name, $options: 'i'};
-            //filter by date
-
-            aggregate_options.push({$match: match});
-
-            //SORTING -- THIRD STAGE
-            const sortOrderU = filterQuestionCtgDto.sortField && filterQuestionCtgDto.sortOrder === 'desc' ? -1 : 1;
-            if (filterQuestionCtgDto.sortField === 'priority') {
-                aggregate_options.push({$sort: {priority: sortOrderU}});
-            } else {
-                aggregate_options.push({$sort: {_id: sortOrderU}});
-            }
-
-            //LOOKUP/JOIN -- FOURTH STAGE
-            // aggregate_options.push({$lookup: {from: 'interested', localField: "_id", foreignField: "eventId", as: "interested"}});
-
-            // Set up the aggregation
-            const myAggregate = this.questionCategoryModel.aggregate(aggregate_options);
-
-            return await this.questionCategoryModel.aggregatePaginate(myAggregate, options, null);
+            }]);
         } catch (error) {
             return new InternalServerErrorException(error);
         }
@@ -471,59 +374,11 @@ export class RapportService {
 
     async fetchQuestionsPaginate(filterQuestionCtgDto: FilterQuestionDto, categoryId: any) {
         try {
-            const aggregate_options = [];
-
-            const options = {
-                page: filterQuestionCtgDto.pageNumber,
-                limit: filterQuestionCtgDto.pageSize,
-                collation: {locale: 'en'},
-                customLabels: {
-                    totalDocs: 'totalCount',
-                    docs: 'entities'
-                }
-            };
-
-            aggregate_options.push({
+            return await this.questionRepository.aggregate(filterQuestionCtgDto, [{
                 $addFields: {
                     _id: {$toString: '$_id'}
                 }
-            });
-
-            //FILTERING AND PARTIAL TEXT SEARCH -- FIRST STAGE
-            const {_id, question} = filterQuestionCtgDto.filter;
-
-            interface IMatch {
-                _id?: any;
-                question?: any;
-                categoryId?: any;
-            }
-
-            const match: IMatch = {};
-
-            //filter by name - use $regex in mongodb - add the 'i' flag if you want the search to be case insensitive.
-            if (categoryId) match.categoryId = {$regex: categoryId, $options: 'i'};
-            if (_id) match._id = {$regex: _id, $options: 'i'};
-            if (question) match.question = {$regex: question, $options: 'i'};
-            //filter by date
-
-            aggregate_options.push({$match: match});
-
-            //SORTING -- THIRD STAGE
-            const sortOrderU = filterQuestionCtgDto.sortField && filterQuestionCtgDto.sortOrder === 'desc' ? -1 : 1;
-            if (filterQuestionCtgDto.sortField === 'priority') {
-                aggregate_options.push({$sort: {priority: sortOrderU}});
-            } else {
-                aggregate_options.push({$sort: {_id: sortOrderU}});
-            }
-
-            //LOOKUP/JOIN -- FOURTH STAGE
-            // aggregate_options.push({$lookup: {from: 'interested', localField: "_id", foreignField: "eventId", as: "interested"}});
-
-            // Set up the aggregation
-            const myAggregate = this.questionModel.aggregate(aggregate_options);
-
-            const questions = await this.questionModel.aggregatePaginate(myAggregate, options, null);
-            return questions;
+            }]);
         } catch (error) {
             return new InternalServerErrorException(error);
         }

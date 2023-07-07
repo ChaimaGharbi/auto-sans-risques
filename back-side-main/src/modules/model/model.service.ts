@@ -6,7 +6,7 @@ import {Model as ModelCar} from "../../entities/model.entity";
 import {IModelCar} from "../../entities/model.interface";
 import {Mark} from "../../entities/mark.entity";
 import {Model} from "mongoose";
-import {pagination} from "../../shared/pagination";
+import {pagination} from "../../shared/aggregation/pagination";
 import {GenericRepository} from "../../shared/generic.repository";
 
 @Injectable()
@@ -33,11 +33,6 @@ export class ModelService {
 
     async getModels(filterModelDto: filterModelDto) {
         try {
-            const pipelines = [];
-            const options = {
-                page: filterModelDto.pageNumber,
-                limit: filterModelDto.pageSize,
-            };
             if (filterModelDto.withChoose) {
                 return await this.modelCarModel.aggregate([
                     {
@@ -101,34 +96,11 @@ export class ModelService {
                     }
                 ])
             }
-            pipelines.push({
+            return await this.markRepository.aggregate(filterModelDto, [{
                 $addFields: {
                     _id: {$toString: '$_id'}
                 }
-            });
-            const {name, _id} = filterModelDto.filter;
-
-            interface IMatch {
-                name?: any;
-                _id?: any;
-                modelId?: any;
-            }
-
-            const match: IMatch = {};
-            if (name) match.name = {$regex: name, $options: 'i'};
-            if (_id) match._id = {$regex: _id, $options: 'i'};
-            pipelines.push({$match: match});
-
-            //filter by date
-            const sortOrderU = filterModelDto.sortOrder === 'desc' ? -1 : 1;
-
-            pipelines.push({$sort: {createdAt: sortOrderU}});
-            const myAgregate = pagination(pipelines, options)
-            const mypipeline = await this.modelCarModel.aggregate(myAgregate)
-
-
-            return mypipeline[0];
-
+            }])
         } catch (error) {
             throw new InternalServerErrorException(error);
         }

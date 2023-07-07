@@ -27,9 +27,9 @@ import { questionCategoryDto } from './dto/questionCategory.dto';
 import { rapportDto } from './dto/rapport.dto';
 import { reponseDto } from './dto/reponse.dto';
 import { reponsesCategoryDto } from './dto/reponsesCategory.dto';
-import { RapportService } from './rapport.service';
-import { uploadImage, niemandsUploadImage } from 'src/utils/upload.files';
-import { FilesInterceptor } from '@nestjs/platform-express';
+import {RapportService} from './rapport.service';
+import {uploadImage, niemandsUploadImage} from 'src/shared/upload.files';
+import {FilesInterceptor} from '@nestjs/platform-express';
 
 import * as path from 'path';
 @Controller('rapport')

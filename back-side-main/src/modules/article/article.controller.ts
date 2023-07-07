@@ -10,9 +10,9 @@ import {
   UseInterceptors,
   ValidationPipe
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { imageFileFilter, uploadImage } from 'src/utils/upload.files';
-import { ArticleService } from './article.service';
+import {FileInterceptor} from '@nestjs/platform-express';
+import {imageFileFilter, uploadImage} from 'src/shared/upload.files';
+import {ArticleService} from './article.service';
 import { ArticleCategoryDto } from './dto/article.category.dto';
 import { ArticleDto } from './dto/article.dto';
 import { FilterArticleDto } from './dto/filterArticle.dto';

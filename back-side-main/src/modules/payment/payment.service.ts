@@ -10,15 +10,20 @@ import {Queue} from "bull";
 import {BullAdapter, setQueues} from "bull-board";
 import crypto from "crypto";
 import {PaymentStatus} from "../../entities/Payment.status.enum";
+import {GenericRepository} from "../../shared/generic.repository";
+import paymentSort from "./payment-sort";
 
 @Injectable()
 export class PaymentService {
+    private readonly paymentRepository: GenericRepository<Payment>
+
     constructor(
         @InjectModel(Expert.name) private expertModel: Model<Expert>,
         @InjectModel(Payment.name) private paymentModel: IPaymentModel,
         @InjectQueue('invoicejob') private readonly pdfQueue: Queue
     ) {
         setQueues([new BullAdapter(pdfQueue)]);
+        this.paymentRepository = new GenericRepository<Payment>(paymentModel)
     }
 
     async handlePayment(data: any) {
@@ -75,65 +80,7 @@ export class PaymentService {
 
   async fetchPayments(filterPaymentDto: FilterPaymentDto) {
       try {
-          const aggregate_options = [];
-
-          const options = {
-              page: filterPaymentDto.pageNumber,
-              limit: filterPaymentDto.pageSize,
-              collation: {locale: 'en'},
-              customLabels: {
-                  totalDocs: 'totalCount',
-                  docs: 'entities'
-              }
-          };
-
-          aggregate_options.push({
-              $lookup: {from: 'factures', localField: 'factureId', foreignField: '_id', as: 'facture'}
-          });
-
-          aggregate_options.push({
-              $addFields: {
-                  _id: {$toString: '$_id'},
-                  expertId: {$toString: '$expertId'}
-              }
-          });
-
-          //FILTERING AND PARTIAL TEXT SEARCH -- FIRST STAGE
-          const {_id, etat, expertId} = filterPaymentDto.filter;
-
-          interface IMatch {
-              etat?: any;
-              expertId?: any;
-              _id?: any;
-          }
-
-          const match: IMatch = {};
-
-          //filter by name - use $regex in mongodb - add the 'i' flag if you want the search to be case insensitive.
-          if (_id) match._id = {$regex: _id, $options: 'i'};
-          if (etat) match.etat = {$regex: etat, $options: 'i'};
-          if (expertId) match.expertId = {$regex: expertId, $options: 'i'};
-
-          //filter by date
-
-          aggregate_options.push({$match: match});
-
-          //SORTING -- THIRD STAGE
-          const sortOrderU = filterPaymentDto.sortField && filterPaymentDto.sortOrder === 'desc' ? -1 : 1;
-          if (filterPaymentDto.sortField === 'date') {
-              aggregate_options.push({$sort: {date: sortOrderU}});
-          } else {
-              aggregate_options.push({$sort: {_id: sortOrderU}});
-          }
-
-          //LOOKUP/JOIN -- FOURTH STAGE
-          // aggregate_options.push({$lookup: {from: 'interested', localField: "_id", foreignField: "eventId", as: "interested"}});
-
-          // Set up the aggregation
-          const myAggregate = this.paymentModel.aggregate(aggregate_options);
-
-          const payments = await this.paymentModel.aggregatePaginate(myAggregate, options, null);
-          return payments;
+          return await this.paymentRepository.aggregate(filterPaymentDto, paymentSort);
       } catch (error) {
           return new InternalServerErrorException(error);
       }

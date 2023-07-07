@@ -20,6 +20,7 @@ export class ExpertService {
     this.expertRepository = new GenericRepository(expertModel);
   }
 
+  // study this function and try to reduce complexity
   async fetchExperts(filterExpertDto: filterExpertDto, group: any) {
     try {
       const aggregate_options: any[] = [];
