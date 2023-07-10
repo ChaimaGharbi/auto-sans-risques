@@ -27,6 +27,8 @@ export class ExpertController {
 
   @Post('/paginate')
   async fetchExperts(@Body(ValidationPipe) filterExpertDto: filterExpertDto, @Query() query) {
+    console.log(filterExpertDto);
+    
     return await this.expertService.fetchExperts(filterExpertDto, query.group);
   }
 

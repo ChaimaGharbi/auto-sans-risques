@@ -7,6 +7,20 @@ import { Pagination } from 'antd'
 const List = () => {
   // TODO: Pagination
   const { state, pagination } = useGetExperts()
+  
+
+  const handlePageChange = (page ) => {
+    pagination.onchange(page)
+  }
+  
+  
+  const start = (pagination.page - 1) * pagination.pageSize;
+  const end = start + pagination.pageSize;
+  const experts = state.data ? state.data.slice(start, end) : [];
+
+  console.log(experts);
+  
+  
 
   return (
     <div className="flex flex-col w-full overflow-scroll lg:max-h-[80vh]">
@@ -21,9 +35,9 @@ const List = () => {
           </div>
         </If>
 
-        <If test={!state.loading && state.data && state.data?.length > 0}>
-          {state.data &&
-            state.data.map(expert => (
+        <If test={!state.loading && experts && experts?.length > 0}>
+          {experts &&
+            experts.map(expert => (
               <Expert
                 key={expert._id}
                 id={expert._id}
@@ -41,8 +55,9 @@ const List = () => {
           <Pagination
             total={pagination.total}
             current={pagination.page}
-            onChange={pagination.onChange}
+            onChange={handlePageChange}
             pageSize={pagination.pageSize}
+            defaultCurrent={1}
           />
         </div>
       </div>

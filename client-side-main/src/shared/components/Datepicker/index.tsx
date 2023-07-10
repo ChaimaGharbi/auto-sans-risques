@@ -1,4 +1,4 @@
-import { DateTimePicker } from 'react-rainbow-components'
+import {DatePicker} from 'react-rainbow-components'
 import { useState } from 'react'
 
 interface Props {
@@ -18,7 +18,9 @@ export default function Picker({
   ...props
 }: Props) {
   return (
-    <DateTimePicker
+    <DatePicker
+    
+    locale='fr'
       {...props}
       icon={<CalendarIcon />}
       className={`${

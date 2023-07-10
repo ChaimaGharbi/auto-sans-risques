@@ -17,6 +17,9 @@ const ExpertsPage = () => {
 
   const { sort, state } = useGetExperts()
 
+  console.log(state);
+  
+
   return (
     <div className="w-full pt-20 bg-[#F6F9FC]">
       <Container>

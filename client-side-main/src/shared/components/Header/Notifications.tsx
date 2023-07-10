@@ -39,8 +39,22 @@ function Badge({ children }) {
   )
 }
 
+
 export default function Notifications() {
   const { data, loading } = useRecentNotifications()
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [window.innerWidth]);
 
   const clear = useClearNotification()
 
@@ -55,16 +69,17 @@ export default function Notifications() {
           <Notification />
         </Badge>
       </Dropdown.Trigger>
-      <Dropdown.Content className="left-4" sticky="always">
+      <Dropdown.Content className="max-w-60" sticky="always">
         <If test={loading}>
           <Loading />
         </If>
         <If test={!loading}>
           {!!data &&
             data.map(({ _id, message, reservationId }) => (
-              <Dropdown.Item key={_id} onClick={() => {}}>
+              <Dropdown.Item key={_id} onClick={() => {}} >
                 <Link to={link(message, reservationId)} className="text-black">
-                  {message}
+               
+                {windowWidth > 1024 ?  <span>{message.substring(0, 70)}...</span> : windowWidth > 600 ? <span>{message.substring(0, 50)}...</span> : <span>{message.substring(0, 30)}...</span> }
                 </Link>
               </Dropdown.Item>
             ))}

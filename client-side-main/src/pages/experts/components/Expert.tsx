@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import Rating from 'app/shared/components/Rating'
 
 const Expert = (props: Props) => {
+
   return (
     <div
       className={`rounded p-4 w-full grid 2xl:flex items-center space-y-4 bg-white max-w-full h-auto `}

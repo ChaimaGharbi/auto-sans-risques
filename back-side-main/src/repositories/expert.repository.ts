@@ -5,6 +5,7 @@ import { Expert } from 'src/entities/expert.entity';
 import { IExpertModel } from 'src/entities/expert.interface';
 import { filterExpertDto } from 'src/modules/expert/dto/filterExpert.dto';
 import { UpdateExpertDto } from 'src/modules/expert/dto/update.dto';
+import { Logger } from "@nestjs/common";
 function equalArrays(first, second) {
   if (first.length !== second.length) return false;
   for (let i = 0; i < first.length; i++) {
@@ -37,7 +38,7 @@ export class ExpertRepository {
       const options = {
         page: filterExpertDto.pageNumber,
         limit: filterExpertDto.pageSize,
-        collation: { locale: 'en' },
+        collation: { locale: 'fr' },
         customLabels: {
           totalDocs: 'totalCount',
           docs: 'entities'
@@ -178,10 +179,13 @@ export class ExpertRepository {
           intervalOfDays.push(i);
         }
         const filteredExpertsByRecurrence = [];
+        console.log(intervalOfDays);
         intervalOfDays.forEach(day => {
           recurrentExperts.forEach(expert => {
+            console.log(expert);
             if (expert.dispos.includes(day)) {
-              filteredExpertsByRecurrence.push(expert);
+              if (!filteredExpertsByRecurrence.includes(expert))
+                filteredExpertsByRecurrence.push(expert);
             }
           });
         });
@@ -214,6 +218,7 @@ export class ExpertRepository {
             ]
           }
         });
+        console.log(filteredDates);
         let filteredExpertsByDate = await this.expertModel.find({
           _id: { $in: filteredDates.map(e => e.expertId) }
         });
@@ -233,6 +238,7 @@ export class ExpertRepository {
         entities,
         totalCount: entities.length
       };
+      
       return response;
     } catch (error) {
       return new InternalServerErrorException(error);
@@ -247,6 +253,7 @@ export class ExpertRepository {
       if (!expert) {
         return new NotFoundException();
       } else
+      
         return {
           _id: expert._id,
           fullName: expert.fullName,

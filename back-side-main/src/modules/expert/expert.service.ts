@@ -23,6 +23,8 @@ export class ExpertService {
   }
 
   async fetchExperts(filterExpertDto: filterExpertDto, group: any) {
+    console.log(filterExpertDto);
+    
     return this.expertRepository.fetchExperts(filterExpertDto, group);
   }
 

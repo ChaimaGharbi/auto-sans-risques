@@ -106,11 +106,14 @@ export const useGetExperts = () => {
   const state = useSelector(
     (state: { experts: ExpertsState }) => state.experts.searchExperts
   )
+  console.log("statee", state);
+  
 
   const query = useSearchParams()[0]
 
   const [address, setAddress] = useState(query.get('address'))
   const [sortField, setSortField] = useState('DEFAULT')
+  const [pageNumber, setPageNumber] = useState(1);
   const [filter, setFilter] = useState({
     lat: query.get('lat') ? Number(query.get('lat')) : undefined,
     lng: query.get('lng') ? Number(query.get('lng')) : undefined,
@@ -121,6 +124,8 @@ export const useGetExperts = () => {
   })
 
   const handleStartDateChange = d => {
+    
+    
     setFilter({ ...filter, dateRange: [d, filter.dateRange[1]] })
   }
 
@@ -152,7 +157,7 @@ export const useGetExperts = () => {
     }
   }, [mark, model])
 
-  const searchExperts = () =>
+  const searchExperts = useCallback(() => {
     dp(
       actions.searchExperts({
         filter: {
@@ -160,13 +165,14 @@ export const useGetExperts = () => {
           repos: false,
           ...filter,
         },
-        pageNumber: 1,
+        pageNumber,
         pageSize: 10,
         sortField, // 'DEFAULT',
         sortOrder: 'desc',
         specialite,
       })
     )
+    }, [dp, filter, sortField, specialite]);
 
   useEffect(() => {
     searchExperts()
@@ -208,6 +214,7 @@ export const useGetExperts = () => {
 
   // TODO: PAGINATION
 
+
   return {
     filter: {
       ...filter,
@@ -225,8 +232,8 @@ export const useGetExperts = () => {
     handleEndDateChange,
     pagination: {
       total: state?.total,
-      page: 1,
-      onChange: () => {},
+      page: pageNumber,
+      onchange: (page) => setPageNumber(page),
       pageSize: 3,
     },
   }
