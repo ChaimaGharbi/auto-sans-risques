@@ -69,7 +69,7 @@ export default function Notifications() {
           <Notification />
         </Badge>
       </Dropdown.Trigger>
-      <Dropdown.Content className="max-w-60" sticky="always">
+      <Dropdown.Content className="" sticky="always">
         <If test={loading}>
           <Loading />
         </If>
