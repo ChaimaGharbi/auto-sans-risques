@@ -10,7 +10,7 @@ export default function GeneralInfo() {
           placeholder="Nom et Prenom"
           type="text"
           name="fullName"
-          validations={[validators.required]}
+          validations={[validators.required, validators.pattern(/.*[a-z][A-Z]*/)]}
           className="rounded bg-[#F0F0F0] w-full p-4 text-sm placeholder-[#BFBFBF] focus:outline-none"
         />
 

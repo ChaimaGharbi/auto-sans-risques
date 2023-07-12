@@ -1,10 +1,12 @@
 import { useModels } from 'app/store/hooks'
 import Select, { Options, components } from 'react-select'
 import { useEffect, useMemo, useState } from 'react'
+import { getClient } from 'app/store/api'
 
 const getKey = (model, mark?) => JSON.stringify({ model, mark })
 
 interface Props {
+  id?: string | null
   defaultMark?: string | null
   defaultModel?: string | null
   onChange
@@ -15,7 +17,14 @@ interface Props {
   isMulti?
 }
 
+interface ModelsInter {
+  data?: object
+  loading?: boolean
+  errors?: string[]
+}
+
 export function MarksPicker({
+  id,
   defaultMark = null,
   defaultModel = null,
   onChange,
@@ -26,8 +35,49 @@ export function MarksPicker({
   isMulti = false,
 }: Props) {
   const [firstRender, setFirstRender] = useState(true)
+  
+ 
 
-  const models = useModels()
+  const [specialitiesMarks, setSpecialitiesMarks] = useState([]);
+  const [specialitiesModels, setSpecialitiesModels] = useState<ModelsInter>({
+    data: [], // Initialize data as an empty array or with the appropriate initial value
+    loading: true,
+    errors: [],
+  });
+  useEffect(() =>{
+    async function fetchData() {
+      const ress = await getClient().get(`/expert/${id}`);
+      const { specialitiesMarks, specialitiesModels } = ress.data;
+      console.log("ress",ress.data);
+      
+      const transformedSpecialitiesMarks = specialitiesMarks.map((specialityMark) => ({
+        id: specialityMark._id,
+        label: specialityMark.name,
+        modelId: specialityMark.modelId,
+      }));
+      const transformedSpecialitiesModels = specialitiesModels.map((specialityModel) => ({
+        id: specialityModel._id,
+        label: specialityModel.name,
+        children: specialitiesMarks
+          .filter((specialityMark) => specialityMark.modelId === specialityModel._id)
+          .map((specialityMark) => ({
+            id: specialityMark._id,
+            label: specialityMark.name,
+          })),
+      }));
+      setSpecialitiesMarks(transformedSpecialitiesMarks);
+      const state  = {data: transformedSpecialitiesModels, loading: false, errors: []}    
+      setSpecialitiesModels(state)
+    }
+    if (id) {
+      fetchData();
+    }
+  }, [])
+  
+  console.log(specialitiesModels);
+
+  const models = id? specialitiesModels : useModels()
+  
 
   const [model, setModel] = useState<any>(
     defaultModel ? { value: defaultModel } : null

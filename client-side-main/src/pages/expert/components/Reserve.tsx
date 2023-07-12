@@ -98,7 +98,6 @@ function Form({ closeModal }) {
     async function fetchData() {
       const res = await getClient().get(`disponibilite/expert/${id}`)
       const filteredDispos = filterTimeslots(res?.data)
-      console.log(filteredDispos)
       setDisponibility(filteredDispos)
     }
     fetchData()
@@ -205,6 +204,7 @@ function Form({ closeModal }) {
     closeModal()
   }
   const [errors, setErrors] = useState<string[]>([])
+
   return (
     <Formiz connect={form} onValidSubmit={handleSubmit}>
       <form noValidate onSubmit={form.submit} className="p-4 grid gap-4">
@@ -278,6 +278,7 @@ function Form({ closeModal }) {
             MARQUE ET MODELE DE VOITURE
           </div>
           <MarksPicker
+            id = {id}
             className="flex flex-col space-y-2"
             onChange={e => {
               const { mark, model } = e
