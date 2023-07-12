@@ -1,12 +1,8 @@
-import {Injectable, InternalServerErrorException, NotFoundException} from '@nestjs/common';
-import {ClientDto} from './dto/client.dto';
+import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {filterClientDto} from './dto/filterClient.dto';
-import {GenericRepository} from "../../shared/generic.repository";
+import {GenericRepository} from "../../shared/generic/generic.repository";
 import {Client} from "../../entities/client.entity";
-import {Model} from "mongoose";
 import {InjectModel} from "@nestjs/mongoose";
-import {pick} from "../../shared/utils";
-import * as aggregatePaginate from 'mongoose-aggregate-paginate-v2';
 import {IClientModel} from "../../entities/client.interface";
 import clientSort from "./client-sort";
 
@@ -21,7 +17,6 @@ export class ClientService {
         this.clientRepository = new GenericRepository(clientModel);
     }
 
-    // TODO: creating generic aggregate function ( with pagination or without pagination )
     async fetchClients(filterClientDto: filterClientDto) {
         try {
 

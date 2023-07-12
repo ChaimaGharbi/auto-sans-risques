@@ -12,14 +12,28 @@ export const redis = new Redis({
   password
 });
 
-export function registerUser(userId: string, socketId: string) {
-  redis.set(`${namespace}:${userId}`, socketId);
+export async function registerUser(userId: string, socketId: string) {
+    try {
+        await redis.set(`${namespace}:${userId}`, socketId);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-export function unregisterUser(userId: string) {
-  redis.del(`${namespace}:${userId}`);
+export async function unregisterUser(userId: string) {
+    try {
+        await redis.del(`${namespace}:${userId}`);
+    } catch (error) {
+        console.log(error);
+    }
+
 }
 
 export function getSocketId(userId: string) {
-  return redis.get(`${namespace}:${userId}`);
+    try {
+        return redis.get(`${namespace}:${userId}`);
+    } catch (error) {
+        console.log(error);
+    }
+
 }

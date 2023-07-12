@@ -1,4 +1,4 @@
-import {Injectable, InternalServerErrorException, NotFoundException} from '@nestjs/common';
+import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {filterModelDto} from './dto/filterModel.dto';
 import {ModelDto} from './dto/model.dto';
 import {InjectModel} from "@nestjs/mongoose";
@@ -6,8 +6,7 @@ import {Model as ModelCar} from "../../entities/model.entity";
 import {IModelCar} from "../../entities/model.interface";
 import {Mark} from "../../entities/mark.entity";
 import {Model} from "mongoose";
-import {pagination} from "../../shared/aggregation/pagination";
-import {GenericRepository} from "../../shared/generic.repository";
+import {GenericRepository} from "../../shared/generic/generic.repository";
 
 @Injectable()
 export class ModelService {

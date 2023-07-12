@@ -1,7 +1,7 @@
 import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {AdminDto} from './dto/admin.dto';
 import {filterAdminDto} from './dto/filterAdmin.dto';
-import {GenericRepository} from "../../shared/generic.repository";
+import {GenericRepository} from "../../shared/generic/generic.repository";
 import {Admin} from "../../entities/admin.entity";
 import {InjectModel} from "@nestjs/mongoose";
 import {Model} from "mongoose";

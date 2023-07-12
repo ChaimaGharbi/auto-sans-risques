@@ -72,23 +72,26 @@ export const uploadImage = file => {
                 })
               ])
             )
-            .pipe(gulp.dest(`${dirPath + '/resized/'}`))
-            .on('end', resolve);
+              .pipe(gulp.dest(`${dirPath + '/resized/'}`))
+              .on('end', resolve);
         });
 
-        data = fs.readFileSync(`${dirPath + '/resized/'}` + originalname);
-        const blob = bucket.file(originalname_date.replace(/ /g, '_'));
-        const blobStream = blob.createWriteStream({
-          resumable: false
-        });
-        blobStream
-          .on('finish', () => {
-            const publicUrl = util.format(
-              `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${blob.name}?alt=media`
-            );
-            resolve(publicUrl);
-          })
-          .on('error', err => {
+          data = fs.readFileSync(`${dirPath + '/resized/'}` + originalname);
+          const blob = bucket.file(originalname_date.replace(/ /g, '_'));
+          const blobStream = blob.createWriteStream({
+              resumable: false
+          });
+          console.log(blob)
+          console.log(blobStream)
+          blobStream
+              .on('finish', () => {
+                  const publicUrl = util.format(
+                      `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${blob.name}?alt=media`
+                  );
+                  resolve(publicUrl);
+                  console.log(publicUrl)
+              })
+              .on('error', err => {
             
 
             reject(`Unable to upload image, something went wrong`);
@@ -107,7 +110,8 @@ export const uploadImage = file => {
         const publicUrl = util.format(
           `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${blob.name}?alt=media`
         );
-        resolve(publicUrl);
+          console.log(publicUrl)
+          resolve(publicUrl);
       })
       .on('error', err => {
         

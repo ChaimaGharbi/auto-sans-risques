@@ -2,15 +2,15 @@ import {
   Body,
   Controller,
   Get,
-    Param,
-    Post,
-    Put,
-    Redirect,
-    UploadedFile,
-    UploadedFiles,
-    UseGuards,
-    UseInterceptors,
-    ValidationPipe
+  Param,
+  Post,
+  Put,
+  Redirect,
+  UploadedFile,
+  UploadedFiles,
+  UseGuards,
+  UseInterceptors,
+  ValidationPipe
 } from '@nestjs/common';
 import {AuthGuard} from '@nestjs/passport';
 import {FileFieldsInterceptor, FileInterceptor, FilesInterceptor} from '@nestjs/platform-express';
@@ -60,20 +60,22 @@ export class AuthController {
   signin(@Body(ValidationPipe) signInCredentialsDto: SignInCredentialsDto) {
     return this.authService.signIn(signInCredentialsDto);
   }
-  @Put('/updateExpert')
+
+  @Put('/updateExpert/:id')
   @UseInterceptors(
-    FileFieldsInterceptor([
-      { name: 'profile', maxCount: 1 },
-      { name: 'cin', maxCount: 1 },
-      { name: 'identFiscale', maxCount: 1 },
-      { name: 'atelier', maxCount: 1 },
-      { name: 'diplome', maxCount: 1 },
-      { name: 'signature', maxCount: 1 }
-    ])
+      FileFieldsInterceptor([
+        {name: 'profile', maxCount: 1},
+        {name: 'cin', maxCount: 1},
+        {name: 'identFiscale', maxCount: 1},
+        {name: 'atelier', maxCount: 1},
+        {name: 'diplome', maxCount: 1},
+        {name: 'signature', maxCount: 1}
+      ])
   )
   async updateExpertProfile(
-    @Body(ValidationPipe) updateExpertCredentialsDto: UpdateExpertCredentialsDto,
-    @UploadedFiles() files
+      @Body(ValidationPipe) updateExpertCredentialsDto: UpdateExpertCredentialsDto,
+      @UploadedFiles() files,
+      @Param("id") id: string
   ) {
     interface IFiles {
       profile?: any;
@@ -83,32 +85,37 @@ export class AuthController {
       diplome?: any;
       signature?: any;
     }
+
+    files = files ?? {};
     const filesUrls: IFiles = {};
     Object.keys(files).length;
     for (let i = 0; i < Object.keys(files).length; i++) {
       const file = files[Object.keys(files)[i]][0];
       file;
         // TODO : upload files to firebase fix the bug
-      const fileUrl = await uploadImage(file);
-      filesUrls[Object.keys(files)[i]] = fileUrl;
+      filesUrls[Object.keys(files)[i]] = await uploadImage(file);
     }
       return this.authService.updateProfile(
+          id,
           updateExpertCredentialsDto,
           filesUrls,
           Role.EXPERT
       );
   }
-  @Put('/updateClient')
-  @UseInterceptors(FileInterceptor('file', { fileFilter: imageFileFilter }))
+
+  @Put('/updateClient/:id')
+  @UseInterceptors(FileInterceptor('file', {fileFilter: imageFileFilter}))
   async updateClientProfile(
-    @Body(ValidationPipe) updateClientCredentialsDto: UpdateClientCredentialsDto,
-    @UploadedFile() file: Express.Multer.File
+      @Body(ValidationPipe) updateClientCredentialsDto: UpdateClientCredentialsDto,
+      @UploadedFile() file: Express.Multer.File,
+      @Param("id") id: string
   ) {
       let fileUrl;
       if (file) {
           fileUrl = await uploadImage(file);
       }
       return this.authService.updateProfile(
+          id,
           updateClientCredentialsDto,
           [...fileUrl],
           Role.CLIENT

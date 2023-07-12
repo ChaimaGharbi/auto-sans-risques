@@ -4,8 +4,7 @@ import {filterModeratorDto} from './dto/filterModerator.dto';
 import {InjectModel} from "@nestjs/mongoose";
 import {Moderator} from "../../entities/moderator.entity";
 import {Model} from "mongoose";
-import {pagination} from "../../shared/aggregation/pagination";
-import {GenericRepository} from "../../shared/generic.repository";
+import {GenericRepository} from "../../shared/generic/generic.repository";
 
 @Injectable()
 export class ModeratorService {

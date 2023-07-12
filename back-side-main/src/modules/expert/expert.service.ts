@@ -1,11 +1,10 @@
 import {Injectable, InternalServerErrorException, NotFoundException} from '@nestjs/common';
 import {filterExpertDto} from './dto/filterExpert.dto';
-import * as axios from 'axios';
 import {UpdateExpertDto} from './dto/update.dto';
 import {InjectModel} from "@nestjs/mongoose";
 import {Expert} from "../../entities/expert.entity";
 import {Model} from "mongoose";
-import {GenericRepository} from "../../shared/generic.repository";
+import {GenericRepository} from "../../shared/generic/generic.repository";
 import {IExpertModel} from "../../entities/expert.interface";
 import {Disponibilite} from "../../entities/disponibilite.entity";
 

@@ -1,9 +1,10 @@
-import { Type } from 'class-transformer';
-import { IsEmail, IsString, MaxLength, MinLength, IsOptional, IsArray, IsNumber } from 'class-validator';
-import { Types } from 'mongoose';
-import { Role } from 'src/entities/user.roles.enum';
+import {Type} from 'class-transformer';
+import {IsArray, IsEmail, IsOptional, IsString, MaxLength, MinLength} from 'class-validator';
+import {Types} from 'mongoose';
+import {Role} from 'src/entities/user.roles.enum';
+import {PartialType} from "@nestjs/mapped-types";
 
-export class UpdateExpertCredentialsDto {
+class ExpertCredentialsDto {
   @IsString()
   @MinLength(3)
   @MaxLength(40)
@@ -47,4 +48,7 @@ export class UpdateExpertCredentialsDto {
 
   // @IsEnum(Role)
   role: Role;
+}
+
+export class UpdateExpertCredentialsDto extends PartialType(ExpertCredentialsDto) {
 }

@@ -6,7 +6,7 @@ import {Reclamation} from "../../entities/reclamation.entity";
 import {IReclamationModel} from "../../entities/reclamation.interface";
 import {Reservation} from "../../entities/reservation.entity";
 import {IReservationModel} from "../../entities/reservation.interface";
-import {GenericRepository} from "../../shared/generic.repository";
+import {GenericRepository} from "../../shared/generic/generic.repository";
 
 @Injectable()
 export class ReclamationService {

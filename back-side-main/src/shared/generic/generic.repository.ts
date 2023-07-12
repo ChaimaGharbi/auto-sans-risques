@@ -1,7 +1,7 @@
 import {NotFoundException} from '@nestjs/common';
 import * as mongoose from 'mongoose';
 import {Model, UpdateQuery} from 'mongoose';
-import sort from "./aggregation/sort";
+import sort from "./sort";
 import {matching} from "./aggregation/matching";
 import {sorting} from "./aggregation/sorting";
 import {pagination} from "./aggregation/pagination";
@@ -49,7 +49,8 @@ export class GenericRepository<T> {
             if (!mongoose.Types.ObjectId.isValid(id)) {
                 throw new NotFoundException('Invalid ID');
             }
-            return await this.model.findByIdAndUpdate(id, data, {new: true}).exec();
+            await this.findById(id);
+            return await this.model.findByIdAndUpdate(id, data);
         } catch (error) {
             throw error;
         }

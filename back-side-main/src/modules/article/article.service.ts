@@ -3,16 +3,13 @@ import {ArticleCategoryDto} from './dto/article.category.dto';
 import {ArticleDto} from './dto/article.dto';
 import {FilterArticleDto} from './dto/filterArticle.dto';
 import {FilterArticleCtgDto} from './dto/filterCategory.article.dto';
-import {GenericRepository} from "../../shared/generic.repository";
+import {GenericRepository} from "../../shared/generic/generic.repository";
 import {Article} from "../../entities/article.entity";
 import {ArticleCategory} from "../../entities/article.category.entity";
 import {InjectModel} from "@nestjs/mongoose";
 import {IArticleModel} from "../../entities/article.interface";
 import {IArticleCategorModel} from "../../entities/article.category.interface";
 import articleSort from "./article-sort";
-import {pagination} from "../../shared/aggregation/pagination";
-import {sorting} from "../../shared/aggregation/sorting";
-import {matching} from "../../shared/aggregation/matching";
 
 @Injectable()
 export class ArticleService {

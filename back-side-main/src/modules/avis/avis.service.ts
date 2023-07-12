@@ -3,7 +3,7 @@ import {avisDto} from './dto/avis.dto';
 import {FilterAvisDto} from './dto/filterAvis.dto';
 import {uploadImage} from "../../shared/upload.files";
 import {Model, Types} from "mongoose";
-import {GenericRepository} from "../../shared/generic.repository";
+import {GenericRepository} from "../../shared/generic/generic.repository";
 import {InjectModel} from "@nestjs/mongoose";
 import {Avis} from "../../entities/avis.entity";
 import {ImageAvis} from "../../entities/image_avis.entity";

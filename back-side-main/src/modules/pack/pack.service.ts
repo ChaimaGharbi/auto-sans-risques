@@ -4,7 +4,7 @@ import {PackDto} from './dto/pack.dto';
 import {InjectModel} from "@nestjs/mongoose";
 import {Pack} from "../../entities/pack.entity";
 import {IPackModel} from "../../entities/pack.interface";
-import {GenericRepository} from "../../shared/generic.repository";
+import {GenericRepository} from "../../shared/generic/generic.repository";
 
 @Injectable()
 export class PackService {

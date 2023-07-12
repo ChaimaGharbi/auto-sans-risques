@@ -15,11 +15,6 @@ export class ConfigService {
   public get(key: string): string {
     return this.envConfig[key];
   }
-
-  public async getPortConfig() {
-    return this.get('PORT');
-  }
-
   public async getMongoConfig() {
     return {
       uri:

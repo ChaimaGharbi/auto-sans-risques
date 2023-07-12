@@ -7,7 +7,7 @@ import {Reservation} from "../../entities/reservation.entity";
 import {Notification} from "../../entities/notification.entity";
 import {IReservationModel} from "../../entities/reservation.interface";
 import {INotificationModel} from "../../entities/notification.interface";
-import {GenericRepository} from "../../shared/generic.repository";
+import {GenericRepository} from "../../shared/generic/generic.repository";
 import moment = require('moment');
 
 @Injectable()
