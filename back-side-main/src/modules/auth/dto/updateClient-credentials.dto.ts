@@ -1,7 +1,8 @@
-import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
-import { Role } from 'src/entities/user.roles.enum';
+import {IsEmail, IsString, MaxLength, MinLength} from 'class-validator';
+import {Role} from 'src/entities/user.roles.enum';
+import {PartialType} from '@nestjs/mapped-types';
 
-export class UpdateClientCredentialsDto {
+class ClientCredentialsDto {
   @IsString()
   @MinLength(3)
   @MaxLength(40)
@@ -27,4 +28,7 @@ export class UpdateClientCredentialsDto {
 
   // @IsEnum(Role)
   role: Role;
+}
+
+export class UpdateClientCredentialsDto extends PartialType(ClientCredentialsDto) {
 }

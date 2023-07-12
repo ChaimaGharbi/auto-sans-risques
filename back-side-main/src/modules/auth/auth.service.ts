@@ -4,7 +4,8 @@ import {
   HttpException,
   Injectable,
   InternalServerErrorException,
-  NotFoundException, UnauthorizedException
+  NotFoundException,
+  UnauthorizedException
 } from '@nestjs/common';
 import {JwtService} from '@nestjs/jwt';
 import {Role} from 'src/entities/user.roles.enum';
@@ -23,7 +24,7 @@ import {Moderator} from "../../entities/moderator.entity";
 import {Token} from "../../entities/token.entity";
 import {MailerService} from "../../config/mailer/mailer.service";
 import {ExpertService} from "../expert/expert.service";
-import {GenericRepository} from "../../shared/generic.repository";
+import {GenericRepository} from "../../shared/generic/generic.repository";
 import {User} from "../../entities/user.entity";
 import {getHtml} from "../../config/mailer/mailer.helper";
 import verifyEmail from "./htmlTemplates/verifyEmail";
@@ -187,6 +188,7 @@ export class AuthService {
   }
 
   async updateProfile(
+      id,
       updateCredentialsDto: UpdateExpertCredentialsDto | UpdateClientCredentialsDto,
       files: any,
       role: Role
@@ -194,28 +196,22 @@ export class AuthService {
 
     try {
       const repository = (role == Role.EXPERT) ? this.expertRepository : (role == Role.CLIENT) ? this.clientRepository : null;
-
-      const position = await getPositionFromAddress(
-          updateCredentialsDto.adresse + ' ' + updateCredentialsDto.ville
-      );
-      const updateObject = {}
-      for (const key in updateCredentialsDto) {
-        if (!updateCredentialsDto[key] && key !== 'id') {
-          updateObject[key] = updateCredentialsDto[key];
-        }
-      }
+      const updateObject = {...updateCredentialsDto}
       for (const key in files) {
         if (!files[key]) {
           updateObject[key] = files[key];
         }
       }
-      // @ts-ignore
-      return await repository.update(updateCredentialsDto.id, {
-        ...updateObject,
-        email: updateCredentialsDto.email.toLocaleLowerCase(),
-        position,
-      });
+      if (updateCredentialsDto.adresse && updateCredentialsDto.ville) {
+        // @ts-ignore
+        updateObject.position = await getPositionFromAddress(
+            updateCredentialsDto.adresse + ' ' + updateCredentialsDto.ville
+        );
+      }
 
+      if (updateObject.email)
+        updateObject.email = updateObject.email.toLocaleLowerCase();
+      return await repository.update(id, updateObject);
     } catch (error) {
       throw new ConflictException(error.message);
     }

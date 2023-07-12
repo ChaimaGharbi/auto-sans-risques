@@ -6,7 +6,7 @@ import {Mark} from "../../entities/mark.entity";
 import {IMarkModel} from "../../entities/mark.interface";
 import {Model as ModelCar} from "../../entities/model.entity";
 import {Model} from "mongoose";
-import {GenericRepository} from "../../shared/generic.repository";
+import {GenericRepository} from "../../shared/generic/generic.repository";
 
 @Injectable()
 export class MarkService {

@@ -1,7 +1,7 @@
 import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {AssistanceDto} from './dto/assistance.dto';
 import {FilterAssistanceDto} from './dto/filterAssistance.dto';
-import {GenericRepository} from "../../shared/generic.repository";
+import {GenericRepository} from "../../shared/generic/generic.repository";
 import {InjectModel} from "@nestjs/mongoose";
 import {Assistance} from "../../entities/assistance.entity";
 import {IAssistanceModel} from "../../entities/assistance.interface";

@@ -4,7 +4,6 @@ import {Model, Types} from "mongoose";
 import {InjectModel} from "@nestjs/mongoose";
 import {Disponibilite} from "../../entities/disponibilite.entity";
 import {Expert} from "../../entities/expert.entity";
-import {GenericRepository} from "../../shared/generic.repository";
 
 @Injectable()
 export class DisponibiliteService {

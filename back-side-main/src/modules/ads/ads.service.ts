@@ -5,7 +5,7 @@ import {InjectModel} from "@nestjs/mongoose";
 import {Ads} from "../../entities/ads.entity";
 import {IAdsModel} from "../../entities/ads.interface";
 import {getPositionFromAddress} from "../../shared/utils";
-import {GenericRepository} from "../../shared/generic.repository";
+import {GenericRepository} from "../../shared/generic/generic.repository";
 
 @Injectable()
 export class AdsService {

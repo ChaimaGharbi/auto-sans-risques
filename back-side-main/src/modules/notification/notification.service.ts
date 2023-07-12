@@ -8,18 +8,16 @@ import {Expert} from "../../entities/expert.entity";
 import {Model} from "mongoose";
 import {Client} from "../../entities/client.entity";
 import {Reservation} from "../../entities/reservation.entity";
-import {SmsService} from "../../config/sms/sms.service";
 import {MailerService} from "../../config/mailer/mailer.service";
 import {NotificationGateway} from "./notification.gateway";
 import {getHtml} from "../../config/mailer/mailer.helper";
 import {ReservationStatus} from "../../entities/reservation.status.enum";
-import {pagination} from "../../shared/aggregation/pagination";
-import moment = require('moment');
 import 'moment/locale/fr';
 import demandeRendezVous from "./htmlTemplates/demande-rendez-vous";
 import acceptationRendezVous from "./htmlTemplates/accepation-rendez-vous";
 import refusRendezVous from "./htmlTemplates/refus-rendez-vous";
-import {GenericRepository} from "../../shared/generic.repository";
+import {GenericRepository} from "../../shared/generic/generic.repository";
+import moment = require('moment');
 
 @Injectable()
 export class NotificationService {
@@ -34,7 +32,6 @@ export class NotificationService {
         @InjectModel(Expert.name) private expertModel: Model<Expert>,
         @InjectModel(Client.name) private clientModel: Model<Client>,
         @InjectModel(Reservation.name) private reservationModel: Model<Reservation>,
-        private smsService: SmsService,
         private mailerService: MailerService,
         private notificationGateway: NotificationGateway
     ) {

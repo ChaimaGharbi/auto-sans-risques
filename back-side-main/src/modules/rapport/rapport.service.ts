@@ -22,7 +22,7 @@ import {Queue} from "bull";
 import {RapportGateway} from "./rapport.gateway";
 import {BullAdapter, setQueues} from "bull-board";
 import {ReservationStatus} from "../../entities/reservation.status.enum";
-import {GenericRepository} from "../../shared/generic.repository";
+import {GenericRepository} from "../../shared/generic/generic.repository";
 
 @Injectable()
 export class RapportService {

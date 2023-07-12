@@ -10,7 +10,7 @@ import {Queue} from "bull";
 import {BullAdapter, setQueues} from "bull-board";
 import crypto from "crypto";
 import {PaymentStatus} from "../../entities/Payment.status.enum";
-import {GenericRepository} from "../../shared/generic.repository";
+import {GenericRepository} from "../../shared/generic/generic.repository";
 import paymentSort from "./payment-sort";
 
 @Injectable()

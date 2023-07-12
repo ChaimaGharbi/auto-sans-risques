@@ -4,7 +4,7 @@ import {MailerService} from 'src/config/mailer/mailer.service';
 import {InjectModel} from "@nestjs/mongoose";
 import {Contact} from "../../entities/contact.entity";
 import {Model} from "mongoose";
-import {GenericRepository} from "../../shared/generic.repository";
+import {GenericRepository} from "../../shared/generic/generic.repository";
 
 @Injectable()
 export class ContactService {
