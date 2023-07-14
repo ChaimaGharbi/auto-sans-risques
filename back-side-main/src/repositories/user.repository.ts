@@ -439,7 +439,7 @@ export class UserRepository {
 
   async recoverPasswordWithoutRole(email: string) {
     try {
-      const user = await this.getUserByEmailAndRole(email, null);
+      const user = await this.getUserByEmail(email);
       if (!user) {
         throw new BadRequestException(
           'The email address ' +

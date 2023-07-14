@@ -53,4 +53,24 @@ export const notificationsReducer = new Reducer(initialState)
   .on(constants.CLEAR_NOTIFICATION, state => {
     if (state.newOnes.data) state.newOnes.data = []
   })
+  .on(constants.UPDATE_NOTIFICATIONS_BY_IDS.success, (state, action) => {
+    const updatedIds = action.payload
+    state.all.loading = false
+    state.all.data = state.all.data? state.all.data.map((notification) => {
+      if (updatedIds.includes(notification._id)) {
+        notification.is_read = true
+      }
+      return notification
+    }): []
+    state.recent.data = state.recent.data? state.recent.data.map((notification) => {
+      if (updatedIds.includes(notification._id)) {
+        notification.is_read = true
+      }
+      return notification
+    }): []
+  })
+  .on(constants.UPDATE_NOTIFICATIONS_BY_IDS.failure, state => {
+    state.all.loading = false
+    state.all.errors = []
+  })
   .get()

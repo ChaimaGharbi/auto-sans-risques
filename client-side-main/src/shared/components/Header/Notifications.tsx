@@ -9,6 +9,7 @@ import Loading from '../Loading'
 import If from '../If'
 import { Link } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
+import { useUpdateIsRead } from 'app/store/hooks'
 
 function link(msg, id) {
   if (msg.toLowerCase().includes('veuillez confirmer ou annuler le rdv'))
@@ -39,22 +40,28 @@ function Badge({ children }) {
   )
 }
 
-
 export default function Notifications() {
   const { data, loading } = useRecentNotifications()
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+  const updateIsRead = useUpdateIsRead()
+
+  const handleIsRead = notificationId => {
+    updateIsRead(notificationId)
+    console.log('done')
+  }
 
   useEffect(() => {
     const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
+      setWindowWidth(window.innerWidth)
+    }
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize)
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [window.innerWidth]);
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [window.innerWidth])
 
   const clear = useClearNotification()
 
@@ -75,11 +82,28 @@ export default function Notifications() {
         </If>
         <If test={!loading}>
           {!!data &&
-            data.map(({ _id, message, reservationId }) => (
-              <Dropdown.Item key={_id} onClick={() => {}} >
-                <Link to={link(message, reservationId)} className="text-black">
-               
-                {windowWidth > 1024 ?  <span>{message.substring(0, 70)}...</span> : windowWidth > 600 ? <span>{message.substring(0, 50)}...</span> : <span>{message.substring(0, 30)}...</span> }
+            data.map(({ _id, message, reservationId, is_read }) => (
+              <Dropdown.Item
+                key={_id}
+                style={{
+                  backgroundImage: is_read ? '' : 'linear-gradient(90deg, rgba(78, 173, 255,0.2) 0%, #ffffff 50%, rgba(78, 173, 255,0.2) 100%)',
+                }}
+              >
+                <Link
+                  to={link(message, reservationId)}
+                  className="text-black"
+                  onClick={() => handleIsRead(_id)}
+                >
+                  <span
+                    key={_id}
+                    style={{ color: is_read ? 'gray' : 'black' }}
+                  >
+                    {windowWidth > 1024
+                      ? `${message.substring(0, 70)}...`
+                      : windowWidth > 600
+                      ? `${message.substring(0, 50)}...`
+                      : `${message.substring(0, 30)}...`}
+                  </span>
                 </Link>
               </Dropdown.Item>
             ))}

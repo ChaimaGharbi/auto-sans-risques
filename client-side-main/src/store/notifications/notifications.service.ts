@@ -12,3 +12,6 @@ export const getRecentNotifications = (id, pageSize = 5) =>
       },
     })
     .then(({ data }) => data)
+
+export const updateNotificationsByIds = ids =>
+  axios.post('/notification/updates', { ids }).then(({ data }) => data)

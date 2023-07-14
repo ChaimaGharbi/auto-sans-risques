@@ -193,6 +193,15 @@ const AppRoutes = () => {
           />
         }
       />
+      <Route
+        path="/notifications"
+        element={
+          <PageWrapper
+            permissions={['EXPERT', 'CLIENT']}
+            element={<routes.NotificationsPage />}
+          />
+        }
+      />
 
       {/* Client Part */}
       <Route

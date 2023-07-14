@@ -5,6 +5,7 @@ export const constants = {
   GET_ALL_NOTIFICATIONS: async('GET_ALL_NOTIFICATIONS'),
   RECEIVE_NOTIFICATION: 'RECEIVE_NOTIFICATION',
   CLEAR_NOTIFICATION: 'CLEAR_NOTIFICATION',
+  UPDATE_NOTIFICATIONS_BY_IDS: async('UPDATE_NOTIFICATIONS_BY_IDS'),
 }
 
 export const getRecentNotifications = id => {
@@ -33,3 +34,8 @@ export const clearNotification = () => {
     type: constants.CLEAR_NOTIFICATION,
   }
 }
+
+export const updateNotificationsByIds = ids => ({
+  type: constants.UPDATE_NOTIFICATIONS_BY_IDS.request,
+  payload: ids,
+})

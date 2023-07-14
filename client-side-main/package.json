@@ -27,6 +27,8 @@
     "gsap": "^3.11.5",
     "history": "^5.3.0",
     "html-react-parser": "^1.4.12",
+    "moment": "^2.29.4",
+    "moment-with-locales-es6": "^1.0.1",
     "promise": "^8.1.0",
     "react": "^17.0.2",
     "react-big-calendar": "^0.40.1",

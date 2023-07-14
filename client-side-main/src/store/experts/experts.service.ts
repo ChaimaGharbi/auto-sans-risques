@@ -1,7 +1,7 @@
 import axios from 'app/store/api'
 
 export const addReview = review =>
-  axios.post(`/avis`, review).then(({ data }) => data)
+  axios.post(`/avis`, review).then(({ data }) => {data})
 
 export const getTopExperts = () =>
   axios.get(`/expert/stats/top10`).then(({ data }) => data)

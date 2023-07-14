@@ -63,3 +63,14 @@ export const useClearNotification = () => {
     dp(actions.clearNotification())
   }
 }
+
+export const useUpdateIsRead = () => {
+  const dp = useDispatch()
+
+  const updateIsRead = (notificationId) => {
+    dp(actions.updateNotificationsByIds([notificationId]))
+  }
+
+  return updateIsRead
+}
+

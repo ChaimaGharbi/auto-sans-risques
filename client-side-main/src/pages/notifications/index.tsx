@@ -5,6 +5,8 @@ import Loading from 'app/shared/components/Loading'
 import If from 'app/shared/components/If'
 import { Link } from 'react-router-dom'
 import { PaginatedContent } from 'app/shared/components/paginated'
+import { useState } from 'react'
+import { useUpdateIsRead } from 'app/store/hooks'
 
 function link(msg, id) {
   if (msg.toLowerCase().includes('veuillez confirmer ou annuler le rdv'))
@@ -14,6 +16,17 @@ function link(msg, id) {
 
 const Notifications = () => {
   const { data, loading } = useAllNotifications()
+  const [page, setPage] = useState(1)
+  const pageSize = 6
+  console.log(data)
+
+  const updateIsRead = useUpdateIsRead()
+
+  const handleIsRead = notificationId => {
+    updateIsRead(notificationId)
+    console.log('done')
+    console.log(data)
+  }
 
   return (
     <Container>
@@ -46,24 +59,33 @@ const Notifications = () => {
 
               <If test={!loading && data}>
                 <PaginatedContent
-                  page={1}
-                  pageSize={10}
+                  page={page}
+                  pageSize={pageSize}
                   data={data}
-                  onChange={() => {}}
+                  onChange={pageNumber => setPage(pageNumber)}
                   onLoadMore={() => {}}
                   total={data?.length ? data.length : 0}
                   item={({ data }) => {
-                    const { _id, message, reservationId } = data
+                    const { _id, message, reservationId, is_read } = data
+                    const notificationStyle = {
+                      color: is_read ? 'gray' : 'black',
+                    }
                     return (
-                      <div key={_id} className="py-4">
+                      <div key={_id} className="py-4 flex justify-between">
                         <div className="text-sm text-gray-800">
-                          {message}{' '}
+                          
                           <Link
                             to={link(message, reservationId)}
                             className="text-primary"
+                            onClick={() => handleIsRead(_id)}
                           >
-                            Visiter la page
+                           <span style={notificationStyle}>{message}</span>
                           </Link>
+                        </div>
+                        <div className='flex items-center'>
+                          {!is_read && (
+                            <span className="inline-block w-2.5 h-2.5 rounded-full bg-blue-500 mr-5" />
+                          )}
                         </div>
                       </div>
                     )

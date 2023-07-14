@@ -59,7 +59,7 @@ export default function Input(props: Props) {
     return (
       <div>
         <textarea
-          placeholder={`${props.placeholder} ${!!required && ' *'}`}
+          placeholder={`${props.placeholder}${!required && ' *'}`}
           className={`resize-none ${props.className}`}
           rows={props.rows}
           value={value ?? ''}

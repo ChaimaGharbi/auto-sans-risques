@@ -37,12 +37,14 @@ export function Seperator() {
 export function Item({
   children,
   className,
+  style,
   ...props
 }: DropdownMenuPrimitive.MenuItemProps) {
   return (
     <DropdownMenuPrimitive.Item
       {...props}
       className={`rx-dropdown-item ${className ? className : ''}`}
+      style={style}
     >
       {children}
     </DropdownMenuPrimitive.Item>

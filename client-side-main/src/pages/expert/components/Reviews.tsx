@@ -1,10 +1,10 @@
-import moment from 'moment'
 import Rating from 'app/shared/components/Rating'
 import { Spinner } from 'app/shared/components/Loading'
 import If from 'app/shared/components/If'
 import { useState } from 'react'
 import { useGetUser, useGetReviews, useMoreReviews } from 'app/store/hooks'
 import ReviewCard from './ReviewCard'
+import moment from 'moment-with-locales-es6'
 
 const Reviews = () => {
   const { role } = useGetUser()
@@ -107,7 +107,7 @@ const Review = props => {
         </div>
 
         <h3 className="py-2 m-0">
-          Note le {moment(props.date).format('mm MMMM YYYY')}
+          Noté le {moment().locale('fr').format('DD MMMM YYYY')}
         </h3>
 
         <p>{props.commentaire}</p>

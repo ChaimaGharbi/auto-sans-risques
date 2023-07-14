@@ -94,7 +94,7 @@ const ReviewCard = () => {
                       key={index}
                       className={`${
                         index < current ? 'text-[#FF9529]' : 'text-[#C8C8C8]'
-                      } text-8xl m-0  relative -left-2 duration-300`}
+                      } text-6xl sm:text-8xl m-0 relative -left-2 duration-300`}
                     >
                       ⭑
                     </button>
@@ -108,7 +108,7 @@ const ReviewCard = () => {
                   validations={[
                     {
                       rule: isMinLength(8),
-                      message: 'Ce champs doit au minimum contenir 8 chiffres',
+                      message: 'Ce champs doit au minimum contenir 8 caracteres',
                     },
                     {
                       rule: isRequired(),
@@ -117,7 +117,7 @@ const ReviewCard = () => {
                   ]}
                   type="textarea"
                 ></Input>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid sm:grid-cols-2 gap-4 ">
                   <button
                     onClick={handleCloseModal}
                     className="button bg-[#F0F0F0] text-black shadow-none hover:text-black"
