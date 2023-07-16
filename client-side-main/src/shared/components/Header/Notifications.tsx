@@ -41,15 +41,31 @@ function Badge({ children }) {
 }
 
 export default function Notifications() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { data, loading } = useRecentNotifications()
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
   const updateIsRead = useUpdateIsRead()
 
   const handleIsRead = notificationId => {
-    updateIsRead(notificationId)
-    console.log('done')
-  }
+    updateIsRead(notificationId);
+  
+    const notificationElement = document.getElementById(notificationId);
+    if (notificationElement) {
+      console.log(notificationElement);
+      
+      const spanElement = notificationElement.querySelector('span');
+      if (spanElement) {
+        console.log(notificationElement, spanElement);
+        
+        spanElement.style.color = 'gray ';
+      }
+      notificationElement.style.backgroundImage = ' ';
+    }
+  
+    setIsDropdownOpen(false);
+  };
+  
 
   useEffect(() => {
     const handleResize = () => {
@@ -68,8 +84,12 @@ export default function Notifications() {
   return (
     <Dropdown.DropdownMenu
       onOpenChange={v => {
-        if (v) clear()
+        setIsDropdownOpen(v)
+        console.log("done");
+        
+        if (v) {clear()}
       }}
+      open={isDropdownOpen}
     >
       <Dropdown.Trigger className="focus:outline-none rx-dropdown-trigger">
         <Badge>
@@ -85,18 +105,21 @@ export default function Notifications() {
             data.map(({ _id, message, reservationId, is_read }) => (
               <Dropdown.Item
                 key={_id}
+                id={_id}
                 style={{
                   backgroundImage: is_read ? '' : 'linear-gradient(90deg, rgba(78, 173, 255,0.2) 0%, #ffffff 50%, rgba(78, 173, 255,0.2) 100%)',
+                  
                 }}
               >
                 <Link
                   to={link(message, reservationId)}
                   className="text-black"
-                  onClick={() => handleIsRead(_id)}
+                  
                 >
                   <span
                     key={_id}
                     style={{ color: is_read ? 'gray' : 'black' }}
+                    onClick={() => handleIsRead(_id)}
                   >
                     {windowWidth > 1024
                       ? `${message.substring(0, 70)}...`

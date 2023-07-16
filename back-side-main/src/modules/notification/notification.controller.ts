@@ -19,6 +19,8 @@ export class NotificationController {
 
   @Post('/paginate')
   async fetchNotificationsPaginate(@Body(ValidationPipe) filterNotificationDto: filterNotificationDto) {
+    console.log(filterNotificationDto);
+    
     return await this.notificationsService.findAll(filterNotificationDto);
   }
 

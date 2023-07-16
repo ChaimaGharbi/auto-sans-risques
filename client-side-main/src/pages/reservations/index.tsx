@@ -3,10 +3,14 @@ import Breadcrumb from 'app/shared/components/Breadcrumb'
 import Card from './components/Card'
 import { useGetMyReservations } from 'app/store/hooks'
 import Loading from 'app/shared/components/Loading'
+import { PaginatedContent } from 'app/shared/components/paginated'
+import { useState } from 'react'
+import { log } from 'console'
 
 export default function Reclamation() {
   const { data, loading } = useGetMyReservations()
-  console.log(data)
+  const [page, setPage] = useState(1)
+  const pageSize = 3
 
   if (loading) return <Loading />
 
@@ -33,20 +37,30 @@ export default function Reclamation() {
             Mes réservations
           </div>
 
-          <Container>
-            <div className="grid gap-y-4 divide-y">
-              {data?.map(mission => (
+          <PaginatedContent
+            page={page}
+            pageSize={pageSize}
+            data={data}
+            onChange={pageNumber => setPage(pageNumber)}
+            onLoadMore={() => {}}
+            total={data?.length ? data.length : 0}
+            item={({ data }) => {
+              const { _id, status, reason, typeCar, createdAt, expert } = data
+
+              console.log(data)
+
+              return (
                 <Card
-                  status={mission.status}
-                  id={mission._id}
-                  key={mission._id}
-                  comment={mission.reason + ' - ' + mission.typeCar}
-                  date={mission.createdAt}
-                  expert={mission.expert[0]}
+                  status={status}
+                  id={_id}
+                  key={_id}
+                  comment={reason + ' - ' + typeCar}
+                  date={createdAt}
+                  expert={expert[0]}
                 />
-              ))}
-            </div>
-          </Container>
+              )
+            }}
+          ></PaginatedContent>
         </div>
       </div>
     </Container>

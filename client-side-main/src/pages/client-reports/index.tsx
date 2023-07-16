@@ -3,9 +3,14 @@ import Card from './components/Card'
 import Breadcrumb from 'app/shared/components/Breadcrumb'
 import { useGetReportsForClient } from 'app/store/hooks'
 import Loading from 'app/shared/components/Loading'
+import { PaginatedContent } from 'app/shared/components/paginated'
+import { useState } from 'react'
 
 const Reports = () => {
   const { data, loading } = useGetReportsForClient()
+  const [page, setPage] = useState(1)
+  const pageSize = 3
+
   if (loading) return <Loading />
 
   return (
@@ -33,17 +38,30 @@ const Reports = () => {
 
           <Container>
             <div className="grid gap-y-4 divide-y">
-              {data?.map(report => (
-                <Card
-                  key={report._id}
-                  id={report._id}
-                  status={report.status}
-                  comment={report.reason + ' - ' + report.typeCar}
-                  date={report.date}
-                  expert={report.expert[0]}
-                  link={report.link}
-                />
-              ))}
+              <PaginatedContent
+                page={page}
+                pageSize={pageSize}
+                data={data}
+                onChange={pageNumber => setPage(pageNumber)}
+                onLoadMore={() => {}}
+                total={data?.length ? data.length : 0}
+                item={({ data }) => {
+                  const { _id, reason, typeCar, date, expert, link, status } =
+                    data
+
+                  return (
+                    <Card
+                      key={_id}
+                      id={_id}
+                      status={status}
+                      comment={reason + ' - ' + typeCar}
+                      date={date}
+                      expert={expert[0]}
+                      link={link}
+                    />
+                  )
+                }}
+              ></PaginatedContent>
             </div>
           </Container>
         </div>

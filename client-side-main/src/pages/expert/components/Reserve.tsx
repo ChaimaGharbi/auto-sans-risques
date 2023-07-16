@@ -13,6 +13,8 @@ import { Button } from 'antd'
 import { CalendarOutlined } from '@ant-design/icons'
 import { getClient } from 'app/store/api'
 import { useParams } from 'react-router-dom'
+import { fr } from 'date-fns/locale';
+
 function InputPicker(props) {
   const { errorMessage, isValid, setValue, value, id, isSubmitted } =
     useField(props)
@@ -220,7 +222,7 @@ function Form({ closeModal }) {
               background: 'linear-gradient(180deg, #FFFFFF 0%, #F9FAFB 100%)',
             }}
             className="border !border-[#C4CDD5] w-full !p-3 !text-black  !rounded-md focus:!outline-none focus:!bg-white focus:!text-gray-900"
-            validations={[validators.required]}
+            validations={[validators.required, validators.minLength(3), validators.pattern(/^[A-Za-z\s]*$/), validators.notJustSpaces]}
           />
         </div>
         <div>
@@ -256,11 +258,12 @@ function Form({ closeModal }) {
           onClose={() => setOpenModal(false)}
           open={openModal}
           children={
-            <div>
-              <div className="font-semibold text-xs mb-2 uppercase">
+            <div className='flex flex-col	'>
+              <div className="font-semibold text-xs mb-2 uppercase ml-5  text-orange-50">
                 SÉLECTIONNER une DATE
               </div>
               <ScheduleMeeting
+                startTimeListStyle="scroll-list"
                 borderRadius={10}
                 primaryColor="#3f5b85"
                 eventDurationInMinutes={30}
@@ -269,7 +272,11 @@ function Form({ closeModal }) {
                 onStartTimeSelect={e => {
                   setReservationTime(e.startTime)
                 }}
-              />
+                locale={fr}
+              />{' '}
+              <div className="font-semibold text-md mb-2 uppercase flex justify-end text-orange-50 mr-5">
+                <button className="hover:text-indigo-900" onClick={()=> setOpenModal(false)}>VALIDER</button>
+              </div>
             </div>
           }
         ></Modal>
@@ -278,7 +285,7 @@ function Form({ closeModal }) {
             MARQUE ET MODELE DE VOITURE
           </div>
           <MarksPicker
-            id = {id}
+            id={id}
             className="flex flex-col space-y-2"
             onChange={e => {
               const { mark, model } = e

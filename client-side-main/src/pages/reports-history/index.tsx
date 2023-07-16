@@ -6,8 +6,12 @@ import Loading from 'app/shared/components/Loading'
 import If from 'app/shared/components/If'
 import { useContext, useEffect, useState } from 'react'
 import { SocketContext } from 'app/socket'
+import { PaginatedContent } from 'app/shared/components/paginated'
+
 const ReportsHistory = () => {
   const { data, loading } = useGetCompletedMissions()
+  const [page, setPage] = useState(1)
+  const pageSize = 3
 
   return (
     <Container>
@@ -36,16 +40,29 @@ const ReportsHistory = () => {
                 <Loading />
               </If>
               <If test={!loading && data}>
-                {data?.map(mission => (
+              <PaginatedContent
+                  page={page}
+                  pageSize={pageSize}
+                  data={data}
+                  onChange={pageNumber => setPage(pageNumber)}
+                  onLoadMore={() => {}}
+                  total={data?.length ? data.length : 0}
+                  item={({ data }) => {
+                    const { _id, reason, typeCar, createdAt, client, rapportId, link } =
+                      data
+
+                    return (
                   <Card
-                    key={mission.rapportId}
-                    comment={mission.reason + ' - ' + mission.typeCar}
-                    date={mission.createdAt}
-                    client={mission.client[0]}
-                    report={mission.rapportId}
-                    link={mission.link}
+                    key={rapportId}
+                    comment={reason + ' - ' + typeCar}
+                    date={createdAt}
+                    client={client[0]}
+                    report={rapportId}
+                    link={link}
                   />
-                ))}
+                  )
+                }}
+              ></PaginatedContent>
               </If>
             </div>
           </Container>

@@ -4,9 +4,13 @@ import Breadcrumb from 'app/shared/components/Breadcrumb'
 import { useGetMissionsRequests } from 'app/store/hooks'
 import Loading from 'app/shared/components/Loading'
 import If from 'app/shared/components/If'
+import { PaginatedContent } from 'app/shared/components/paginated'
+import { useState } from 'react'
 
 const Missions = () => {
   const { data, loading } = useGetMissionsRequests()
+  const [page, setPage] = useState(1)
+  const pageSize = 3
 
   return (
     <Container>
@@ -37,15 +41,29 @@ const Missions = () => {
                 <Loading />
               </If>
               <If test={!loading && data}>
-                {data?.map(mission => (
-                  <Card
-                    id={mission._id}
-                    key={mission._id}
-                    comment={mission.reason + ' - ' + mission.typeCar}
-                    date={mission.date}
-                    client={mission.client[0]}
-                  />
-                ))}
+                <PaginatedContent
+                  page={page}
+                  pageSize={pageSize}
+                  data={data}
+                  onChange={pageNumber => setPage(pageNumber)}
+                  onLoadMore={() => {}}
+                  total={data?.length ? data.length : 0}
+                  item={({ data }) => {
+                    const { _id, reason, typeCar, date, client } = data
+
+                    console.log(data)
+
+                    return (
+                      <Card
+                        id={_id}
+                        key={_id}
+                        comment={reason + ' - ' + typeCar}
+                        date={date}
+                        client={client[0]}
+                      />
+                    )
+                  }}
+                ></PaginatedContent>
               </If>
             </div>
           </Container>

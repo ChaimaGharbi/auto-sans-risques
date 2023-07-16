@@ -3,9 +3,13 @@ import Breadcrumb from 'app/shared/components/Breadcrumb'
 import Card from './components/Card'
 import { useGetMyReclamations } from 'app/store/hooks'
 import Loading from 'app/shared/components/Loading'
+import { PaginatedContent } from 'app/shared/components/paginated'
+import { useState } from 'react'
 
 export default function Reservations() {
   const { data, loading } = useGetMyReclamations()
+  const [page, setPage] = useState(1)
+  const pageSize = 3
 
   if (loading) return <Loading />
 
@@ -34,15 +38,27 @@ export default function Reservations() {
 
           <Container>
             <div className="grid gap-y-4 divide-y">
-              {data?.map(rec => (
-                <Card
-                  status={rec.etat}
-                  id={rec._id}
-                  key={rec._id}
-                  date={rec.date}
-                  title={rec.title}
-                />
-              ))}
+              <PaginatedContent
+                page={page}
+                pageSize={pageSize}
+                data={data}
+                onChange={pageNumber => setPage(pageNumber)}
+                onLoadMore={() => {}}
+                total={data?.length ? data.length : 0}
+                item={({ data }) => {
+                  const { _id, date, title, etat } = data
+
+                  return (
+                    <Card
+                      status={etat}
+                      id={_id}
+                      key={_id}
+                      date={date}
+                      title={title}
+                    />
+                  )
+                }}
+              ></PaginatedContent>
             </div>
           </Container>
         </div>
