@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: listing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: listing
+      gateway: enabled
+  template:
+    metadata:
+      labels:
+        app: listing
+    spec:
+      containers:
+        - name: listing
+          image: auto-sans-risque/listing:latest
+          ports:
+            - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: listing
+spec:
+  selector:
+    app: listing
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer

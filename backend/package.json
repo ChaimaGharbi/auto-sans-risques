@@ -1,0 +1,16 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "all:start": "concurrently \"cd _gateway && npm run start:dev\" \"cd admin && npm run start:dev\" \"cd communication && npm run start:dev\" \"cd diagnosis && npm run start:dev\" \"cd listing && npm run start:dev\"  \"cd payment && npm run start:dev\" \"cd user_managment && npm run start:dev\"  ",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "kubernetes:build": "kubectl apply -f ./_gateway/kubernetes.yaml -f ./admin/kubernetes.yaml -f ./communication/kubernetes.yaml -f ./diagnosis/kubernetes.yaml -f ./listing/kubernetes.yaml -f ./payment/kubernetes.yaml -f ./user_managment/kubernetes.yaml"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
