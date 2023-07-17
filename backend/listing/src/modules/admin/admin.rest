@@ -1,0 +1,59 @@
+POST http://localhost:3009/auth/signup/admin
+content-type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsTmFtZSI6ImFsaSIsImVtYWlsIjoiYWxpLmtvdWJhYWFAZ21haWwudG4iLCJyb2xlIjpbXSwiaWF0IjoxNjMyNDcyMTAzLCJleHAiOjE2MzM3NjgxMDN9.iifDorbbFerLKd2LS_vpGoxf3yefyDm4U_ImnL3dh5A
+
+{
+    "fullName":"admin",
+    "email":"admin3@gmail.com",
+    "tel":"23581547",
+    "password":"123456",
+    "roles":"ADMIN"
+}
+
+###
+
+Post http://localhost:3009/admin/paginate
+content-type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsTmFtZSI6ImFsaSIsImVtYWlsIjoiYWxpLmtvdWJhYWFAZ21haWwudG4iLCJyb2xlIjpbXSwiaWF0IjoxNjMyNDcyMTAzLCJleHAiOjE2MzM3NjgxMDN9.iifDorbbFerLKd2LS_vpGoxf3yefyDm4U_ImnL3dh5A
+
+{
+  "filter":{},
+  "pageNumber": 1,
+  "pageSize": 3,
+  "sortField": "default",
+  "sortOrder": "desc"
+}
+
+###
+GET http://localhost:3009/admin/61921b679bc86b39a46bab56
+content-type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsTmFtZSI6ImFsaSIsImVtYWlsIjoiYWxpLmtvdWJhYWFAZ21haWwudG4iLCJyb2xlIjpbXSwiaWF0IjoxNjMyNDcyMTAzLCJleHAiOjE2MzM3NjgxMDN9.iifDorbbFerLKd2LS_vpGoxf3yefyDm4U_ImnL3dh5A
+
+
+###
+PUT http://localhost:3009/admin/619235199a04eb41dc6db31c
+content-type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsTmFtZSI6ImFsaSIsImVtYWlsIjoiYWxpLmtvdWJhYWFAZ21haWwudG4iLCJyb2xlIjpbXSwiaWF0IjoxNjMyNDcyMTAzLCJleHAiOjE2MzM3NjgxMDN9.iifDorbbFerLKd2LS_vpGoxf3yefyDm4U_ImnL3dh5A
+
+{
+    "fullName":"admin3",
+    "tel":"21475447",
+    "isVerified":true
+}
+
+###
+DELETE  http://localhost:3009/admin/619235199a04eb41dc6db31c
+content-type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsTmFtZSI6ImFsaSIsImVtYWlsIjoiYWxpLmtvdWJhYWFAZ21haWwudG4iLCJyb2xlIjpbXSwiaWF0IjoxNjMyNDcyMTAzLCJleHAiOjE2MzM3NjgxMDN9.iifDorbbFerLKd2LS_vpGoxf3yefyDm4U_ImnL3dh5A
+
+###
+POST   http://localhost:3009/admin/delete
+content-type: application/json
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmdWxsTmFtZSI6ImFsaSIsImVtYWlsIjoiYWxpLmtvdWJhYWFAZ21haWwudG4iLCJyb2xlIjpbXSwiaWF0IjoxNjMyNDcyMTAzLCJleHAiOjE2MzM3NjgxMDN9.iifDorbbFerLKd2LS_vpGoxf3yefyDm4U_ImnL3dh5A
+
+{
+  "ids":[
+    "6192350e9a04eb41dc6db31a",
+    "61921b679bc86b39a46bab56"
+  ]
+}

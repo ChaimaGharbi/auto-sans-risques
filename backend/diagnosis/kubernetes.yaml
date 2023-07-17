@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: diagnosis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: diagnosis
+      gateway: enabled
+  template:
+    metadata:
+      labels:
+        app: diagnosis
+    spec:
+      containers:
+        - name: diagnosis
+          image: auto-sans-risque/diagnosis:latest
+          ports:
+            - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: diagnosis
+spec:
+  selector:
+    app: diagnosis
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
