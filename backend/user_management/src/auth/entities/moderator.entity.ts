@@ -2,7 +2,6 @@ import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {User} from './user.entity';
 import * as crypto from 'crypto';
 import * as bcrypt from 'bcrypt';
-import {Types} from 'mongoose';
 
 @Schema({timestamps: true})
 export class Moderator extends User {

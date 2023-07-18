@@ -1,5 +1,5 @@
 import {Type} from 'class-transformer';
-import {IsArray, IsEmail, IsEnum, IsOptional, IsPhoneNumber, IsString, MaxLength, MinLength} from 'class-validator';
+import {IsArray, IsEmail, IsEnum, IsOptional, IsString, MaxLength, MinLength} from 'class-validator';
 import {Types} from 'mongoose';
 import {Role} from 'src/auth/entities/user.roles.enum';
 

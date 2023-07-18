@@ -1,5 +1,5 @@
 import {Type} from 'class-transformer';
-import {IsNumber, IsString, Max, Min, IsOptional, IsArray} from 'class-validator';
+import {IsArray, IsNumber, IsOptional, Max, Min} from 'class-validator';
 import {Types} from 'mongoose';
 
 export class ExpertDto {
