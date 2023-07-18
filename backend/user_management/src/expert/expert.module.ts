@@ -6,8 +6,7 @@ import {ExpertService} from './expert.service';
 import {Model, ModelSchema} from './entities/model.entity';
 import {Mark, MarkSchema} from './entities/mark.entity';
 import {PassportModule} from '@nestjs/passport';
-import {Disponibilite} from './entities/disponibilite.entity';
-import {DisponibiliteSchema} from './entities/disponibilite.entity';
+import {Disponibilite, DisponibiliteSchema} from './entities/disponibilite.entity';
 
 @Module({
     imports: [

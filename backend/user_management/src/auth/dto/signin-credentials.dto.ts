@@ -1,5 +1,4 @@
-import {IsEmail, IsEnum, IsString, MaxLength, MinLength} from 'class-validator';
-import {Role} from 'src/auth/entities/user.roles.enum';
+import {IsEmail, IsString, MaxLength, MinLength} from 'class-validator';
 
 export class SignInCredentialsDto {
     @IsEmail()

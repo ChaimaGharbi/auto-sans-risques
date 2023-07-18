@@ -1,5 +1,5 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {Types, Document} from 'mongoose';
+import {Document, Types} from 'mongoose';
 import * as aggregatePaginate from 'mongoose-aggregate-paginate-v2';
 
 @Schema({timestamps: true})

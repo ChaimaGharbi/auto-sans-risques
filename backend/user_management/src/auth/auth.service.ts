@@ -40,21 +40,21 @@ export class AuthService {
     private readonly moderatorRepository: GenericRepository<Moderator>;
     private readonly tokenRepository: GenericRepository<Token>;
 
-    private async hashPassword(password: string, salt: string): Promise<string> {
-        return bcrypt.hash(password, salt);
-    }
-
-    private async createUser(signupCredentials, role: Role) {
-        switch (role) {
-            case Role.CLIENT:
-                return await this.clientRepository.create(signupCredentials);
-            case Role.EXPERT:
-                return await this.expertRepository.create(signupCredentials);
-            case Role.MODERATOR:
-                return await this.moderatorRepository.create(signupCredentials);
-            default:
-                return await this.adminRepository.create(signupCredentials);
-        }
+    constructor(
+        @InjectModel(Client.name) private clientModel: Model<Client>,
+        @InjectModel(Expert.name) private expertModel: Model<Expert>,
+        @InjectModel(Admin.name) private adminModel: Model<Admin>,
+        @InjectModel(Moderator.name) private moderatorModel: Model<Moderator>,
+        @InjectModel(Token.name) private tokenModel: Model<Token>,
+        private mailerService: MailerService,
+        private expertService: ExpertService,
+        private jwtService: JwtService,
+    ) {
+        this.adminRepository = new GenericRepository(adminModel);
+        this.moderatorRepository = new GenericRepository(moderatorModel);
+        this.clientRepository = new GenericRepository(clientModel);
+        this.expertRepository = new GenericRepository(expertModel);
+        this.tokenRepository = new GenericRepository(tokenModel);
     }
 
     async sendVerificationEmail(user: User, role: Role) {
@@ -80,24 +80,6 @@ export class AuthService {
         }
     }
 
-    constructor(
-        @InjectModel(Client.name) private clientModel: Model<Client>,
-        @InjectModel(Expert.name) private expertModel: Model<Expert>,
-        @InjectModel(Admin.name) private adminModel: Model<Admin>,
-        @InjectModel(Moderator.name) private moderatorModel: Model<Moderator>,
-        @InjectModel(Token.name) private tokenModel: Model<Token>,
-        private mailerService: MailerService,
-        private expertService: ExpertService,
-        private jwtService: JwtService,
-    ) {
-        this.adminRepository = new GenericRepository(adminModel);
-        this.moderatorRepository = new GenericRepository(moderatorModel);
-        this.clientRepository = new GenericRepository(clientModel);
-        this.expertRepository = new GenericRepository(expertModel);
-        this.tokenRepository = new GenericRepository(tokenModel);
-    }
-
-    // Authentication
     // TODO : correct bug :  expert and client can have the same email
     async signUp(signupCredentials: SignupCredentialsDto, role: Role) {
         try {
@@ -166,6 +148,8 @@ export class AuthService {
             throw new InternalServerErrorException(error);
         }
     }
+
+    // Authentication
 
     // Update
     async updatePassword(id: string, oldPassword: string, newPassword: string, role: Role) {
@@ -307,8 +291,6 @@ export class AuthService {
         }
     }
 
-    // Tokenization+Verification
-
     async verifyEmail(token: string) {
         try {
             const tokenExists = await this.tokenModel.findOne({token});
@@ -359,6 +341,8 @@ export class AuthService {
         }
     }
 
+    // Tokenization+Verification
+
     async verifyToken(token: any, role: Role, verify = false) {
         const findByToken = async (token, role) => {
             const model = (role == Role.EXPERT) ? this.expertModel : (role == Role.CLIENT) ? this.clientModel : (role == Role.MODERATOR) ? this.moderatorModel : this.adminModel;
@@ -393,8 +377,6 @@ export class AuthService {
             throw new InternalServerErrorException(error);
         }
     }
-
-    // Recovery
 
     async recoverPasswordWithoutRole(email: string) {
         try {
@@ -443,6 +425,7 @@ export class AuthService {
         }
     }
 
+    // Recovery
 
     async resetPasswordWithoutRole(token: any, password: any) {
         try {
@@ -498,6 +481,23 @@ export class AuthService {
             };
         } catch (error) {
             throw new InternalServerErrorException(error);
+        }
+    }
+
+    private async hashPassword(password: string, salt: string): Promise<string> {
+        return bcrypt.hash(password, salt);
+    }
+
+    private async createUser(signupCredentials, role: Role) {
+        switch (role) {
+            case Role.CLIENT:
+                return await this.clientRepository.create(signupCredentials);
+            case Role.EXPERT:
+                return await this.expertRepository.create(signupCredentials);
+            case Role.MODERATOR:
+                return await this.moderatorRepository.create(signupCredentials);
+            default:
+                return await this.adminRepository.create(signupCredentials);
         }
     }
 }
