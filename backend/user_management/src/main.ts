@@ -7,7 +7,10 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
     app.enableCors();
+    console.log("port", process.env.PORT)
     await app.listen(process.env.PORT || 8006);
+
+    console.log(`Application is running on: ${await app.getUrl()}`);
 
     const adminConfig: ServiceAccount = {
         projectId: process.env.FIREBASE_PROJECT_ID,
