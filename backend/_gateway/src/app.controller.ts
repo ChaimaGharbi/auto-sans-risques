@@ -65,8 +65,10 @@ export class AppController {
       params: query,
       data: body,
     };
+    console.log(requestOptions)
     try {
       const resp = await axios(requestOptions);
+      console.log(resp.data)
       return response.send(resp.data);
     } catch (e) {
       return response.send(e.response.data);

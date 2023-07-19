@@ -7,7 +7,7 @@ on:
 
 env:
   DOCKER_USERNAME: dhouib
-  DOCKER_PASSWORD: dhouib50810555
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   DOCKER_REPO: auto-sans-risque
 
 jobs:
