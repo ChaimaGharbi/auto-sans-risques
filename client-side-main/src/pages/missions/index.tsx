@@ -51,8 +51,6 @@ const Missions = () => {
                   item={({ data }) => {
                     const { _id, reason, typeCar, date, client } = data
 
-                    console.log(data)
-
                     return (
                       <Card
                         id={_id}

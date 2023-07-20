@@ -571,8 +571,9 @@ export class RapportRepository {
         const job = await this.pdfQueue.add('transcode', {
           idRapport: rapportId,
           expertId: rapport.expertId
-        });
-
+        }, {priority: 1});
+        console.log(job);
+        
         const reservation = await this.reservationModel.findById(rapport.reservationId);
         reservation.status = ReservationStatus.COMPLETEE;
         await reservation.save();

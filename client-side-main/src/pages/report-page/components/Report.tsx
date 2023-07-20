@@ -38,7 +38,7 @@ export default function Report({ comment, date, client }) {
       />
       <div className="py-4">
         <Formiz connect={form} onValidSubmit={onSubmit}>
-          <div className="w-full grid grid-cols-5 pb-3">
+          <div className="w-full grid grid-cols-2 pb-3 sm:grid-cols-4 xxs:grid-cols-3 md:grid-cols-5">
             {questions.data?.map((step, idx) => (
               <div key={step._id} className="grid place-content-center">
                 <button

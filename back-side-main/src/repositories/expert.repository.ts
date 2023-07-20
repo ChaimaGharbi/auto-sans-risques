@@ -246,7 +246,7 @@ export class ExpertRepository {
   }
   async fetchExpertId(id: any) {
     try {
-      const expert = await await this.expertModel
+      const expert = await this.expertModel
         .findById(id)
         .populate('specialitiesModels')
         .populate('specialitiesMarks');

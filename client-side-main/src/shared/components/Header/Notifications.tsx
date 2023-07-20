@@ -14,7 +14,7 @@ import { useUpdateIsRead } from 'app/store/hooks'
 function link(msg, id) {
   if (msg.toLowerCase().includes('veuillez confirmer ou annuler le rdv'))
     return '/missions'
-  return `/ongoing/${id}`
+  return `/reservations`
 }
 
 function Badge({ children }) {
@@ -41,31 +41,30 @@ function Badge({ children }) {
 }
 
 export default function Notifications() {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const { data, loading } = useRecentNotifications()
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
   const updateIsRead = useUpdateIsRead()
 
   const handleIsRead = notificationId => {
-    updateIsRead(notificationId);
-  
-    const notificationElement = document.getElementById(notificationId);
+    updateIsRead(notificationId)
+
+    const notificationElement = document.getElementById(notificationId)
     if (notificationElement) {
-      console.log(notificationElement);
-      
-      const spanElement = notificationElement.querySelector('span');
+      console.log(notificationElement)
+
+      const spanElement = notificationElement.querySelector('span')
       if (spanElement) {
-        console.log(notificationElement, spanElement);
+        console.log(notificationElement, spanElement)
+        notificationElement.style.backgroundImage = 'none'
+        spanElement.style.color = 'gray'
+        console.log(notificationElement, spanElement)
         
-        spanElement.style.color = 'gray ';
+        setIsDropdownOpen(false)
       }
-      notificationElement.style.backgroundImage = ' ';
     }
-  
-    setIsDropdownOpen(false);
-  };
-  
+  }
 
   useEffect(() => {
     const handleResize = () => {
@@ -85,9 +84,9 @@ export default function Notifications() {
     <Dropdown.DropdownMenu
       onOpenChange={v => {
         setIsDropdownOpen(v)
-        console.log("done");
-        
-        if (v) {clear()}
+        if (v) {
+          clear()
+        }
       }}
       open={isDropdownOpen}
     >
@@ -107,14 +106,13 @@ export default function Notifications() {
                 key={_id}
                 id={_id}
                 style={{
-                  backgroundImage: is_read ? '' : 'linear-gradient(90deg, rgba(78, 173, 255,0.2) 0%, #ffffff 50%, rgba(78, 173, 255,0.2) 100%)',
-                  
+                  backgroundImage: is_read
+                    ? ''
+                    : 'linear-gradient(335deg, rgba(78, 173, 255,0.2) 0%, #ffffff 50%, rgba(78, 173, 255,0.2) 100%)',
                 }}
               >
                 <Link
-                  to={link(message, reservationId)}
-                  className="text-black"
-                  
+                  to={link(message, reservationId)} 
                 >
                   <span
                     key={_id}

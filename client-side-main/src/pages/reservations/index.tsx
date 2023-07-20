@@ -46,9 +46,6 @@ export default function Reclamation() {
             total={data?.length ? data.length : 0}
             item={({ data }) => {
               const { _id, status, reason, typeCar, createdAt, expert } = data
-
-              console.log(data)
-
               return (
                 <Card
                   status={status}

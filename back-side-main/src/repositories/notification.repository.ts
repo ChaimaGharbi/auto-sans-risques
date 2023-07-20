@@ -93,6 +93,8 @@ export class NotificationRepository {
               '                        </table>'
           );
           expert.nb_missions = expert.nb_missions + 1;
+          console.log(expert);
+          
           await expert.save();
           statusFr = 'acceptée';
         } else if (reservation.status === ReservationStatus.REFUSEE) {
