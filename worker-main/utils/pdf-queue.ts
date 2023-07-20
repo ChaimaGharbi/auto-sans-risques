@@ -51,8 +51,9 @@ export default class PDFQueue {
     this.onFailed();
     this.onError();
 
-    this.pdfQueue.process("transcode", async (job, done) => {
+    this.pdfQueue.process("transcode",100, async (job, done) => {
       try {
+        const startTime = +new Date(); 
         console.log("transcode job started", job.id);
         const namePdf = job.data.idRapport;
         const rapportToEdit = await rapport.findById(job.data.idRapport);
@@ -74,6 +75,11 @@ export default class PDFQueue {
             await reservationEdit?.save();
           }
         );
+
+        const endTime = +new Date(); // Record the end time
+        const duration = endTime - startTime // Calculate the duration in milliseconds
+        console.log("transcode job completed in", duration, "ms");
+        this.pdfQueue.empty();
         return { link: rapportToEdit.link };
       } catch (error) {
         done(error as Error, null);

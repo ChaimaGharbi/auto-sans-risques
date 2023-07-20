@@ -11,7 +11,6 @@ import rapport from "../models/rapport";
 import category from "../models/category";
 import { uploadFile } from "./uploadPdf";
 import hbHelpers from "handlebars-helpers";
-import merge from "easy-pdf-merge";
 
 function random() {
   return Math.floor(Math.random() * 1000000);
@@ -107,8 +106,6 @@ async function getExpertAndClient(rapportId) {
     .populate("reservationId")
     .exec();
 
-  console.log(rapportData);
-
   return {
     expert: rapportData?.expertId as any,
     client: rapportData?.clientId as any,
@@ -119,6 +116,9 @@ async function getExpertAndClient(rapportId) {
 
 export const generatePDF = async (_pages, namePdf, date, cb) => {
   try {
+  
+    console.log("started");
+    
     const res = await getTemplateHtml();
     const lastPage = await getLastPageTemplateHtml();
 
@@ -213,8 +213,10 @@ export const generatePDF = async (_pages, namePdf, date, cb) => {
         // <span class=pageNumber></span> / <span class=totalPages></span>
         margin: {
           top: "100px",
-          bottom: "50px",
+          bottom: 
+          "50px",
         },
+        scale: 0.8
       });
 
       await tab.setContent(lastPageHtml);

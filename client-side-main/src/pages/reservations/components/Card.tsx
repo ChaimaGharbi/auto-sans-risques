@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { HiOutlineCheck as Done, HiOutlineX as X } from 'react-icons/hi'
 import { IoTime as Time } from 'react-icons/io5'
 import { FiUser as Avatar } from 'react-icons/fi'
-import moment from 'moment'
+import moment from 'moment-with-locales-es6'
 const Card = ({ status, id, comment, date, expert }) => {
   return (
     <div className="flex md:items-center p-2 justify-between flex-col md:flex-row ">
@@ -104,7 +104,7 @@ const User = props => {
         <div className="grid ">
           <h1 className="font-medium m-0 font-roboto">{fullName}</h1>
           <span className="text-[#47495A] uppercase font-roboto">
-            {moment(date).format('DD MMMM YYYY - HH:mm')}
+            {moment(date).locale('fr').format('DD MMMM YYYY - HH:mm')}
           </span>
         </div>
       </div>

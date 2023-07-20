@@ -1,7 +1,7 @@
 import { Formiz, useForm } from '@formiz/core'
 import If from 'app/shared/components/If'
 import { FiUser as Avatar } from 'react-icons/fi'
-import moment from 'moment'
+import moment from 'moment-with-locales-es6'
 import {
   useGetQuestions,
   useGetResponses,
@@ -156,7 +156,7 @@ const User = ({ image, commentaire, fullName, date }) => {
         <div className="grid ">
           <h1 className="font-medium m-0 font-roboto">{fullName}</h1>
           <span className="text-[#47495A] uppercase font-roboto">
-            {moment(date).format('DD MMMM YYYY - HH:mm')}
+            {moment(date).locale('fr').format('DD MMMM YYYY - HH:mm')}
           </span>
         </div>
       </div>

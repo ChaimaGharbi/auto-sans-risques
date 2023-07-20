@@ -16,5 +16,4 @@ export const createReservation = reservation =>
   axios.post(`/reservation`, reservation).then(({ data }) => data)
 
 export const searchExperts = filter =>
-  axios.post(`/expert/paginate?group=false`, filter).then(({ data }) => {console.log("dataa",data);
-  return data})
+  axios.post(`/expert/paginate?group=false`, filter).then(({ data }) => data)

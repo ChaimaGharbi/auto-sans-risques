@@ -3,7 +3,7 @@ import { AiOutlineDownload as DownloadIcon } from 'react-icons/ai'
 import { ImEye as EyeIcon } from 'react-icons/im'
 import { IoTime as Time } from 'react-icons/io5'
 import { FiUser as Avatar } from 'react-icons/fi'
-import moment from 'moment'
+import moment from 'moment-with-locales-es6'
 import Reclamation from './Reclamation'
 
 const Card = ({ status, id, expert, date, comment, link }) => {
@@ -94,7 +94,7 @@ const User = props => {
         <div className="grid ">
           <h1 className="font-medium m-0 font-roboto">{fullName}</h1>
           <span className="text-[#47495A] uppercase font-roboto">
-            {moment(date).format('DD MMMM YYYY - HH:mm')}
+            {moment(date).locale('fr').format('DD MMMM YYYY - HH:mm')}
           </span>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import If from 'app/shared/components/If'
 import { Link } from 'react-router-dom'
 import { FiUser as Avatar } from 'react-icons/fi'
-import moment from 'moment'
+import moment from 'moment-with-locales-es6'
 
 const Card = ({ comment, date, client, report, id }) => {
   return (
@@ -43,7 +43,7 @@ const User = props => {
         <div className="grid ">
           <h1 className="font-medium m-0 font-roboto">{fullName}</h1>
           <span className="text-[#47495A] uppercase font-roboto">
-            {moment(date).format('DD MMMM YYYY - HH:mm')}
+            {moment(date).locale('fr').format('DD MMMM YYYY - HH:mm')}
           </span>
         </div>
       </div>

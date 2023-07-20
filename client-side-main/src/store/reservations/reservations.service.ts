@@ -19,7 +19,7 @@ export const getOngoingMissions = id =>
   getClient()
     .post(`/reservation/paginate?group=false`, {
       sortOrder: 'desc',
-      sortField: 'priority',
+      sortField: 'date',
       pageNumber: 1,
       pageSize: 20,
       filter: {
@@ -34,7 +34,7 @@ export const getCompletedMissions = id =>
   getClient()
     .post(`/reservation/paginate?group=false`, {
       sortOrder: 'desc',
-      sortField: 'priority',
+      sortField: 'createdAt',
       pageNumber: 1,
       pageSize: 20,
       filter: {

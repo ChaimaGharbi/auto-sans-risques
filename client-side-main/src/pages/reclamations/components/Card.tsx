@@ -1,7 +1,7 @@
 import If from 'app/shared/components/If'
 import { Link } from 'react-router-dom'
 import { IoTimerOutline as Icon } from 'react-icons/io5'
-import moment from 'moment'
+import moment from 'moment-with-locales-es6'
 import { IoTime as Time } from 'react-icons/io5'
 
 const Card = ({ status, title, date, id }) => {
@@ -10,7 +10,7 @@ const Card = ({ status, title, date, id }) => {
       <div className="grid ">
         <h1 className="font-medium m-0 font-roboto">Sujet : {title}</h1>
         <span className="text-[#47495A] uppercase font-roboto">
-          {moment(date).format('DD MMMM YYYY - HH:mm')}
+          {moment(date).locale('fr').format('DD MMMM YYYY - HH:mm')}
         </span>
       </div>
 
