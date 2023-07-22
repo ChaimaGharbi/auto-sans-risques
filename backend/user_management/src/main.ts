@@ -8,7 +8,7 @@ async function bootstrap() {
 
     app.enableCors();
     console.log("port", process.env.PORT)
-    await app.listen(process.env.PORT || 8006);
+    await app.listen(process.env.PORT || 8004);
 
     console.log(`Application is running on: ${await app.getUrl()}`);
 

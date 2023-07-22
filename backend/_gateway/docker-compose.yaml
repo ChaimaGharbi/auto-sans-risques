@@ -5,9 +5,3 @@ services:
     image: dhouib/auto-sans-risque:_gateway
     ports:
       - 8000:8000
-    networks:
-      - my-network
-
-networks:
-  my-network:
-    driver: bridge

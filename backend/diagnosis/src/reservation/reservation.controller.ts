@@ -1,8 +1,6 @@
 import {Body, Controller, Get, Param, Post, Put, Request, UseGuards, ValidationPipe} from '@nestjs/common';
 import {AuthGuard} from '@nestjs/passport';
-// import { Roles } from '../auth/role.decorator';
-// import { RolesGuard } from '../auth/roles.guard';
-import {RapportService} from '../rapport/rapport.service';
+import {RolesGuard} from '../roles.guard';
 import {filterReservationDto} from './dto/filterReservation.dto';
 import {reservationDto} from './dto/reservation.dto';
 import {ReservationService} from './reservation.service';
@@ -37,9 +35,7 @@ export class ReservationController {
 
     @Get('/:id')
     // @Roles(Role.EXPERT)
-    @UseGuards(AuthGuard(),
-        // RolesGuard
-    )
+    @UseGuards(AuthGuard(), RolesGuard)
     async fetchReservationById(@Param() params, @Request() req) {
         const id = req.user._id?.toString();
         return await this.reservationService.fetchReservationById(params.id, id);
@@ -47,9 +43,7 @@ export class ReservationController {
 
     @Put('/updateStatus/:id/:status')
     // @Roles(Role.EXPERT)
-    @UseGuards(AuthGuard(),
-        // RolesGuard
-    )
+    @UseGuards(AuthGuard(), RolesGuard)
     async updateReservationStatus(@Param() params, @Request() req) {
         return await this.reservationService.updateReservationStatus(
             params.id.toString(),

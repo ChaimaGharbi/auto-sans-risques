@@ -26,7 +26,7 @@ export class ReclamationService {
             await this.reservationRepository.findById(reclamationDto.reservationId);
             return await this.reclamationRepository.create(reclamationDto);
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -40,7 +40,7 @@ export class ReclamationService {
             if (!reclamation) return new NotFoundException('No reclamation found');
             return reclamation;
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 

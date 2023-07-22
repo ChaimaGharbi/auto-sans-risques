@@ -8,16 +8,13 @@ import {
     Put,
     Query,
     Request,
-    UploadedFile,
     UploadedFiles,
     UseGuards,
     UseInterceptors,
     ValidationPipe
 } from '@nestjs/common';
 import {AuthGuard} from '@nestjs/passport';
-import {Role} from '../reservation/entities/user.roles.enum';
-// import { Roles } from '../auth/role.decorator';
-// import { RolesGuard } from '../auth/roles.guard';
+import {RolesGuard} from '../roles.guard';
 import {FilterQuestionDto} from './dto/filterQuestion.dto';
 import {FilterQuestionCtgDto} from './dto/filterQuestionCtg.dto';
 import {filterRapportDto} from './dto/filterRapport.dto';
@@ -28,7 +25,7 @@ import {rapportDto} from './dto/rapport.dto';
 import {reponseDto} from './dto/reponse.dto';
 import {reponsesCategoryDto} from './dto/reponsesCategory.dto';
 import {RapportService} from './rapport.service';
-import {uploadImage, niemandsUploadImage} from 'src/shared/upload.files';
+import {niemandsUploadImage} from 'src/shared/upload.files';
 import {FilesInterceptor} from '@nestjs/platform-express';
 
 import * as path from 'path';
@@ -65,9 +62,7 @@ export class RapportController {
     }
 
     // @Roles(Role.EXPERT)
-    @UseGuards(AuthGuard(),
-        // RolesGuard
-    )
+    @UseGuards(AuthGuard(), RolesGuard)
     @Post('/reponse')
     async createReponse(@Body(ValidationPipe) reponseDto: reponseDto, @Request() req) {
         return await this.rapportService.createReponse(reponseDto, req.user._id?.toString());

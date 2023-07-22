@@ -53,7 +53,7 @@ export class ModeratorService {
             await this.moderatorRepository.delete(id)
             return 'Moderator deleted';
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -62,7 +62,7 @@ export class ModeratorService {
             await this.moderatorModel.deleteMany({_id: {$in: ids}});
             return 'Moerators deleted';
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 }

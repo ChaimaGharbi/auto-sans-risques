@@ -34,7 +34,7 @@ export class ArticleService {
             }
             return articleSaved;
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -73,7 +73,7 @@ export class ArticleService {
             await this.articleRepository.deleteManyByIds(ids);
             return 'Articles deleted';
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -123,7 +123,7 @@ export class ArticleService {
         try {
             return this.categoryModel.create(articleCategoryDto);
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -160,7 +160,7 @@ export class ArticleService {
             await this.categoryRepository.deleteManyByIds(ids);
             return 'Article Category deleted';
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -176,7 +176,7 @@ export class ArticleService {
         try {
             return await this.categoryRepository.findAll();
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 

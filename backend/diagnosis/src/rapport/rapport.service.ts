@@ -53,7 +53,7 @@ export class RapportService {
         try {
             return await this.rapportRepository.update(id, {images});
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -63,7 +63,7 @@ export class RapportService {
             await this.reservationRepository.update(rapportDto.reservationId, {rapportId: rapport._id});
             return rapport;
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -71,7 +71,7 @@ export class RapportService {
         try {
             return await this.rapportRepository.update(id, {etat: rapportDto.etat});
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -79,7 +79,7 @@ export class RapportService {
         try {
             return await this.rapportRepository.findById(id);
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -92,7 +92,7 @@ export class RapportService {
             if (!rapport) return new NotFoundException('No rapport found');
             return rapport;
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -155,7 +155,7 @@ export class RapportService {
         try {
             return await this.questionCategoryRepository.create(questionCategoryDto);
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -174,7 +174,7 @@ export class RapportService {
         try {
             return await this.questionCategoryRepository.findById(id);
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -183,7 +183,7 @@ export class RapportService {
             await this.questionCategoryRepository.delete(id);
             return 'Question Category deleted';
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -195,7 +195,7 @@ export class RapportService {
             }
             return questionCtg;
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -205,7 +205,7 @@ export class RapportService {
             await this.questionCategoryModel.deleteMany({_id: {$in: ids.ids}});
             return 'Questions categories deleted';
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -275,7 +275,7 @@ export class RapportService {
                 comment: reponseDto.comment
             });
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -283,7 +283,7 @@ export class RapportService {
         try {
             return this.reponseRepository.findById(id);
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -299,7 +299,7 @@ export class RapportService {
             }
             return reponses;
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -368,7 +368,7 @@ export class RapportService {
             await this.questionRepository.deleteManyByIds(ids);
             return 'Questions deleted';
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -417,7 +417,7 @@ export class RapportService {
             }
             return createdReponse;
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -443,7 +443,7 @@ export class RapportService {
             console.log('rep', rep);
             return rep;
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 }

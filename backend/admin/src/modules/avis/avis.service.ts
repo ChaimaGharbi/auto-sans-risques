@@ -76,7 +76,7 @@ export class AvisService {
             await this.avisRepository.deleteManyByIds(ids);
             return 'avis deleted';
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 

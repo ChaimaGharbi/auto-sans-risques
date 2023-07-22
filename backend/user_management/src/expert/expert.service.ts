@@ -6,7 +6,7 @@ import {Expert} from "./entities/expert.entity";
 import {Model} from "mongoose";
 import {GenericRepository} from "../shared/generic/generic.repository";
 import {IExpertModel} from "./entities/expert.interface";
-import {Disponibilite} from "./entities/disponibilite.entity";
+import {Disponibilite} from "../disponibilite/entities/disponibilite.entity";
 
 @Injectable()
 export class ExpertService {
