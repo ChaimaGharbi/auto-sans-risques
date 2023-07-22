@@ -60,8 +60,13 @@ export class AppController {
       url: `http://${host}:${port}` + url,
       params: query,
       data: body,
-      headers
     };
+    if (headers.authorization) {
+      requestOptions['headers'] = {
+        Authorization: headers.authorization,
+      };
+    }
+    console.log(requestOptions)
     try {
       const resp = await axios(requestOptions);
       return response.status(resp.status).send(resp.data);
