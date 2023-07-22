@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: diagnosis
-      gateway: enabled
+
   template:
     metadata:
       labels:
@@ -15,9 +15,10 @@ spec:
     spec:
       containers:
         - name: diagnosis
-          image: auto-sans-risque/diagnosis:latest
+          image: dhouib/auto-sans-risque:diagnosis
+          imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8003
 
 ---
 
@@ -30,6 +31,5 @@ spec:
     app: diagnosis
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 8080
-  type: LoadBalancer
+      port: 8003
+      targetPort: 8003

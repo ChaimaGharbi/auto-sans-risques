@@ -1,16 +1,17 @@
-import {All, Controller, Get, Inject, Req, Res} from '@nestjs/common';
-import {ClientProxy} from '@nestjs/microservices';
+import {All, Controller, Get, Req, Res} from '@nestjs/common';
 import axios from "axios";
+import {Request} from 'express';
+
 
 @Controller()
 export class AppController {
   constructor(
-      @Inject('ADMIN') private adminClient: ClientProxy,
-      @Inject('COMMUNICATION') private communicationClient: ClientProxy,
-      @Inject('DIAGNOSIS') private diagnosisClient: ClientProxy,
-      @Inject('LISTING') private listingClient: ClientProxy,
-      @Inject('PAYMENT') private paymentClient: ClientProxy,
-      @Inject('USER_MANAGEMENT') private userManagementClient: ClientProxy,
+      // @Inject('ADMIN') private adminClient: ClientProxy,
+      // @Inject('COMMUNICATION') private communicationClient: ClientProxy,
+      // @Inject('DIAGNOSIS') private diagnosisClient: ClientProxy,
+      // @Inject('LISTING') private listingClient: ClientProxy,
+      // @Inject('PAYMENT') private paymentClient: ClientProxy,
+      // @Inject('USER_MANAGEMENT') private userManagementClient: ClientProxy,
   ) {
   }
 
@@ -20,10 +21,11 @@ export class AppController {
   }
 
   @All('*')
-  async redirectRequests(@Req() request, @Res() response) {
+  async redirectRequests(@Req() request: Request, @Res() response) {
     let host = 'localhost';
     let port = 8001;
-    const {url, method, body, query} = request;
+    console.log(request.headers)
+    const {url, method, body, query, headers} = request;
     switch (request.url.split('/')[1]) {
       case 'admin':
         host = 'localhost';
@@ -44,19 +46,13 @@ export class AppController {
         host = 'localhost';
         port = 8003;
         break
-      case 'listing':
-        host = 'localhost';
-        port = 8004;
-        break
       case 'payment':
-        host = 'localhost';
-        port = 8005;
-        break
       case 'expert':
       case 'client':
       case 'auth':
+      case 'disponibilte' :
         host = 'localhost';
-        port = 8006;
+        port = 8004;
         break
     }
     const requestOptions = {
@@ -64,14 +60,13 @@ export class AppController {
       url: `http://${host}:${port}` + url,
       params: query,
       data: body,
+      headers
     };
-    console.log(requestOptions)
     try {
       const resp = await axios(requestOptions);
-      console.log(resp.data)
-      return response.send(resp.data);
+      return response.status(resp.status).send(resp.data);
     } catch (e) {
-      return response.send(e.response.data);
+      return response.status(e.response.status).send(e.response.data);
     }
 
   }

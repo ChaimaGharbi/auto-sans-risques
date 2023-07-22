@@ -5,8 +5,6 @@ services:
     image: dhouib/auto-sans-risque:communication
     ports:
       - 8002:8002
-    networks:
-      - my-network
     environment:
       - PORT=8002
       - FIREBASE_PROJECT_ID=karhabtek-5df57
@@ -31,8 +29,3 @@ services:
       - REDIS_PWD=iBlztoUrZwAeJiWzWGwmmf466jXY0X7O
       - REDIS_PORT=14042
       - REDIS_HOST=redis-14042.c256.us-east-1-2.ec2.cloud.redislabs.com
-
-networks:
-  my-network:
-    external: true
-    name: my-network

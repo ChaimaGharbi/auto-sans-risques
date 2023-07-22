@@ -11,8 +11,6 @@ import {JwtService} from '@nestjs/jwt';
 import {Role} from 'src/auth/entities/user.roles.enum';
 import {SignInCredentialsDto} from './dto/signin-credentials.dto';
 import {SignupCredentialsDto} from './dto/signup-credentials.dto';
-import {UpdateClientCredentialsDto} from './dto/updateClient-credentials.dto';
-import {UpdateExpertCredentialsDto} from './dto/updateExpert-credentials.dto';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
 import {InjectModel} from "@nestjs/mongoose";
@@ -28,8 +26,6 @@ import {GenericRepository} from "../shared/generic/generic.repository";
 import {User} from "./entities/user.entity";
 import {getHtml} from "../config/mailer/mailer.helper";
 import verifyEmail from "./htmlTemplates/verifyEmail";
-import {getPositionFromAddress} from "../shared/utils";
-import resetPasswordConfirmation from "./htmlTemplates/resetPasswordConfirmation";
 
 
 @Injectable()
@@ -115,6 +111,7 @@ export class AuthService {
     async signIn(signInCredentialsDto: SignInCredentialsDto) {
         try {
             const user = await this.getUserByEmail(signInCredentialsDto.email.toLocaleLowerCase());
+            console.log({user})
             const isValdiated = await user.validatePassword(signInCredentialsDto.password);
             if (user && isValdiated) {
                 if (user.status === 2) {
@@ -174,37 +171,6 @@ export class AuthService {
             throw new InternalServerErrorException(error);
         }
     }
-
-    async updateProfile(
-        id,
-        updateCredentialsDto: UpdateExpertCredentialsDto | UpdateClientCredentialsDto,
-        files: any,
-        role: Role
-    ) {
-
-        try {
-            const repository = (role == Role.EXPERT) ? this.expertRepository : (role == Role.CLIENT) ? this.clientRepository : null;
-            const updateObject = {...updateCredentialsDto}
-            for (const key in files) {
-                if (!files[key]) {
-                    updateObject[key] = files[key];
-                }
-            }
-            if (updateCredentialsDto.adresse && updateCredentialsDto.ville) {
-                // @ts-ignore
-                updateObject.position = await getPositionFromAddress(
-                    updateCredentialsDto.adresse + ' ' + updateCredentialsDto.ville
-                );
-            }
-
-            if (updateObject.email)
-                updateObject.email = updateObject.email.toLocaleLowerCase();
-            return await repository.update(id, updateObject);
-        } catch (error) {
-            throw new ConflictException(error.message);
-        }
-    }
-
     // Getters
     async getUserByEmail(email: string) {
         let user = null;
@@ -231,7 +197,10 @@ export class AuthService {
             }
             return user;
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            if (error instanceof HttpException) {
+                throw error;
+            }
+            return new InternalServerErrorException("Server Error")
         }
     }
 
@@ -251,7 +220,6 @@ export class AuthService {
     async getUserByEmailAndRole(email: string, role: Role) {
         try {
             let user;
-
             switch (role) {
                 case Role.CLIENT:
                     user = await this.clientModel.findOne({email}).populate('user', '-password -salt').exec();
@@ -274,23 +242,6 @@ export class AuthService {
             throw new InternalServerErrorException(error);
         }
     }
-
-    async getClientById(id: any) {
-        try {
-            const client = await this.clientRepository.findById(id);
-            return {
-                email: client.email,
-                fullName: client.fullName,
-                tel: client.tel,
-                address: client.adresse,
-                gouv: client.ville,
-                profile: client.img
-            };
-        } catch (error) {
-            throw new InternalServerErrorException(error);
-        }
-    }
-
     async verifyEmail(token: string) {
         try {
             const tokenExists = await this.tokenModel.findOne({token});
@@ -335,149 +286,6 @@ export class AuthService {
             await this.sendVerificationEmail(user, role);
             return {
                 message: 'A verification email has been sent to ' + user.email
-            };
-        } catch (error) {
-            throw new InternalServerErrorException(error);
-        }
-    }
-
-    // Tokenization+Verification
-
-    async verifyToken(token: any, role: Role, verify = false) {
-        const findByToken = async (token, role) => {
-            const model = (role == Role.EXPERT) ? this.expertModel : (role == Role.CLIENT) ? this.clientModel : (role == Role.MODERATOR) ? this.moderatorModel : this.adminModel;
-            return model.findOne({
-                resetPasswordToken: token,
-                resetPasswordExpires: {$gt: new Date(Date.now())}
-            });
-        }
-        try {
-            let user;
-            if (!role) {
-                user = await findByToken(token, Role.EXPERT);
-                if (!user) {
-                    user = await findByToken(token, Role.CLIENT);
-                }
-                if (!user) {
-                    user = await findByToken(token, Role.ADMIN);
-                }
-                if (!user) {
-                    user = await findByToken(token, Role.MODERATOR);
-                }
-            } else {
-                user = await findByToken(token, role);
-            }
-            if (!user) {
-                throw new BadRequestException('Password reset token is invalid or has expired.');
-            }
-            if (verify) {
-                return user;
-            } else return 'token valid';
-        } catch (error) {
-            throw new InternalServerErrorException(error);
-        }
-    }
-
-    async recoverPasswordWithoutRole(email: string) {
-        try {
-            const user = await this.getUserByEmailAndRole(email, null);
-            if (!user) {
-                throw new BadRequestException(
-                    'The email address ' +
-                    email +
-                    ' is not associated with any account. Double-check your email address and try again.'
-                );
-            }
-            user.generatePasswordReset();
-            await user.save();
-            const html = await getHtml(verifyEmail(user.fullName, user.resetPasswordToken));
-
-            await this.mailerService.sendMail(user.email, user.fullName, 'Demande de changement de mot de passe', html);
-
-            return {
-                message: 'A Reset email has been sent to ' + user.email
-            };
-        } catch (error) {
-            throw new InternalServerErrorException(error);
-        }
-    }
-
-    async recoverPassword(email: string, role: Role) {
-        try {
-            const user = await this.getUserByEmailAndRole(email, role);
-            if (!user) {
-                throw new BadRequestException(
-                    'The email address ' +
-                    email +
-                    ' is not associated with any account. Double-check your email address and try again.'
-                );
-            }
-            user.generatePasswordReset();
-            await user.save();
-            const html = await getHtml(verifyEmail(user.fullName, user.resetPasswordToken));
-            await this.mailerService.sendMail(user.email, user.fullName, 'Demande de changement de mot de passe', html);
-
-            return {
-                message: 'A Reset email has been sent to ' + user.email
-            };
-        } catch (error) {
-            throw new InternalServerErrorException(error);
-        }
-    }
-
-    // Recovery
-
-    async resetPasswordWithoutRole(token: any, password: any) {
-        try {
-            const user = await this.verifyToken(token, null, true);
-            if (password === null || password === undefined) {
-                throw new BadRequestException('No password Provided');
-            }
-
-            user.password = await this.hashPassword(password, user.salt);
-            user.resetPasswordToken = undefined;
-            user.resetPasswordExpires = undefined;
-            user.isVerified = true;
-
-            await user.save();
-            const html = await getHtml(resetPasswordConfirmation(user.fullName));
-            await this.mailerService.sendMail(user.email, user.fullName, 'Votre mot de passe a été changé ', html);
-            return {
-                done: true
-            };
-        } catch (error) {
-            throw new InternalServerErrorException(error);
-        }
-    }
-
-    async resetPassword(token: any, password: any, role: Role) {
-        try {
-            const user = await this.verifyToken(token, role, true);
-            if (password === null || password === undefined) {
-                throw new BadRequestException('No paasword Provided');
-            }
-            user.password = await this.hashPassword(password, user.salt);
-            user.resetPasswordToken = undefined;
-            user.resetPasswordExpires = undefined;
-            user.isVerified = true;
-
-            await user.save();
-            const html = await getHtml(resetPasswordConfirmation(user.fullName));
-            await this.mailerService.sendMail(user.email, user.fullName, 'Votre mot de passe a été changé ', html);
-            const payload = {
-                fullName: user.fullName,
-                specialitiesModels: user.specialitiesModels,
-                specialitiesMarks: user.specialitiesMarks,
-                tel: user.tel,
-                address: user.adresse,
-                gouv: user.ville,
-                email: user.email,
-                role: user.role
-            };
-            const accessToken = this.jwtService.sign(payload);
-            return {
-                ...payload,
-                accessToken
             };
         } catch (error) {
             throw new InternalServerErrorException(error);

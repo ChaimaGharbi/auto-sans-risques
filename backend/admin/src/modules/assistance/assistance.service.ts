@@ -20,7 +20,7 @@ export class AssistanceService {
         try {
             return await this.assistanceRepository.create(assistanceDto);
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 

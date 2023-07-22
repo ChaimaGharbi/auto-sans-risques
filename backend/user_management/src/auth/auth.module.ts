@@ -9,11 +9,11 @@ import {AuthController} from './auth.controller';
 import {AuthService} from './auth.service';
 import {ExpertModule} from '../expert/expert.module';
 import {JwtModule} from '@nestjs/jwt';
-import {JwtStrategy} from './jwt-strategy';
 import {MailerService} from 'src/config/mailer/mailer.service';
 import {Module} from '@nestjs/common';
 import {MongooseModule} from '@nestjs/mongoose';
 import {PassportModule} from '@nestjs/passport';
+import {JwtStrategy} from "../jwt-strategy";
 
 @Module({
     imports: [

@@ -18,7 +18,7 @@ export class PackService {
         try {
             return this.packModel.create(packDto);
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -38,7 +38,7 @@ export class PackService {
         try {
             return this.packRepository.findById(id);
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -46,7 +46,7 @@ export class PackService {
         try {
             return await this.packModel.find().sort({priority: -1});
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -55,7 +55,7 @@ export class PackService {
             await this.packRepository.delete(id)
             return 'pack deleted';
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -64,7 +64,7 @@ export class PackService {
             await this.packModel.deleteMany({_id: {$in: ids}});
             return 'Packs deleted';
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 

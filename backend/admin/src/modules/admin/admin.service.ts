@@ -51,7 +51,7 @@ export class AdminService {
             await this.adminRepository.delete(id);
             return 'Admin deleted';
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -60,7 +60,7 @@ export class AdminService {
             await this.adminRepository.deleteManyByIds(ids);
             return 'Admins deleted';
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 }

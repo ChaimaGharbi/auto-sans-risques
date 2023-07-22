@@ -71,7 +71,7 @@ export class AdsService {
             const ads = await this.adsModel.aggregate(pipelines);
             return ads[0];
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -91,7 +91,7 @@ export class AdsService {
             await ads.save();
             return ads;
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -103,7 +103,7 @@ export class AdsService {
             }
             return 'ads deleted';
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -112,7 +112,7 @@ export class AdsService {
             await this.adsModel.deleteMany({_id: {$in: ids}});
             return 'Ads deleted';
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 

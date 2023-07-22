@@ -1,4 +1,4 @@
-import {Injectable, InternalServerErrorException} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {filterModelDto} from './dto/filterModel.dto';
 import {ModelDto} from './dto/model.dto';
 import {InjectModel} from "@nestjs/mongoose";
@@ -26,7 +26,7 @@ export class ModelService {
         try {
             return this.modelRepository.create(modelDto)
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -101,7 +101,7 @@ export class ModelService {
                 }
             }])
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -109,7 +109,7 @@ export class ModelService {
         try {
             return await this.modelCarModel.findById(id).populate('marks').sort({priority: -1});
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -118,7 +118,7 @@ export class ModelService {
         try {
             return await this.modelRepository.update(id, {marks: modelDto.marks, name: modelDto.name})
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -127,7 +127,7 @@ export class ModelService {
             await this.modelRepository.delete(id)
             return 'model deleted';
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -136,7 +136,7 @@ export class ModelService {
             await this.modelCarModel.deleteMany({_id: {$in: ids}});
             return 'Models deleted';
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 

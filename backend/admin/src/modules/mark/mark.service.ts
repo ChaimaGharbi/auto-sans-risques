@@ -1,4 +1,4 @@
-import {Injectable, InternalServerErrorException} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {filterMarkDto} from './dto/filterMark.dto';
 import {MarkDto} from './dto/mark.dto';
 import {InjectModel} from "@nestjs/mongoose";
@@ -29,7 +29,7 @@ export class MarkService {
             await modelCar.save();
             return mark;
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -50,7 +50,7 @@ export class MarkService {
 
             return await this.markModel.aggregatePaginate(myAggregate, options, null);
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -58,7 +58,7 @@ export class MarkService {
         try {
             return await this.markRepository.aggregate(filterMarkDto, [], {modelId})
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -66,7 +66,7 @@ export class MarkService {
         try {
             return await this.markModel.findById(id).populate('modelId').sort({priority: -1});
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -74,7 +74,7 @@ export class MarkService {
         try {
             return await this.markRepository.update(id, {name: markDto.name});
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -83,7 +83,7 @@ export class MarkService {
             await this.markRepository.delete(id);
             return 'Mark deleted';
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 
@@ -92,7 +92,7 @@ export class MarkService {
             await this.markModel.deleteMany({_id: {$in: ids}});
             return 'Marks deleted';
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            return error
         }
     }
 }

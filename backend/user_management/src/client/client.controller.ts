@@ -13,7 +13,7 @@ import {
 import {AuthGuard} from '@nestjs/passport';
 import {FileFieldsInterceptor} from '@nestjs/platform-express';
 import {niemandsUploadImage} from 'src/shared/upload.files';
-import {GetUser} from '../auth/get-user.decorator';
+import {GetUser} from '../get-user.decorator';
 import {ClientService} from './client.service';
 import {filterClientDto} from './dto/filterClient.dto';
 
@@ -21,7 +21,6 @@ import {filterClientDto} from './dto/filterClient.dto';
 export class ClientController {
     constructor(private clientService: ClientService) {
     }
-
     @Post('/paginate')
     async fetchRapports(@Body(ValidationPipe) filterClientDto: filterClientDto) {
         return await this.clientService.fetchClients(filterClientDto);
