@@ -27,7 +27,7 @@ export class AppController {
     const {url, method, body, query, headers} = request;
     switch (request.url.split('/')[1]) {
       case 'admin':
-        host = 'localhost';
+        host = 'admin';
         port = 8001;
         break
       case 'pack':
@@ -35,14 +35,14 @@ export class AppController {
       case 'assistance':
       case 'article':
       case 'ads':
-        host = 'localhost';
+        host = 'communication';
         port = 8002;
         break
       case 'reservation':
       case 'reclamation':
       case 'rapport':
       case 'avis':
-        host = 'localhost';
+        host = 'diagnosis';
         port = 8003;
         break
       case 'payment':
@@ -50,7 +50,7 @@ export class AppController {
       case 'client':
       case 'auth':
       case 'disponibilte' :
-        host = 'localhost';
+        host = 'user_management';
         port = 8004;
         break
     }
@@ -59,11 +59,12 @@ export class AppController {
       url: `http://${host}:${port}` + url,
       params: query,
       data: body,
+      headers: {
+        "Content-Type": 'application/json',
+      }
     };
     if (headers.authorization) {
-      requestOptions['headers'] = {
-        Authorization: headers.authorization,
-      };
+      requestOptions['headers']["Authorization"] = headers.authorization
     }
     console.log(requestOptions)
     try {
