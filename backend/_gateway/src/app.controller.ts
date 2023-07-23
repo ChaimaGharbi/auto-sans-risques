@@ -24,7 +24,6 @@ export class AppController {
   async redirectRequests(@Req() request: Request, @Res() response) {
     let host = 'localhost';
     let port = 8001;
-    console.log(request.headers)
     const {url, method, body, query, headers} = request;
     switch (request.url.split('/')[1]) {
       case 'admin':
@@ -71,6 +70,7 @@ export class AppController {
       const resp = await axios(requestOptions);
       return response.status(resp.status).send(resp.data);
     } catch (e) {
+      console.log(e)
       return response.status(e.response.status).send(e.response.data);
     }
 
