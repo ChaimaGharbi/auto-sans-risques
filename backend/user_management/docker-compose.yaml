@@ -4,7 +4,7 @@ services:
   user_management:
     image: dhouib/auto-sans-risque:user_management
     ports:
-      - 8004:8000
+      - 8004:8004
     env_file:
       - ./.env
     networks:

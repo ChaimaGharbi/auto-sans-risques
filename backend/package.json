@@ -7,9 +7,7 @@
     "all:start": "concurrently \"cd _gateway && npm run start:dev\" \"cd admin && npm run start:dev\" \"cd communication && npm run start:dev\" \"cd diagnosis && npm run start:dev\" \"cd user_management && npm run start:dev\"  ",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docker:pull": "docker compose -f ./_gateway/docker-compose.yaml -f ./admin/docker-compose.yaml -f ./communication/docker-compose.yaml -f ./diagnosis/docker-compose.yaml -f ./user_management/docker-compose.yaml pull",
-    "docker:build": "docker compose -f ./_gateway/docker-compose.yaml -f ./admin/docker-compose.yaml -f ./communication/docker-compose.yaml -f ./diagnosis/docker-compose.yaml -f ./user_management/docker-compose.yaml up",
-    "docker:pull:dev": "docker compose pull",
-    "docker:build:dev": "docker compose up"
+    "docker:build": "concurrently \"cd _gateway && docker compose up\" \"cd admin && docker compose up\" \"cd communication && docker compose up\" \"cd diagnosis && docker compose up\" \"cd user_management && docker compose up\"  "
   },
   "devDependencies": {
     "concurrently": "^7.6.0"

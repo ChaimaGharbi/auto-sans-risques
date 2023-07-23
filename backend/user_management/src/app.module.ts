@@ -46,4 +46,7 @@ import {BullModule} from '@nestjs/bull';
     providers: []
 })
 export class AppModule {
+    constructor() {
+        console.log(process.env)
+    }
 }
