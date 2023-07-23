@@ -5,27 +5,10 @@ services:
     image: dhouib/auto-sans-risque:user_management
     ports:
       - 8004:8000
-    environment:
-      - PORT=8004
-      - FIREBASE_PROJECT_ID=karhabtek-5df57
-      - FIREBASE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCVN9hfIfSEeUD4\n3FHWuWAUhelcRRRYCNVviqSmeyxpAF0rGowjwQQt01Ox1xC7oQedNkiEdqgjNj6w\nnOF9np3liu6wobK2jCsTdFtuSDc3m78rnZc1ZWNfDD4xZgKfvZmaOYuR1v376/P/\nEjReGo5/3t9R9FKERPBXqUF+WXa8s96JISqAev376yNFsb7FXCGke3LJW3Bbt1S3\nZtX7iR0f/CjhxOtbfKfkV9xaIcJGLbgOR9EMGsF66Y6ygzFkxexetRRsvC2M6C5k\nBdrh5iOat1f2bsgY/k7eE7B/Z8rUuHu5q9czx9rpE/fw5PXG0veITV0eNl8ezVPT\njbsues4RAgMBAAECggEAEBHtmYE8pi+w0ZxYq/lW4Z7yXN+Lq1d4NQUHam6Ff+Fs\nJ0I6qXcWDiFeOB7jTHGxMjswYCOvQ+uJoNekaTT16EyoHBmt937s/LFhT2UznSeG\n1RmpuTRsGUZmREeqLK3spvFfmJtAyyrEIkpBnYjao+bKwja/1ELgZ3Bw/zx/Tx8d\nu8Z2YrYZTsX6Eum+iXmdpO+/Kg6/MW0xNX9WQVuZLLqFYVC2liF+JNTyQXmL+Ma/\nulaO3krtKUSgnOVp7NOCc9XZFx95iHZ+rxwNJ8XhHT9iTmFSVrweRBegnuZByGCu\no3tmN2aQAvnYY+IRGW+kkHYq76DOxq658YMTYtwSCQKBgQDRU8N3ivzPwi6juSiY\nJAUN/83HOG/hNogQ9E79hGKWIKn8QL2hiywtrhmLfkOGY3+x4jIVLeabbOJCmPUu\nYSvQjwkxsU3utR9isbnl/B/sllUHuoauiyIo1tuKSdPrO9zDhVpDEmLthJdeGE2m\n25p+S3mMQBzxLCX+Kf4sMNKopwKBgQC2fRpNSQsg6zMSxsscgLDXxrj7qMolAqQI\nsCPS7VOOdRE+18tMweAsN7othAbzL9aOgug01jtHDeQeanAYQpa5r5jYnRZyNGtR\n/FXQDX1Zy9scl8IP1NyeuujDPkA1PvZONwBXvyT3fhljA6oPm52GOANaROZ9kBZf\nl4iP3RryhwKBgBhSklDOnoeJeZ/egOAEt22j/oYaga16h57otFDy0/27t+SupRoj\nMLPyGdfCiRgRcaH6tXUOi1Ad+8BfQ4XrFos6Q4g5oOOOuiHeosodXJxB74lhXArl\n8ccrCAFuiKg5oXI6iX1nooUUtf3h9wvfUnlATdRFEtfXGGcK/BSoa6HbAoGBAKlI\nH6/1xCcDR1txoVSNZH6lT0/T4cC3VGbizjiKAuqxWhALqgFID6W1BDXYtYG9rLCC\natkoqdBd6HD2l4lJq/wQEh9OiVXjnnJtO0VGXjOAUX+Sn2iEMyvjgqwrAPDjuSQR\nDXZYT/httysMaSMVXej16NZB9/YeRULjlMCvgKHdAoGABbexJmc7+aQm9jxSvCO7\n178/IEFOpB9J+nGqxgR/5xGgvDx90rEF412iMuM86GE8aB6od6wdBaC682B1LHx7\nQ/9J212RJi/c/yaQhKmzIPL2M2jWAfFHerH64FnNHZdmQQZCk5qd7hEfREBhvvoN\nqLYnt3O1rOG/FdKdI/owyDE=\n-----END PRIVATE KEY-----\n
-      - FIREBASE_CLIENT_EMAIL=firebase-adminsdk-j6i1q@karhabtek-5df57.iam.gserviceaccount.com
-      - MAILER_KEY1=e817868f73f6f7b142e7a5a4f293a912
-      - MAILER_KEY2=44942ab3d43c591b45711518bc7157f8
-      - FROM_EMAIL=contact@karhabtek.tn
-      - PLATFORM_NAME=Karhabtek
-      - MONGO_USER=root
-      - MONGO_PASSWORD=yD72BsnAB9WDd744
-      - MONGO_HOST=cluster0.polo8.mongodb.net
-      - MONGO_DATABASE=karehabti
-      - SMS_USERNAME=MohamedG
-      - SMS_PASSWORD=1!MohamedG
-      - SMS_SC=Karhebtek
-      - JWTSECRET=KLDMMMD12333
-      - GOOGLE_MAP_KEY=AIzaSyCTHkJzYcGlqXasTIJVxbYv_kTP2ss605w
-      - GPG_CHECKOUT_PASSWORD=gg_oaJ69
-      - FRONT_WEBSITE=https://client-side-8s3p9h7ja-mahdisoussi.vercel.app
-      - SERVER_URL=https://157.230.103.28:8080
-      - REDIS_PWD=iBlztoUrZwAeJiWzWGwmmf466jXY0X7O
-      - REDIS_PORT=14042
-      - REDIS_HOST=redis-14042.c256.us-east-1-2.ec2.cloud.redislabs.com
+    env_file:
+      - ./.env
+    networks:
+      - auto-sans-risque
+networks:
+  auto-sans-risque:
+    external: true

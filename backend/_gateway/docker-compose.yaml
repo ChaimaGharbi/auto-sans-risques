@@ -5,3 +5,9 @@ services:
     image: dhouib/auto-sans-risque:_gateway
     ports:
       - 8000:8000
+    networks:
+      - auto-sans-risque
+
+networks:
+  auto-sans-risque:
+    external: true
