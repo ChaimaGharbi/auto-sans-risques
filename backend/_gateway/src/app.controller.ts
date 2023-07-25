@@ -22,7 +22,7 @@ export class AppController {
 
   @All('*')
   async redirectRequests(@Req() request: Request, @Res() response) {
-    let host = 'localhost';
+    let host = 'admin';
     let port = 8001;
     const {url, method, body, query, headers} = request;
     switch (request.url.split('/')[1]) {
@@ -68,8 +68,10 @@ export class AppController {
     }
     try {
       const resp = await axios(requestOptions);
+      console.log("resp", resp)
       return response.status(resp.status).send(resp.data);
     } catch (e) {
+      console.log("e", e)
       try {
         return response.status(e.response.status).send(e.response.data);
       } catch (e) {
