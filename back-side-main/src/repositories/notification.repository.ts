@@ -225,4 +225,13 @@ export class NotificationRepository {
       return new InternalServerErrorException(error);
     }
   }
+
+  async updateNotificationById(id) {
+    try{
+      await this.notificationModel.updateOne({_id: id}, {$set: {is_read: true}})
+      return this.notificationModel.findById(id);
+    } catch(error) {
+      return new InternalServerErrorException(error); 
+    }
+  }
 }

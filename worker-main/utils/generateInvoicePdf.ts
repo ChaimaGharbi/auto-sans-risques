@@ -26,7 +26,7 @@ export const generateInvoicePDF = (paymentData, expert, namePdf) => {
       });
       const template = hb.compile(res, { strict: true });
 
-      console.log("Launch puppeteer");
+      console.log("Launch puppeteer"); 
 
       // we have compile our code with handlebars
 

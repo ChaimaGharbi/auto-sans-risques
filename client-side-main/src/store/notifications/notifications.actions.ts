@@ -6,6 +6,7 @@ export const constants = {
   RECEIVE_NOTIFICATION: 'RECEIVE_NOTIFICATION',
   CLEAR_NOTIFICATION: 'CLEAR_NOTIFICATION',
   UPDATE_NOTIFICATIONS_BY_IDS: async('UPDATE_NOTIFICATIONS_BY_IDS'),
+  UPDATE_NOTIFICATION_BY_ID: async('UPDATE_NOTIFICATION_BY_ID'),
 }
 
 export const getRecentNotifications = id => {
@@ -35,7 +36,15 @@ export const clearNotification = () => {
   }
 }
 
-export const updateNotificationsByIds = ids => ({
+export const updateNotificationsByIds = ids => {console.log(ids);
+return {
   type: constants.UPDATE_NOTIFICATIONS_BY_IDS.request,
   payload: ids,
-})
+}}
+
+export const updateNotificationById = id => {
+  return {
+    type: constants.UPDATE_NOTIFICATION_BY_ID.request,
+    payload: id,
+  }
+}

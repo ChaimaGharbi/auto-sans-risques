@@ -1,5 +1,5 @@
 import temp from "temp";
-import puppeteer from "puppeteer";
+import puppeteer, { Page } from "puppeteer";
 import pdfMerge from "easy-pdf-merge";
 import path from "path";
 import utils from "util";
@@ -145,6 +145,7 @@ export const generatePDF = async (_pages, namePdf, date, cb) => {
 
     const browser = await puppeteer.launch({
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      devtools: true
     });
     const tab = await browser.newPage();
 
@@ -212,11 +213,10 @@ export const generatePDF = async (_pages, namePdf, date, cb) => {
             </span>`,
         // <span class=pageNumber></span> / <span class=totalPages></span>
         margin: {
-          top: "100px",
+          top: "85px",
           bottom: 
-          "50px",
+          "30px",
         },
-        scale: 0.8
       });
 
       await tab.setContent(lastPageHtml);
@@ -272,8 +272,8 @@ export const generatePDF = async (_pages, namePdf, date, cb) => {
             ]
           );
           console.log(url);
-
           cb(url);
+          console.info(tab);
         }
       );
     } catch (error) {

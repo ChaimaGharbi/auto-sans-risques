@@ -25,7 +25,7 @@ const Reviews = () => {
           Commentaires ({state.total})
         </h1>
 
-        <div className="flex items-center justify-end">
+        <div className="flex justify-center items-start">
           <If test={role === 'CLIENT'}>
             <ReviewCard />
           </If>

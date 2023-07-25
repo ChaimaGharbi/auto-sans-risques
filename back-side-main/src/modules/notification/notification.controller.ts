@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Put, Param, Delete, ValidationPipe } from 
 import { NotificationService } from './notification.service';
 import { NotificationDto } from './dto/notification.dto';
 import { filterNotificationDto } from './dto/filterNotification.dto';
+import { ObjectId } from 'mongoose';
 
 @Controller('notification')
 export class NotificationController {
@@ -41,5 +42,10 @@ export class NotificationController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.notificationsService.remove(+id);
+  }
+
+  @Put('/updates/:id')
+  async updateNotificationById(@Param('id') id:string) {
+    return await this.notificationsService.updateNotificationById(id);
   }
 }

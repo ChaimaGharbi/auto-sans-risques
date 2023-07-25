@@ -9,7 +9,7 @@ import Loading from '../Loading'
 import If from '../If'
 import { Link } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
-import { useUpdateIsRead } from 'app/store/hooks'
+import { useUpdateAreRead } from 'app/store/hooks'
 
 function link(msg, id) {
   if (msg.toLowerCase().includes('veuillez confirmer ou annuler le rdv'))
@@ -45,10 +45,13 @@ export default function Notifications() {
   const { data, loading } = useRecentNotifications()
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
-  const updateIsRead = useUpdateIsRead()
+  const updateRead = useUpdateAreRead()
 
   const handleIsRead = notificationId => {
-    updateIsRead(notificationId)
+    updateRead(notificationId)
+
+    console.log(data);
+    
 
     const notificationElement = document.getElementById(notificationId)
     if (notificationElement) {

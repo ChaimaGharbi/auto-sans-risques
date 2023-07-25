@@ -226,12 +226,17 @@ export const useAvailability = () => {
     [dp]
   )
 
+  const removeAvailability = useCallback((id) => {
+    dp(actions.removeAvailability(id))
+  }, [dp])
+
   const state = useSelector((state: { auth: AuthenticationState }) => ({
     availability: state.auth.availability,
     repos: state.auth.setRepo,
     recurrent: state.auth.setRecurrent,
     resetAvailability: state.auth.resetAvailability,
     createAvailability: state.auth.createAvailability,
+    removeAvailability: state.auth.removeAvailability
   }))
   return {
     ...state.availability,
@@ -251,5 +256,9 @@ export const useAvailability = () => {
       ...state.createAvailability,
       createAvailability,
     },
+    removeAvailability: {
+      ...state.removeAvailability,
+      removeAvailability
+    }
   }
 }

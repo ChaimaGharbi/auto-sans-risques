@@ -205,3 +205,19 @@ export const createAvailability = new Saga(
     }
   })
   .get()
+
+export const removeAvailability = new Saga(constants.REMOVE_AVAILABILITY.request)
+  .do(action => [api.removeAvailability, action.payload])
+  .then(response => {
+    return {
+      type: constants.REMOVE_AVAILABILITY.success,
+      payload: response.id,
+    }
+  })
+  .catch(e => {
+    return {
+      type: constants.CREATE_AVAILABILITY.failure,
+      payload: [e.response],
+    }
+  })
+  .get()

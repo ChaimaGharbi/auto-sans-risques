@@ -49,6 +49,8 @@ const ReviewCard = () => {
       expertId: id,
       clientId: me?.data?._id,
     })
+    console.log(res.data);
+    
     dp(actions.addReview(res.data))
     setLoading(false)
     setOpenModal(false)
@@ -67,7 +69,7 @@ const ReviewCard = () => {
           noValidate
           onSubmit={myForm.submit}
           className="demo-form"
-          style={{ minHeight: '16rem' }}
+          //style={{ minHeight: '16rem' }}
         >
           <If test={openModal}>
             <div

@@ -32,6 +32,8 @@ export const constants = {
   UPDATE_BY_UPLOAD: async('UPDATE_BY_UPLOAD'),
 
   UPDATE_PASSWORD: async('UPDATE_PASSWORD'),
+
+  REMOVE_AVAILABILITY: async('REMOVE_AVAILABILITY'),
 }
 
 export const updatePassword = data => ({
@@ -123,4 +125,8 @@ export const resetAvailability = () => {
 
 export const createAvailability = payload => {
   return { type: constants.CREATE_AVAILABILITY.request, payload }
+}
+
+export const removeAvailability = (id) => {
+  return { type: constants.REMOVE_AVAILABILITY.request, payload: id }
 }

@@ -71,6 +71,11 @@ export interface AuthenticationState {
     errors: string[]
     done: boolean
   }
+  removeAvailability: {
+    loading: boolean
+    errors: string[]
+    done: boolean
+  }
 }
 
 interface User {

@@ -8,6 +8,7 @@ import { useAvailability } from 'app/store/hooks'
 
 function createEvents(data) {
   return data.map(d => ({
+    id: d._id,
     allDay: false,
     title: '',
     start: new Date(d.start),
@@ -25,6 +26,7 @@ const OngoingMissions = () => {
     setRecurrent,
     resetAvailability,
     createAvailability,
+    removeAvailability
   } = useAvailability()
 
   if (loading) {
@@ -82,6 +84,7 @@ const OngoingMissions = () => {
                 <Calendar
                   events={createEvents(data || [])}
                   onSlotSelect={createAvailability.createAvailability}
+                  onDoubleClick={removeAvailability.removeAvailability}
                 />
               </div>
             </div>

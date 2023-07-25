@@ -67,6 +67,9 @@ export const expertsReducer = new Reducer(initialState)
     state.reviews.data = action.payload.avis
     state.reviews.total = action.payload.NumAvis
 
+    console.log(state.reviews.total);
+    
+
     if (action.payload.NumAvis > 0) {
       state.reviews.avg = (
         action.payload.avis
@@ -112,6 +115,8 @@ export const expertsReducer = new Reducer(initialState)
   })
   .on(constants.ADD_REVIEW.success, (state, action) => {
     state.reviews.data?.push(action.payload)
+    state.reviews.total = action.payload.numAvis;
+    
   })
   .on(constants.FETCH_MORE_REVIEWS, state => {
     state.reviews.limit += 5

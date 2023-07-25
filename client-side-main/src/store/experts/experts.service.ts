@@ -10,7 +10,8 @@ export const getExpert = id =>
   axios.get(`/expert/${id}`).then(({ data }) => data)
 
 export const getReviews = (id, limit: string) =>
-  axios.get(`/avis/expert/${id}/${limit}`).then(({ data }) => data)
+  axios.get(`/avis/expert/${id}/${limit}`).then(({ data }) => {console.log(data);
+    return data})
 
 export const createReservation = reservation =>
   axios.post(`/reservation`, reservation).then(({ data }) => data)

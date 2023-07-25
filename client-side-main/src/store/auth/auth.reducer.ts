@@ -69,6 +69,11 @@ const initialState: AuthenticationState = {
     loading: false,
     errors: [],
   },
+  removeAvailability: {
+    loading: false,
+    errors: [],
+    done: false,
+  },
 }
 
 export const authenticationReducer = new Reducer(initialState)
@@ -139,8 +144,8 @@ export const authenticationReducer = new Reducer(initialState)
   })
   .on(constants.LOGIN.success, (state, action) => {
     state.login.loading = false
-    console.log(action.payload);
-    
+    console.log(action.payload)
+
     localStorage.setItem('token', action.payload)
 
     state.login.errors = []
@@ -322,5 +327,23 @@ export const authenticationReducer = new Reducer(initialState)
   .on(constants.UPDATE_PASSWORD.failure, (state, action) => {
     state.updatePassword.loading = false
     state.updatePassword.errors = action.payload
+  })
+  .on(constants.REMOVE_AVAILABILITY.request, state => {
+    state.removeAvailability.loading = true
+    state.removeAvailability.errors = []
+    state.removeAvailability.done = false
+  })
+  .on(constants.REMOVE_AVAILABILITY.success, (state, action) => {
+    state.removeAvailability.loading = false
+    state.removeAvailability.errors = []
+    state.removeAvailability.done = true
+    const eventId = action.payload;    
+    state.availability.data = state.availability.data.filter(event => event._id !== eventId);
+    toast.success('Votre disponibilité a été mise à jour avec succès')
+  })
+  .on(constants.REMOVE_AVAILABILITY.failure, (state,action) => {
+    state.removeAvailability.loading = false
+    state.removeAvailability.errors = action.payload
+    toast.error('Une erreur est survenue')
   })
   .get()

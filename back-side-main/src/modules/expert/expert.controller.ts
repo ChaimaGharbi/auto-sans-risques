@@ -85,6 +85,8 @@ export class ExpertController {
       signature?: any;
     }
     const filesUrls: IFiles = {};
+    console.log(files);
+    
 
     for (let i = 0; i < Object.keys(files).length; i++) {
       const file = files[Object.keys(files)[i]][0];

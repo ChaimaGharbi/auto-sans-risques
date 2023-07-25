@@ -35,7 +35,7 @@ export class DisponibiliteRepository {
       await expert.save();
       await dispo.delete();
 
-      return 'deleted';
+      return {id: id};
     } catch (error) {
       throw new InternalServerErrorException(error.message);
     }

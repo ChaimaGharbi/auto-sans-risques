@@ -23,6 +23,7 @@ export class AvisController {
   @UseInterceptors(FilesInterceptor('images[]'))
   async createAvis(@UploadedFiles() images, @Body(ValidationPipe) avisDto: avisDto) {
     (images);
+    console.log(avisDto);
     return await this.avisService.createAvis(avisDto, images);
   }
 

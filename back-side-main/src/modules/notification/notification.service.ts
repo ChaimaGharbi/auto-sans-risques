@@ -35,4 +35,8 @@ export class NotificationService {
   async remove(id: number) {
     return `This action removes a #${id} notification`;
   }
+
+  async updateNotificationById(id) {
+    return this.notificationRepository.updateNotificationById(id);
+  }
 }

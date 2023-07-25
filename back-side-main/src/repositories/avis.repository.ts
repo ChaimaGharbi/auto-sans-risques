@@ -42,7 +42,8 @@ export class AvisRepository {
       expert.note = Math.round(result[0].note);
       await expert.save();
       const test = await this.avisModel.findById(newAvis._id).populate('clientId', { fullName: 1, _id: 1, img: 1 });
-      return test;
+      const numAvis = await this.avisModel.find({ expertId: Types.ObjectId(avisDto.expertId) }).countDocuments();
+      return {test, numAvis};
     } catch (error) {
       throw new InternalServerErrorException(error.message);
     }

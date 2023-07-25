@@ -97,3 +97,9 @@ export const createAvailability = payload => {
     .post(`/disponibilite`, payload)
     .then(({ data }) => data)
 }
+
+export const removeAvailability = (id) => {
+  return getClient()
+  .delete(`/disponibilite/remove/${id}`)
+  .then(({ data }) => data)
+}

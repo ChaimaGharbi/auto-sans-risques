@@ -2,11 +2,11 @@ import { Calendar, dateFnsLocalizer, SlotInfo } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { useCallback } from 'react'
 import { useGetUser } from 'app/store/hooks'
-import format from 'date-fns/format';
-import parse from 'date-fns/parse';
-import startOfWeek from 'date-fns/startOfWeek';
-import getDay from 'date-fns/getDay';
-import fr from 'date-fns/locale/fr';
+import format from 'date-fns/format'
+import parse from 'date-fns/parse'
+import startOfWeek from 'date-fns/startOfWeek'
+import getDay from 'date-fns/getDay'
+import fr from 'date-fns/locale/fr'
 
 const messages = {
   allDay: 'Tous les jours',
@@ -20,11 +20,11 @@ const messages = {
   date: 'Date',
   time: 'Heure',
   event: 'Événement',
-};
+}
 
 const locales = {
   fr: fr,
-};
+}
 
 const localizer = dateFnsLocalizer({
   format,
@@ -32,11 +32,13 @@ const localizer = dateFnsLocalizer({
   startOfWeek,
   getDay,
   locales,
-});
+})
 
-
-
-export default function AvailabilityCalendar({ events, onSlotSelect }) {
+export default function AvailabilityCalendar({
+  events,
+  onSlotSelect,
+  onDoubleClick,
+}) {
   const onSelectSlot = useCallback((selected: SlotInfo) => {
     const payload = {
       date: selected.start,
@@ -50,21 +52,27 @@ export default function AvailabilityCalendar({ events, onSlotSelect }) {
     onSlotSelect(payload)
   }, [])
 
+  const deleteTimeSlot = useCallback((event, e) => {
+    console.log('Double-clicked on event:', event)
+    onDoubleClick(event.id)
+  }, [])
+
   const { me } = useGetUser()
 
   return (
     <Calendar
       localizer={localizer}
-      culture='fr'
+      culture="fr"
       events={events}
       views={{
         week: true,
       }}
       selectable
       onSelectSlot={onSelectSlot}
+      onDoubleClickEvent={deleteTimeSlot}
       startAccessor="start"
       endAccessor="end"
-      style={{ height: 500 }}
+      style={{ minHeight: 500, width: 'full' }}
       messages={messages}
       defaultView="week"
       min={new Date(2017, 10, 0, 6, 0, 0)}
@@ -84,7 +92,6 @@ const today = new Date()
 //     end: new Date(Number(today) + 3600000),
 //   },
 // ]
-
 
 // const events = [
 //   {
