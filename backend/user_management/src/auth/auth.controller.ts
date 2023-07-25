@@ -3,7 +3,7 @@ import {AuthGuard} from '@nestjs/passport';
 import {AuthService} from './auth.service';
 import {SignInCredentialsDto} from './dto/signin-credentials.dto';
 import {SignupCredentialsDto} from './dto/signup-credentials.dto';
-import {GetUser} from '../get-user.decorator';
+import {GetUser} from '../shared/get-user.decorator';
 import 'dotenv/config';
 import {UpdatePasswordDto} from './dto/update-password.dto';
 
@@ -46,40 +46,7 @@ export class AuthController {
     @Get('/me')
     @UseGuards(AuthGuard())
     //@Roles(Role.ADMIN, Role.CLIENT)
-    async getUser(@GetUser() user1) {
-        console.log("hi")
-        console.log(user1.role);
-
-        const user = await this.authService.getUserByEmailAndRole(user1.email, user1.role);
-        console.log("user/me", user);
-
-        return {
-            _id: user._id,
-            fullName: user.fullName,
-            specialitiesModels: user.specialitiesModels,
-            specialitiesMarks: user.specialitiesMarks,
-            tel: user.tel,
-            lat: user.lat,
-            lng: user.lng,
-            allows: user.allows,
-            address: user.adresse,
-            gouv: user.ville,
-            email: user.email,
-            isVerfied: user.isVerified,
-            status: user.status,
-            propos: user.propos,
-            certif: user.certif,
-            //!
-            role: user.role,
-            carteFiscale: user.carteFiscale,
-            cin: user.cin,
-            diplome: user.diplome,
-            signature: user.signature,
-            profile: user.img,
-            photoAtelier: user.photoAtelier,
-            nb_missions: user.nb_missions,
-            credit: user.credit,
-            recurrentAvailability: user.recurrentAvailability
-        };
+    async getUser(@GetUser() user) {
+        return await this.authService.getUserByEmailAndRole(user.email, user.role)
     }
 }

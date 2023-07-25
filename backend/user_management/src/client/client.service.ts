@@ -5,6 +5,7 @@ import {Client} from "./entities/client.entity";
 import {InjectModel} from "@nestjs/mongoose";
 import {IClientModel} from "./entities/client.interface";
 import clientSort from "./client-sort";
+import {ClientDto} from "./dto/client.dto";
 
 
 @Injectable()
@@ -43,28 +44,9 @@ export class ClientService {
         }
     }
 
-    // TODO : studying the utility of this pick function and seeing if it is necessary to use it
-    async updateClientsData(id: any, clientDto: any) {
+    async updateClientsData(id: any, clientDto: ClientDto) {
         try {
-            return await this.clientRepository.update(id, {
-                status: clientDto.fullName,
-                img: clientDto.img,
-                tel: clientDto.tel,
-                adresse: clientDto.adresse,
-                ville: clientDto.ville
-            });
-            //
-            // const client = await this.clientModel.findById(id);
-            // if (!client) {
-            //   return new NotFoundException('No client found');
-            // }
-            // client.fullName = pick(clientDto.fullName, client.fullName);
-            // client.img = pick(clientDto.img, client.img);
-            // client.tel = pick(clientDto.tel, client.tel);
-            // client.adresse = pick(clientDto.adresse, client.adresse);
-            // client.ville = pick(clientDto.ville, client.ville);
-            // await client.save();
-            // return client;
+            return await this.clientRepository.update(id, clientDto);
         } catch (error) {
             return new InternalServerErrorException(error);
         }

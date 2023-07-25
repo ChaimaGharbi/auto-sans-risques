@@ -1,12 +1,18 @@
-import {Type} from 'class-transformer';
-import {IsNumber, Max, Min} from 'class-validator';
+import {PartialType} from "@nestjs/mapped-types";
+import {IsNotEmpty} from "class-validator";
 
-export class ClientDto {
-    @Type(() => Number)
-    @IsNumber()
-    @Min(0)
-    @Max(3)
-    status: number;
+class ClientUpdateDto {
+    @IsNotEmpty()
+    fullName: string;
+    @IsNotEmpty()
+    img: string;
+    @IsNotEmpty()
+    tel: string;
+    @IsNotEmpty()
+    adresse: string;
+    @IsNotEmpty()
+    ville: string;
+}
 
-    isVerified: any;
+export class ClientDto extends PartialType(ClientUpdateDto) {
 }

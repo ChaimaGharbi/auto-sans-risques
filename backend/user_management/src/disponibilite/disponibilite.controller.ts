@@ -2,7 +2,7 @@ import {Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards, Valid
 import {AuthGuard} from '@nestjs/passport';
 import {DisponibiliteService} from './disponibilite.service';
 import {DisponibiliteDto} from './dto/disponibilite.dto';
-import {GetUser} from "../get-user.decorator";
+import {GetUser} from "../shared/get-user.decorator";
 
 @Controller('disponibilite')
 export class DisponibiliteController {
@@ -29,15 +29,13 @@ export class DisponibiliteController {
     @Put('/metadata')
     changeReposOrRecurrent(@GetUser() user, @Body() body) {
         const id = user._id;
-        const value = body;
-        return this.disponibilteService.changeReposOrRecurrent(id, value);
+        return this.disponibilteService.changeReposOrRecurrent(id, body);
     }
 
     @UseGuards(AuthGuard())
     @Get('/')
     fetchDispos(@GetUser() user) {
         const id = user._id;
-
         return this.disponibilteService.fetchDisposByExpertId(id);
     }
 

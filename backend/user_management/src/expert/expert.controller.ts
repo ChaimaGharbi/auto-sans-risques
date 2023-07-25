@@ -15,10 +15,11 @@ import {
 import {AuthGuard} from '@nestjs/passport';
 import {FileFieldsInterceptor} from '@nestjs/platform-express';
 import {niemandsUploadImage} from 'src/shared/upload.files';
-import {GetUser} from '../get-user.decorator';
+import {GetUser} from '../shared/get-user.decorator';
 import {filterExpertDto} from './dto/filterExpert.dto';
 import {UpdateExpertDto} from './dto/update.dto';
 import {ExpertService} from './expert.service';
+import {UpdateExpertDataDto} from "./dto/update-expert.dto";
 
 @Controller('expert')
 export class ExpertController {
@@ -37,7 +38,7 @@ export class ExpertController {
 
     @Put('/')
     @UseGuards(AuthGuard())
-    async updateExpertsData(@GetUser() user, @Body(ValidationPipe) expertDto: any) {
+    async updateExpertsData(@GetUser() user, @Body(ValidationPipe) expertDto: UpdateExpertDataDto) {
         return await this.expertService.updateExpertsData(user._id, expertDto);
     }
 
@@ -90,8 +91,7 @@ export class ExpertController {
 
             const ext = file.originalname.split('.')[file.originalname.split('.').length - 1];
             const fileName = `${user._id}-${Object.keys(files)[i]}`;
-            const fileUrl = await niemandsUploadImage(file.buffer, fileName, ext);
-            filesUrls[Object.keys(files)[i]] = fileUrl;
+            filesUrls[Object.keys(files)[i]] = await niemandsUploadImage(file.buffer, fileName, ext);
         }
 
         return this.expertService.updateExpertsData(user._id, filesUrls);

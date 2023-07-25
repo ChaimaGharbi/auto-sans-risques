@@ -13,9 +13,10 @@ import {
 import {AuthGuard} from '@nestjs/passport';
 import {FileFieldsInterceptor} from '@nestjs/platform-express';
 import {niemandsUploadImage} from 'src/shared/upload.files';
-import {GetUser} from '../get-user.decorator';
+import {GetUser} from '../shared/get-user.decorator';
 import {ClientService} from './client.service';
 import {filterClientDto} from './dto/filterClient.dto';
+import {ClientDto} from "./dto/client.dto";
 
 @Controller('client')
 export class ClientController {
@@ -33,9 +34,8 @@ export class ClientController {
 
     @Put('/')
     @UseGuards(AuthGuard())
-    async updateExpertsData(@GetUser() user, @Body(ValidationPipe) clientDto: any) {
-        ('Update client data');
-        return await this.clientService.updateClient(user._id, clientDto);
+    async updateClientsData(@GetUser() user, @Body(ValidationPipe) clientDto: ClientDto) {
+        return await this.clientService.updateClientsData(user._id, clientDto);
     }
 
     @Put('/status/ids')
@@ -47,27 +47,21 @@ export class ClientController {
     @UseInterceptors(FileFieldsInterceptor([{name: 'img', maxCount: 1}]))
     @UseGuards(AuthGuard())
     async uploadImages(@UploadedFiles() files, @GetUser() user) {
-        ({
-            ISSSSSS: user
-        });
 
         interface IFiles {
             img?: any;
         }
 
         const filesUrls: IFiles = {};
-
-        for (let i = 0; i < Object.keys(files).length; i++) {
-            const file = files[Object.keys(files)[i]][0];
-            const fileUrl = await niemandsUploadImage(
+        const filesKeys = Object.keys(files);
+        for (let i = 0; i < filesKeys.length; i++) {
+            const file = files[filesKeys[i]][0];
+            filesUrls[filesKeys[i]] = await niemandsUploadImage(
                 file.buffer,
                 file.originalname.split('.')[0],
                 file.originalname.split('.')[1]
             );
-            filesUrls[Object.keys(files)[i]] = fileUrl;
         }
-
-
         return this.clientService.updateClient(user._id, filesUrls);
     }
 }

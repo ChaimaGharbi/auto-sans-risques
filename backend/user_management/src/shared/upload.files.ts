@@ -19,15 +19,6 @@ export const imageFileFilter = (req, file, callback) => {
     callback(null, true);
 };
 
-export const imagesFileFilter = (req, files, callback) => {
-    for (const file of files) {
-        if (!file.originalname.match(/\.(jpg|jpeg|png|PNG|JPEG|JPG)$/)) {
-            return callback(new BadRequestException('Only image files are allowed!'), false);
-        }
-    }
-    callback(null, true);
-};
-
 export const niemandsUploadImage = async (file, filename, ext) => {
     const name = md5(filename);
     const bucket = admin.storage().bucket();
