@@ -66,14 +66,15 @@ export class AppController {
     if (headers.authorization) {
       requestOptions['headers']["Authorization"] = headers.authorization
     }
-    console.log(requestOptions)
     try {
       const resp = await axios(requestOptions);
       return response.status(resp.status).send(resp.data);
     } catch (e) {
-      console.log(e)
-      return response.status(e.response.status).send(e.response.data);
+      try {
+        return response.status(e.response.status).send(e.response.data);
+      } catch (e) {
+        console.log(e);
+      }
     }
-
   }
 }

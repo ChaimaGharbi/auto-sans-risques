@@ -1,6 +1,5 @@
 import {
     BadRequestException,
-    ConflictException,
     HttpException,
     Injectable,
     InternalServerErrorException,
@@ -8,18 +7,16 @@ import {
 } from '@nestjs/common';
 import {JwtService} from '@nestjs/jwt';
 import {Role} from 'src/auth/entities/user.roles.enum';
-import {SignInCredentialsDto} from './dto/signin-credentials.dto';
-import {SignupCredentialsDto} from './dto/signup-credentials.dto';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
 import {InjectModel} from "@nestjs/mongoose";
 import {Client} from "../client/entities/client.entity";
 import {Model} from "mongoose";
 import {Expert} from "../expert/entities/expert.entity";
-import {MailerService} from "../config/mailer/mailer.service";
+import {MailerService} from 'src/shared/mailer/mailer.service';
 import {ExpertService} from "../expert/expert.service";
 import {GenericRepository} from "../shared/generic/generic.repository";
-import {getHtml} from "../config/mailer/mailer.helper";
+import {getHtml} from "../shared/mailer/mailer.helper";
 import verifyEmail from "./htmlTemplates/verifyEmail";
 import resetPasswordConfirmation from "./htmlTemplates/resetPasswordConfirmation";
 import {Admin} from "../auth/entities/admin.entity";
@@ -78,81 +75,6 @@ export class AuthService {
             return new InternalServerErrorException("Server Error")
         }
     }
-
-    // TODO : correct bug :  expert and client can have the same email
-    async signUp(signupCredentials: SignupCredentialsDto, role: Role) {
-        try {
-            signupCredentials.email = signupCredentials.email.toLowerCase();
-
-            const userExist = await this.getUserByEmailAndRole(signupCredentials.email, role);
-
-            if (userExist) {
-                throw new ConflictException('Un utilisateur avec cette adresse e-mail existe!');
-            }
-
-            const salt = await bcrypt.genSalt();
-            const hashedPassword = await this.hashPassword(signupCredentials.password, salt);
-
-            const createdUser = await this.createUser({
-                ...signupCredentials,
-                password: hashedPassword,
-                salt: salt
-            }, role);
-
-            await this.sendVerificationEmail(createdUser, role);
-
-            return createdUser;
-        } catch (error) {
-            if (error instanceof HttpException) {
-                throw error;
-            } else {
-                throw new InternalServerErrorException("Erreur d'inscription!");
-            }
-        }
-    }
-
-    async signIn(signInCredentialsDto: SignInCredentialsDto) {
-        try {
-            const user = await this.getUserByEmail(signInCredentialsDto.email.toLocaleLowerCase());
-            const isValdiated = await user.validatePassword(signInCredentialsDto.password);
-            if (user && isValdiated) {
-                if (user.status === 2) {
-                    throw new UnauthorizedException('Votre compte a été banni!');
-                } else if (!user.isVerified) {
-                    throw new UnauthorizedException('Veuillez vérifier votre compte!');
-                } else {
-                    const payload = {
-                        id: user._id,
-                        fullName: user.fullName,
-                        specialitiesModels: user.specialitiesModels,
-                        specialitiesMarks: user.specialitiesMarks,
-                        tel: user.tel,
-                        address: user.adresse,
-                        gouv: user.ville,
-                        email: user.email,
-                        role: user.role,
-                        allows: user.allows
-                    };
-
-                    const accessToken = this.jwtService.sign(payload);
-                    return {
-                        ...payload,
-                        accessToken
-                    };
-                }
-            } else {
-                throw new UnauthorizedException("Nom d'utilisateur ou mot de passe incorrect");
-            }
-        } catch (error) {
-            if (error instanceof HttpException) {
-                throw error;
-            }
-            return new InternalServerErrorException("Server Error")
-        }
-    }
-
-    // Authentication
-
     // Update
     async updatePassword(id: string, oldPassword: string, newPassword: string, role: Role) {
         try {
@@ -258,36 +180,6 @@ export class AuthService {
             return new InternalServerErrorException("Server Error")
         }
     }
-
-    async verifyEmail(token: string) {
-        try {
-            const tokenExists = await this.tokenModel.findOne({token});
-            if (!tokenExists) {
-                throw new BadRequestException('We were unable to find a valid token. Your token my have expired.');
-            }
-            const user = await this.getUserById(tokenExists.userId);
-
-            if (!user) {
-                throw new BadRequestException('We were unable to find a user for this token.');
-            }
-            if (user.isVerified) {
-                throw new BadRequestException('This user has already been verified.');
-            }
-            user.isVerified = true;
-            try {
-                await user.save();
-                return true;
-            } catch (error) {
-                throw new InternalServerErrorException(error);
-            }
-        } catch (error) {
-            if (error instanceof HttpException) {
-                throw error;
-            }
-            return new InternalServerErrorException("Server Error")
-        }
-    }
-
     // Tokenization+Verification
 
     async verifyToken(token: any, role: Role, verify = false) {
@@ -450,16 +342,4 @@ export class AuthService {
         return bcrypt.hash(password, salt);
     }
 
-    private async createUser(signupCredentials, role: Role) {
-        switch (role) {
-            case Role.CLIENT:
-                return await this.clientRepository.create(signupCredentials);
-            case Role.EXPERT:
-                return await this.expertRepository.create(signupCredentials);
-            case Role.MODERATOR:
-                return await this.moderatorRepository.create(signupCredentials);
-            default:
-                return await this.adminRepository.create(signupCredentials);
-        }
-    }
 }

@@ -9,11 +9,11 @@ import {AuthController} from './auth.controller';
 import {AuthService} from './auth.service';
 import {ExpertModule} from '../expert/expert.module';
 import {JwtModule} from '@nestjs/jwt';
-import {MailerService} from 'src/config/mailer/mailer.service';
+import {MailerService} from 'src/shared/mailer/mailer.service';
 import {Module} from '@nestjs/common';
 import {MongooseModule} from '@nestjs/mongoose';
 import {PassportModule} from '@nestjs/passport';
-import {JwtStrategy} from "../jwt-strategy";
+import {JwtStrategy} from "../shared/jwt-strategy";
 
 @Module({
     imports: [
@@ -22,7 +22,7 @@ import {JwtStrategy} from "../jwt-strategy";
         }),
         ExpertModule,
         JwtModule.register({
-            secret: 'KLDMMMD12333',
+            secret: process.env.JWTSECRET,
             signOptions: {
                 expiresIn: 1296000
             }

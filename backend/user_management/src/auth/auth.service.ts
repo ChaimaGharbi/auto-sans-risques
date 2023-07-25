@@ -20,11 +20,11 @@ import {Expert} from "../expert/entities/expert.entity";
 import {Admin} from "./entities/admin.entity";
 import {Moderator} from "./entities/moderator.entity";
 import {Token} from "./entities/token.entity";
-import {MailerService} from "../config/mailer/mailer.service";
+import {MailerService} from 'src/shared/mailer/mailer.service';
 import {ExpertService} from "../expert/expert.service";
 import {GenericRepository} from "../shared/generic/generic.repository";
 import {User} from "./entities/user.entity";
-import {getHtml} from "../config/mailer/mailer.helper";
+import {getHtml} from "../shared/mailer/mailer.helper";
 import verifyEmail from "./htmlTemplates/verifyEmail";
 
 
@@ -76,14 +76,13 @@ export class AuthService {
         }
     }
 
-    // TODO : correct bug :  expert and client can have the same email
     async signUp(signupCredentials: SignupCredentialsDto, role: Role) {
         try {
             signupCredentials.email = signupCredentials.email.toLowerCase();
 
-            const userExist = await this.getUserByEmailAndRole(signupCredentials.email, role);
+            const emailExists = await this.emailExist(signupCredentials.email);
 
-            if (userExist) {
+            if (emailExists) {
                 throw new ConflictException('Un utilisateur avec cette adresse e-mail existe!');
             }
 
@@ -111,7 +110,6 @@ export class AuthService {
     async signIn(signInCredentialsDto: SignInCredentialsDto) {
         try {
             const user = await this.getUserByEmail(signInCredentialsDto.email.toLocaleLowerCase());
-            console.log({user})
             const isValdiated = await user.validatePassword(signInCredentialsDto.password);
             if (user && isValdiated) {
                 if (user.status === 2) {
@@ -142,7 +140,11 @@ export class AuthService {
                 throw new UnauthorizedException("Nom d'utilisateur ou mot de passe incorrect");
             }
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            if (error instanceof HttpException) {
+                throw error;
+            } else {
+                throw new InternalServerErrorException("Erreur d'inscription!");
+            }
         }
     }
 
@@ -217,6 +219,16 @@ export class AuthService {
         }
     }
 
+    async emailExist(email) {
+        let user = null
+        const models = [this.clientModel, this.expertModel, this.adminModel, this.moderatorModel]
+        let i = 0
+        while (!user && i < models.length) {
+            user = models[i].findOne({email}).exec()
+        }
+        return user !== null
+    }
+
     async getUserByEmailAndRole(email: string, role: Role) {
         try {
             let user;
@@ -264,7 +276,11 @@ export class AuthService {
                 throw new InternalServerErrorException(error);
             }
         } catch (error) {
-            throw new InternalServerErrorException(error);
+            if (error instanceof HttpException) {
+                throw error;
+            } else {
+                throw new InternalServerErrorException("Erreur de verification!");
+            }
         }
     }
 

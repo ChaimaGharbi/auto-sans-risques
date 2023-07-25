@@ -1,30 +1,5 @@
-import {Type} from 'class-transformer';
-import {IsArray, IsNumber, IsOptional, Max, Min} from 'class-validator';
-import {Types} from 'mongoose';
+import {PartialType} from "@nestjs/mapped-types";
+import {ExpertDto} from "./expert.dto";
 
-export class UpdateExpertDto {
-
-    @IsOptional()
-    @Type(() => Number)
-    @IsNumber()
-    @Min(0)
-    @Max(3)
-    status?: number;
-
-    @IsOptional()
-    @Type(() => Number)
-    @IsNumber()
-    credit?: number;
-
-    @IsOptional()
-    @IsArray()
-    @Type(() => Types.ObjectId)
-    specialitiesMarks?: [];
-
-    @IsOptional()
-    @IsArray()
-    @Type(() => Types.ObjectId)
-    specialitiesModels?: [];
-
-    isVerified?: any;
+export class UpdateExpertDto extends PartialType(ExpertDto) {
 }

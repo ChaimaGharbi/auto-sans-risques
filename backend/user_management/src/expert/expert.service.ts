@@ -7,6 +7,7 @@ import {Model} from "mongoose";
 import {GenericRepository} from "../shared/generic/generic.repository";
 import {IExpertModel} from "./entities/expert.interface";
 import {Disponibilite} from "../disponibilite/entities/disponibilite.entity";
+import {UpdateExpertDataDto} from "./dto/update-expert.dto";
 
 @Injectable()
 export class ExpertService {
@@ -19,7 +20,6 @@ export class ExpertService {
         this.expertRepository = new GenericRepository(expertModel);
     }
 
-    // study this function and try to reduce complexity
     async fetchExperts(filterExpertDto: filterExpertDto, group: any) {
         try {
             const aggregate_options: any[] = [];
@@ -274,26 +274,9 @@ export class ExpertService {
         }
     }
 
-    async updateExpertsData(id: any, expertDto: any) {
+    async updateExpertsData(id: any, expertDto: UpdateExpertDataDto) {
         try {
-            return await this.expertRepository.update(id, {
-                fullName: expertDto.fullName,
-                tel: expertDto.tel,
-                adresse: expertDto.adresse,
-                ville: expertDto.ville,
-                specialite: expertDto.specialite,
-                propos: expertDto.propos,
-                certif: expertDto.certif,
-                img: expertDto.img,
-                specialitiesModels: expertDto.specialitiesModels,
-                specialitiesMarks: expertDto.specialitiesMarks,
-                cin: expertDto.cin,
-                carteFiscale: expertDto.carteFiscale,
-                diplome: expertDto.diplome,
-                signature: expertDto.signature,
-                repos: expertDto.repos,
-                photoAtelier: expertDto.photoAtelier
-            });
+            return await this.expertRepository.update(id, expertDto);
         } catch (error) {
             return new InternalServerErrorException(error);
         }

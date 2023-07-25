@@ -1,28 +1,14 @@
 import {ExtractJwt, Strategy} from 'passport-jwt';
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {PassportStrategy} from '@nestjs/passport';
-import * as jwt from 'jsonwebtoken';
-import {AuthService} from "./recovery/auth.service";
-
-export class JwtHandlerCzIHateDI {
-    private secret = 'KLDMMMD12333';
-
-    async validate(token) {
-        try {
-            const payload = await jwt.verify(token, this.secret);
-            return payload;
-        } catch (error) {
-            throw error;
-        }
-    }
-}
+import {AuthService} from "../recovery/auth.service";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor(private userService: AuthService) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            secretOrKey: 'KLDMMMD12333'
+            secretOrKey: process.env.JWTSECRET
         });
     }
 
