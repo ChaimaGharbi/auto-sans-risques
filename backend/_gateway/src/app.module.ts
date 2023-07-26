@@ -1,70 +1,17 @@
-import {Module} from '@nestjs/common';
-import {AppController} from './app.controller';
-//
-// const microserviceOptions = {
-//     admin: {
-//         host: 'localhost',
-//         port: 8001,
-//     },
-//     communication: {
-//         host: 'localhost',
-//         port: 8002,
-//     },
-//     diagnosis: {
-//         host: 'localhost',
-//         port: 8003,
-//     },
-//     listing: {
-//         host: 'localhost',
-//         port: 8004,
-//     },
-//     payment: {
-//         host: 'localhost',
-//         port: 8005,
-//     },
-//     user_management: {
-//         host: 'localhost',
-//         port: 8006,
-//     }
-// }
+import {MiddlewareConsumer, Module, RequestMethod} from '@nestjs/common';
+import {ReverseProxyMiddleware} from "./app.middleware";
+import {Proxy} from "./proxy.factory";
 
 @Module({
-    imports: [
-        // ClientsModule.register([
-        //     {
-        //         name: 'ADMIN',
-        //         transport: Transport.TCP,
-        //         options: microserviceOptions.admin,
-        //     },
-        //     {
-        //         name: 'COMMUNICATION',
-        //         transport: Transport.TCP,
-        //         options: microserviceOptions.communication,
-        //     },
-        //     {
-        //         name: 'DIAGNOSIS',
-        //         transport: Transport.TCP,
-        //         options: microserviceOptions.diagnosis,
-        //     },
-        //     {
-        //         name: 'LISTING',
-        //         transport: Transport.TCP,
-        //         options: microserviceOptions.listing,
-        //     },
-        //     {
-        //         name: 'PAYMENT',
-        //         transport: Transport.TCP,
-        //         options: microserviceOptions.payment,
-        //     },
-        //     {
-        //         name: 'USER_MANAGEMENT',
-        //         transport: Transport.TCP,
-        //         options: microserviceOptions.user_management,
-        //     },
-        // ]),
-    ],
-    controllers: [AppController],
-    providers: [],
+    imports: [],
+    controllers: [],
+    providers: [Proxy],
 })
 export class AppModule {
+    configure(consumer: MiddlewareConsumer) {
+        consumer
+            .apply(ReverseProxyMiddleware)
+            .forRoutes({path: '*', method: RequestMethod.ALL});
+    }
 }
+
