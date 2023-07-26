@@ -6,7 +6,8 @@ import If from 'app/shared/components/If'
 import { Link } from 'react-router-dom'
 import { PaginatedContent } from 'app/shared/components/paginated'
 import { useState } from 'react'
-import { useUpdateIsRead } from 'app/store/hooks'
+import { useUpdateAreRead } from 'app/store/hooks'
+
 
 function link(msg, id) {
   if (msg.toLowerCase().includes('veuillez confirmer ou annuler le rdv'))
@@ -20,7 +21,7 @@ const Notifications = () => {
   const pageSize = 6
   console.log(data)
 
-  const updateIsRead = useUpdateIsRead()
+  const updateIsRead = useUpdateAreRead()
 
   const handleIsRead = notificationId => {
     updateIsRead(notificationId)

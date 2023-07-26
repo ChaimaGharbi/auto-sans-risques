@@ -36,7 +36,7 @@ const Profile = () => {
           </div>
 
           <Container>
-            <div className="grid gap-y-4 divide-y">
+            <div className="grid gap-y-4 divide-y justify-center">
               <Header />
               <Form />
             </div>

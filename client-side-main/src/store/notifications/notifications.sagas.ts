@@ -40,3 +40,17 @@ export const updateNotificationsByIds = new Saga(
   })
   .catch(constants.UPDATE_NOTIFICATIONS_BY_IDS.failure)
   .get()
+
+
+export const updateNotificationById = new Saga(
+  constants.UPDATE_NOTIFICATION_BY_ID.request
+)
+  .do(action => [api.updateNotificationById, action.payload])
+  .then(response => {
+    return {
+      type: constants.UPDATE_NOTIFICATION_BY_ID.success,
+      payload: response,
+    }
+  })
+  .catch(constants.UPDATE_NOTIFICATION_BY_ID.failure)
+  .get()

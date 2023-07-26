@@ -58,7 +58,7 @@ const OngoingMissions = () => {
 
           <Container>
             <div className="">
-              <div className="flex items-center justify-between w-full py-4 space-x-4">
+              <div className="flex items-center justify-evenly w-full py-4 flex-wrap space-x-1 gap-4 xsx:justify-between xsx:space-x-4 xsx:flex-nowrap ">
                 <button
                   className="button"
                   disabled={resetAvailability.loading}
@@ -66,7 +66,7 @@ const OngoingMissions = () => {
                 >
                   Reinitialiser
                 </button>
-                <div className="flex-1"></div>
+                <div className="xsx:flex-1"></div>
                 <Toggle
                   value={repos}
                   label="Repos"
@@ -80,7 +80,7 @@ const OngoingMissions = () => {
                   disabled={loading || setRecurrent.loading}
                 />
               </div>
-              <div className="p-10">
+              <div className="xss:p-10">
                 <Calendar
                   events={createEvents(data || [])}
                   onSlotSelect={createAvailability.createAvailability}

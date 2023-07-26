@@ -73,8 +73,3 @@ export const useUpdateAreRead = () => {
 
   return updateIsRead
 }
-
-export const useUpdateIsRead = (id) => {
-  const dp = useDispatch()
-  return dp(actions.updateNotificationById(id))
-}

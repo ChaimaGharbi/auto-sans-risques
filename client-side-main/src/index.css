@@ -158,3 +158,11 @@ body {
 .ant-pagination-item-active a {
   color: #4eadff !important;
 }
+
+@media (max-width: 350px) {
+  .rbc-btn-group {
+    display: flex !important;
+    flex-direction: column !important;
+    
+  }
+}

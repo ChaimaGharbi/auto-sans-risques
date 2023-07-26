@@ -11,6 +11,8 @@ import { Toaster } from 'react-hot-toast'
 import GoogleMapsContainer from './shared/components/GoogleMaps/Container'
 import { useInitModels, useLoadUser } from 'app/store/hooks'
 import ErrorBoundary from './shared/components/ErrorBoundary'
+import './index.css'
+
 function Main() {
   useLoadUser()
   useInitModels()

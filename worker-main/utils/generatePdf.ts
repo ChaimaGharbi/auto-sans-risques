@@ -116,9 +116,8 @@ async function getExpertAndClient(rapportId) {
 
 export const generatePDF = async (_pages, namePdf, date, cb) => {
   try {
-  
     console.log("started");
-    
+
     const res = await getTemplateHtml();
     const lastPage = await getLastPageTemplateHtml();
 
@@ -145,7 +144,6 @@ export const generatePDF = async (_pages, namePdf, date, cb) => {
 
     const browser = await puppeteer.launch({
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      devtools: true
     });
     const tab = await browser.newPage();
 
@@ -214,8 +212,7 @@ export const generatePDF = async (_pages, namePdf, date, cb) => {
         // <span class=pageNumber></span> / <span class=totalPages></span>
         margin: {
           top: "85px",
-          bottom: 
-          "30px",
+          bottom: "30px",
         },
       });
 

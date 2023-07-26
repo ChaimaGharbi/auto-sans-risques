@@ -34,7 +34,7 @@ const Header = () => {
           isMenuOpen ? 'right-20' : 'right-full'
         } `}
       >
-        <div className="grid place-content-center h-full">
+        <div className="grid place-content-center h-full justify-end xxs:justify-center">
           <div className="flex flex-col items-start h-full space-y-3">
             <Link onClick={handleCloseMenu} to="/home">
               Acceuil
@@ -64,7 +64,7 @@ const Header = () => {
 
       <nav className="bg-white pb-1 border-b-2 fixed z-[2001] w-full">
         <Container>
-          <div className="flex items-center justify-between py-4 space-x-1">
+          <div className="flex items-center justify-between sm:py-4 space-x-1">
             <div className="md:hidden">
               <MobileViewMenu
                 isMenuOpen={isMenuOpen}

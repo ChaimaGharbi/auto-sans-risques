@@ -26,7 +26,7 @@ const Blog = () => {
       <If test={articles.data?.length === 0}>
       <SkeletonLoading></SkeletonLoading>
       </If>
-      <div className="text-center pb-5 flex justify-center">
+      <div className="text-center pb-5 flex justify-center flex-wrap">
         <If test={categories.loading}>
           <Spinner />
         </If>

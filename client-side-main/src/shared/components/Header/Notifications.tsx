@@ -9,7 +9,8 @@ import Loading from '../Loading'
 import If from '../If'
 import { Link } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
-import { useUpdateAreRead } from 'app/store/hooks'
+import { useDispatch } from 'react-redux'
+import { actions } from 'app/store/notifications'
 
 function link(msg, id) {
   if (msg.toLowerCase().includes('veuillez confirmer ou annuler le rdv'))
@@ -45,25 +46,20 @@ export default function Notifications() {
   const { data, loading } = useRecentNotifications()
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
-  const updateRead = useUpdateAreRead()
+  const dp = useDispatch()
 
-  const handleIsRead = notificationId => {
-    updateRead(notificationId)
 
-    console.log(data);
+  function handleIsRead(notificationId) {
+    
+    dp(actions.updateNotificationById(notificationId))
     
 
     const notificationElement = document.getElementById(notificationId)
     if (notificationElement) {
-      console.log(notificationElement)
-
       const spanElement = notificationElement.querySelector('span')
       if (spanElement) {
-        console.log(notificationElement, spanElement)
         notificationElement.style.backgroundImage = 'none'
-        spanElement.style.color = 'gray'
-        console.log(notificationElement, spanElement)
-        
+        spanElement.style.color = 'gray'        
         setIsDropdownOpen(false)
       }
     }
@@ -133,7 +129,7 @@ export default function Notifications() {
             ))}
           <Dropdown.Seperator />
           <Dropdown.Item>
-            <Link to="/notifications">Voir toutes les notifications</Link>
+            <Link to="/notifications" onClick={() => setIsDropdownOpen(false)}>Voir toutes les notifications</Link>
           </Dropdown.Item>
         </If>
       </Dropdown.Content>
