@@ -77,19 +77,7 @@ export class AdsService {
 
     async updateAd(id: any, adsDto: AdsDto) {
         try {
-            const ads = await this.adsModel.findById(id);
-            console.log('update', {ads, adsDto});
-            if (!ads) {
-                return new NotFoundException('ads not found');
-            }
-            ads.title = adsDto.title;
-            ads.body = adsDto.body;
-            ads.url = adsDto.url;
-            ads.img = adsDto.img;
-            ads.typeUser = adsDto.typeUser;
-            ads.isActive = adsDto.isActive;
-            await ads.save();
-            return ads;
+            return await this.adsRepository.update(id, adsDto);
         } catch (error) {
             return error
         }

@@ -4,7 +4,6 @@ import * as util from 'util';
 import * as fs from 'fs';
 import * as temp from 'temp';
 import * as path from 'path';
-import * as md5 from 'md5';
 import * as imagemin from 'gulp-imagemin';
 import * as gulp from 'gulp';
 
@@ -18,36 +17,8 @@ export const imageFileFilter = (req, file, callback) => {
     }
     callback(null, true);
 };
-
-export const imagesFileFilter = (req, files, callback) => {
-    for (const file of files) {
-        if (!file.originalname.match(/\.(jpg|jpeg|png|PNG|JPEG|JPG)$/)) {
-            return callback(new BadRequestException('Only image files are allowed!'), false);
-        }
-    }
-    callback(null, true);
-};
-
-export const niemandsUploadImage = async (file, filename, ext) => {
-    const name = md5(filename);
-    const bucket = admin.storage().bucket();
-    const remote = bucket.file(`report-images/${name}.${ext}`);
-
-    try {
-        await remote.save(file);
-        await remote.makePublic();
-
-        const url = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/report-images%2F${name}.${ext}?alt=media`;
-        // const url = res[0].publicUrl();
-        return url;
-    } catch (error) {
-
-    }
-};
-
-// TOD0 : this function does not return anything (wrong implementation)
 export const uploadImage = file => {
-    new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         const bucket = admin.storage().bucket(); // should be your bucket name
         const {originalname, buffer} = file;
         const originalname_date = Date.now() + originalname.replace('+', '_');

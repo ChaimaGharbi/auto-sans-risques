@@ -40,12 +40,7 @@ export class ArticleService {
 
     async updateArticle(articleDto: ArticleDto, id: any) {
         try {
-            return await this.articleRepository.update(id, {
-                title: articleDto.title,
-                priority: articleDto.priority,
-                content: articleDto.content,
-                articleImg: articleDto.articleImg
-            });
+            return await this.articleRepository.update(id, articleDto);
         } catch (error) {
             return new InternalServerErrorException(error);
         }
