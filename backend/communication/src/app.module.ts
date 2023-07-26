@@ -1,23 +1,36 @@
 import * as multer from 'multer';
-import {ConfigModule} from './config/mongo/config.module';
-import {ConfigService} from './config/mongo/config.service';
-import {MailerModule} from './config/mailer/mailer.module';
 import {Module} from '@nestjs/common';
 import {MongooseModule} from '@nestjs/mongoose';
 import {MulterModule} from '@nestjs/platform-express';
 import {AdsModule} from './ads/ads.module';
-import {BullModule} from '@nestjs/bull';
 import {ArticleModule} from "./article/article.module";
 import {ContactModule} from "./contact/contact.module";
+import * as dotenv from 'dotenv';
+import {AssistanceModule} from "./assistance/assistance.module";
+import {PackModule} from "./pack/pack.module";
+
+dotenv.config();
 
 @Module({
     imports: [
-        ConfigModule,
+        // @ts-ignore
         MongooseModule.forRootAsync({
-            inject: [ConfigService],
-            useFactory: (configService: ConfigService) => configService.getMongoConfig()
+            useFactory: () => ({
+                uri: 'mongodb+srv://' +
+                    process.env.MONGO_USER +
+                    ':' +
+                    process.env.MONGO_PASSWORD +
+                    '@' +
+                    process.env.MONGO_HOST +
+                    '/' +
+                    process.env.MONGO_DATABASE +
+                    '?retryWrites=true&w=majority',
+                useNewUrlParser: true,
+                useCreateIndex: true,
+                useUnifiedTopology: true,
+                useFindAndModify: false
+            })
         }),
-        MailerModule,
         MulterModule.register({
             storage: multer.memoryStorage(),
             limits: {
@@ -27,6 +40,8 @@ import {ContactModule} from "./contact/contact.module";
         AdsModule,
         ArticleModule,
         ContactModule,
+        AssistanceModule,
+        PackModule
     ],
     controllers: [],
     providers: []

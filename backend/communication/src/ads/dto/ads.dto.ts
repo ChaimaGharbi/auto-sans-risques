@@ -1,4 +1,4 @@
-import {IsString, IsBoolean, IsMongoId, IsNumber, MinLength, MaxLength} from 'class-validator';
+import {IsBoolean, IsNumber, IsString, MaxLength, MinLength} from 'class-validator';
 
 
 export class AdsDto {

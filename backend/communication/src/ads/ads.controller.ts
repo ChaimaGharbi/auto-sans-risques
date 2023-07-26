@@ -1,15 +1,14 @@
 import {
-    Controller,
-    Get,
-    Post,
     Body,
-    Put,
-    Param,
+    Controller,
     Delete,
-    ValidationPipe,
+    Get,
+    Param,
+    Post,
+    Put,
+    UploadedFile,
     UseInterceptors,
-    UploadedFiles,
-    UploadedFile
+    ValidationPipe
 } from '@nestjs/common';
 import {FileInterceptor} from '@nestjs/platform-express';
 import {imageFileFilter, uploadImage} from 'src/shared/upload.files';
@@ -26,18 +25,12 @@ export class AdsController {
     @UseInterceptors(FileInterceptor('img', {fileFilter: imageFileFilter}))
     async create(@Body() AdsDto: AdsDto, @UploadedFile() img: Express.Multer.File) {
         let fileUrl;
-
         if (img) {
             fileUrl = await uploadImage(img);
             AdsDto.img = fileUrl;
         }
         return this.adsService.createAds(AdsDto);
     }
-
-    /* @Get()
-    findAll() {
-      return this.adsService.findAll();
-    } */
 
     @Post('/paginate')
     async fetchAdssPaginate(@Body(ValidationPipe) filterAdsDto: filterAdsDto) {
@@ -57,7 +50,6 @@ export class AdsController {
 
         if (img) {
             fileUrl = await uploadImage(img);
-
             AdsDto.img = fileUrl;
         }
         return this.adsService.updateAd(id, AdsDto);

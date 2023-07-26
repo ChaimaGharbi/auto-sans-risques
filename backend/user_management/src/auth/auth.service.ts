@@ -79,9 +79,7 @@ export class AuthService {
     async signUp(signupCredentials: SignupCredentialsDto, role: Role) {
         try {
             signupCredentials.email = signupCredentials.email.toLowerCase();
-
-            const emailExists = await this.emailExist(signupCredentials.email);
-
+            const emailExists = await this.getUserByEmail(signupCredentials.email);
             if (emailExists) {
                 throw new ConflictException('Un utilisateur avec cette adresse e-mail existe!');
             }
@@ -110,24 +108,29 @@ export class AuthService {
     async signIn(signInCredentialsDto: SignInCredentialsDto) {
         try {
             const user = await this.getUserByEmail(signInCredentialsDto.email.toLocaleLowerCase());
+            if (!user) {
+                throw new UnauthorizedException("Email incorrect");
+            }
             const isValdiated = await user.validatePassword(signInCredentialsDto.password);
-            if (user && isValdiated) {
-                if (user.status === 2) {
-                    throw new UnauthorizedException('Votre compte a été banni!');
-                } else if (!user.isVerified) {
-                    throw new UnauthorizedException('Veuillez vérifier votre compte!');
-                } else {
-                    const payload = {
-                        id: user._id,
-                        fullName: user.fullName,
-                        specialitiesModels: user.specialitiesModels,
-                        specialitiesMarks: user.specialitiesMarks,
-                        tel: user.tel,
-                        address: user.adresse,
-                        gouv: user.ville,
-                        email: user.email,
-                        role: user.role,
-                        allows: user.allows
+            if (!isValdiated) {
+                throw new UnauthorizedException("mot de passe incorrect");
+            }
+            if (user.status === 2) {
+                throw new UnauthorizedException('Votre compte a été banni!');
+            } else if (!user.isVerified) {
+                throw new UnauthorizedException('Veuillez vérifier votre compte!');
+            } else {
+                const payload = {
+                    id: user._id,
+                    fullName: user.fullName,
+                    specialitiesModels: user.specialitiesModels,
+                    specialitiesMarks: user.specialitiesMarks,
+                    tel: user.tel,
+                    address: user.adresse,
+                    gouv: user.ville,
+                    email: user.email,
+                    role: user.role,
+                    allows: user.allows
                     };
 
                     const accessToken = this.jwtService.sign(payload);
@@ -136,9 +139,6 @@ export class AuthService {
                         accessToken
                     };
                 }
-            } else {
-                throw new UnauthorizedException("Nom d'utilisateur ou mot de passe incorrect");
-            }
         } catch (error) {
             if (error instanceof HttpException) {
                 throw error;
@@ -147,8 +147,6 @@ export class AuthService {
             }
         }
     }
-
-    // Authentication
 
     // Update
     async updatePassword(id: string, oldPassword: string, newPassword: string, role: Role) {
@@ -194,9 +192,6 @@ export class AuthService {
             if (!user) {
                 user = await this.moderatorModel.findOne({email: email}).exec();
             }
-            if (!user) {
-                throw new UnauthorizedException("Nom d'utilisateur ou mot de passe incorrect");
-            }
             return user;
         } catch (error) {
             if (error instanceof HttpException) {
@@ -217,16 +212,6 @@ export class AuthService {
         } catch (error) {
             throw new InternalServerErrorException(error);
         }
-    }
-
-    async emailExist(email) {
-        let user = null
-        const models = [this.clientModel, this.expertModel, this.adminModel, this.moderatorModel]
-        let i = 0
-        while (!user && i < models.length) {
-            user = models[i].findOne({email}).exec()
-        }
-        return user !== null
     }
 
     async getUserByEmailAndRole(email: string, role: Role) {

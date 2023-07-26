@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {HttpException, Injectable, InternalServerErrorException} from '@nestjs/common';
 
 
 @Injectable()
@@ -25,7 +25,10 @@ export class MailerService {
                 ]
             });
         } catch (error) {
-            return error
+            if (error instanceof HttpException) {
+                throw error;
+            }
+            return new InternalServerErrorException("Server Error")
         }
     }
 }
