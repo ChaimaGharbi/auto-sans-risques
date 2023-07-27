@@ -1,6 +1,6 @@
 import {Injectable, NestMiddleware} from '@nestjs/common';
 import {Request, Response} from 'express';
-import {createProxyMiddleware} from 'http-proxy-middleware';
+import {createProxyMiddleware, fixRequestBody} from 'http-proxy-middleware';
 import {options, routes} from "./config";
 
 
@@ -14,6 +14,7 @@ export class ReverseProxyMiddleware implements NestMiddleware {
             const proxy = createProxyMiddleware({
                 target,
                 changeOrigin: true,
+                onProxyReq: fixRequestBody
             });
             proxy(req, res, next);
         } catch (e) {

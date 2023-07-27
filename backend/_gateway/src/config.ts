@@ -42,5 +42,5 @@ export const routes = {
     admin: ["admin"],
     communication: ["pack", 'contact', 'assistance', 'article', 'ads'],
     diagnosis: ['reservation', 'reclamation', 'rapport', 'avis'],
-    user_management: ['payment', 'expert', 'client', 'auth', 'disponibilte']
+    user_management: ['payment', 'expert', 'client', 'auth', 'disponibilte', "models", "mark"]
 }
