@@ -40,5 +40,5 @@ import {PassportModule} from '@nestjs/passport';
     providers: [AuthService, JwtStrategy, MailerService],
     exports: [AuthService, JwtStrategy, PassportModule]
 })
-export class AuthModule {
+export class RecoveryModule {
 }

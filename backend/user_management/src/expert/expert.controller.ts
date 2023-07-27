@@ -39,7 +39,7 @@ export class ExpertController {
     @Put('/')
     @UseGuards(AuthGuard())
     async updateExpertsData(@GetUser() user, @Body(ValidationPipe) expertDto: UpdateExpertDataDto) {
-        return await this.expertService.updateExpertsData(user._id, expertDto);
+        return await this.expertService.updateExpert(user._id, expertDto);
     }
 
     @Put('/:id')
@@ -94,6 +94,6 @@ export class ExpertController {
             filesUrls[Object.keys(files)[i]] = await niemandsUploadImage(file.buffer, fileName, ext);
         }
 
-        return this.expertService.updateExpertsData(user._id, filesUrls);
+        return this.expertService.updateExpert(user._id, filesUrls);
     }
 }

@@ -1,13 +1,11 @@
 import {Injectable, InternalServerErrorException, NotFoundException} from '@nestjs/common';
 import {filterExpertDto} from './dto/filterExpert.dto';
-import {UpdateExpertDto} from './dto/update.dto';
 import {InjectModel} from "@nestjs/mongoose";
 import {Expert} from "./entities/expert.entity";
 import {Model} from "mongoose";
 import {GenericRepository} from "../shared/generic/generic.repository";
 import {IExpertModel} from "./entities/expert.interface";
 import {Disponibilite} from "../disponibilite/entities/disponibilite.entity";
-import {UpdateExpertDataDto} from "./dto/update-expert.dto";
 
 @Injectable()
 export class ExpertService {
@@ -259,22 +257,8 @@ export class ExpertService {
         }
     }
 
-    async updateExpert(id: any, expertDto: UpdateExpertDto) {
-        try {
-            const expert = await this.expertRepository.findById(id);
-            expert.credit = expertDto.credit;
-            expert.status = expertDto.status;
-            expert.isVerified = expertDto.isVerified;
-            expert.specialitiesModels = [...expert.specialitiesModels, ...expertDto.specialitiesModels];
-            expert.specialitiesMarks = [...expert.specialitiesMarks, ...expertDto.specialitiesMarks];
-            await expert.save();
-            return expert;
-        } catch (error) {
-            return new InternalServerErrorException(error);
-        }
-    }
 
-    async updateExpertsData(id: any, expertDto: UpdateExpertDataDto) {
+    async updateExpert(id: any, expertDto) {
         try {
             return await this.expertRepository.update(id, expertDto);
         } catch (error) {

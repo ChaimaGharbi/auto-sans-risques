@@ -5,8 +5,6 @@ class ClientUpdateDto {
     @IsNotEmpty()
     fullName: string;
     @IsNotEmpty()
-    img: string;
-    @IsNotEmpty()
     tel: string;
     @IsNotEmpty()
     adresse: string;

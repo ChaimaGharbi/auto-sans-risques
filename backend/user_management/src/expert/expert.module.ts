@@ -3,10 +3,10 @@ import {MongooseModule} from '@nestjs/mongoose';
 import {Expert, ExpertSchema} from 'src/expert/entities/expert.entity';
 import {ExpertController} from './expert.controller';
 import {ExpertService} from './expert.service';
-import {Model, ModelSchema} from './entities/model.entity';
-import {Mark, MarkSchema} from './entities/mark.entity';
 import {PassportModule} from '@nestjs/passport';
 import {Disponibilite, DisponibiliteSchema} from '../disponibilite/entities/disponibilite.entity';
+import {Model, ModelSchema} from "../model/entities/model.entity";
+import {Mark, MarkSchema} from "../mark/entities/mark.entity";
 
 @Module({
     imports: [

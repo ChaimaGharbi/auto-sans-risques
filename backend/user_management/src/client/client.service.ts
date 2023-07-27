@@ -5,7 +5,6 @@ import {Client} from "./entities/client.entity";
 import {InjectModel} from "@nestjs/mongoose";
 import {IClientModel} from "./entities/client.interface";
 import clientSort from "./client-sort";
-import {ClientDto} from "./dto/client.dto";
 
 
 @Injectable()
@@ -35,16 +34,8 @@ export class ClientService {
         }
     }
 
-    async updateClient(id: any, clientDto: any) {
-        try {
-            return await this.clientRepository.update(id, {status: clientDto.status, isVerified: clientDto.isVerified});
 
-        } catch (error) {
-            return new InternalServerErrorException(error);
-        }
-    }
-
-    async updateClientsData(id: any, clientDto: ClientDto) {
+    async updateClient(id: any, clientDto) {
         try {
             return await this.clientRepository.update(id, clientDto);
         } catch (error) {

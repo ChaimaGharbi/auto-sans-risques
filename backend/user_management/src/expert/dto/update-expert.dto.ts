@@ -8,15 +8,9 @@ class UpdateExpert {
     specialite: string[];
     propos: string;
     certif: string[];
-    img: string;
     specialitiesModels: [];
     specialitiesMarks: [];
-    cin: string;
-    carteFiscale: string;
-    diplome: string;
-    signature: string;
     repos: boolean;
-    photoAtelier: string;
 }
 
 export class UpdateExpertDataDto extends PartialType(UpdateExpert) {

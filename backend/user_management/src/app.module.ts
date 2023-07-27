@@ -8,6 +8,11 @@ import {MulterModule} from '@nestjs/platform-express';
 import {NestjsFormDataModule} from 'nestjs-form-data';
 import {BullModule} from '@nestjs/bull';
 import * as dotenv from 'dotenv';
+import {DisponibiliteModule} from "./disponibilite/disponibilite.module";
+import {MarkModule} from "./mark/mark.module";
+import {ModelModule} from "./model/model.module";
+import {PaymentModule} from "./payment/payment.module";
+import {RecoveryModule} from "./recovery/auth.module";
 
 
 dotenv.config();
@@ -54,6 +59,11 @@ dotenv.config();
         }),
         ExpertModule,
         ClientModule,
+        DisponibiliteModule,
+        MarkModule,
+        ModelModule,
+        PaymentModule,
+        RecoveryModule
     ],
     controllers: [],
     providers: []

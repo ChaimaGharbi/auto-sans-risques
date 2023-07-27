@@ -35,7 +35,7 @@ export class ClientController {
     @Put('/')
     @UseGuards(AuthGuard())
     async updateClientsData(@GetUser() user, @Body(ValidationPipe) clientDto: ClientDto) {
-        return await this.clientService.updateClientsData(user._id, clientDto);
+        return await this.clientService.updateClient(user._id, clientDto);
     }
 
     @Put('/status/ids')
