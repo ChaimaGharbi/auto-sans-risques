@@ -1,13 +1,13 @@
 import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {InjectModel} from "@nestjs/mongoose";
-import {Expert} from "../../entities/expert.entity";
-import {IExpertModel} from "../../entities/expert.interface";
-import {Client} from "../../entities/client.entity";
-import {IClientModel} from "../../entities/client.interface";
-import {Reservation} from "../../entities/reservation.entity";
-import {IReservationModel} from "../../entities/reservation.interface";
 import * as moment from "moment-timezone";
-import {ReservationStatus} from "../../entities/reservation.status.enum";
+import {Expert} from "../reservation/entities/expert.entity";
+import {IExpertModel} from "../reservation/entities/expert.interface";
+import {Client} from "../reservation/entities/client.entity";
+import {IClientModel} from "../reservation/entities/client.interface";
+import {Reservation} from "../reservation/entities/reservation.entity";
+import {IReservationModel} from "../reservation/entities/reservation.interface";
+import {ReservationStatus} from "../reservation/entities/reservation.status.enum";
 
 // TODO :Understand The stats service
 @Injectable()

@@ -2,21 +2,20 @@ import {Injectable, InternalServerErrorException} from '@nestjs/common';
 import {filterNotificationDto} from './dto/filterNotification.dto';
 import {NotificationDto} from './dto/notification.dto';
 import {InjectModel} from "@nestjs/mongoose";
-import {Notification} from "../../entities/notification.entity";
-import {INotificationModel} from "../../entities/notification.interface";
-import {Expert} from "../../entities/expert.entity";
 import {Model} from "mongoose";
-import {Client} from "../../entities/client.entity";
-import {Reservation} from "../../entities/reservation.entity";
-import {MailerService} from "../../config/mailer/mailer.service";
 import {NotificationGateway} from "./notification.gateway";
-import {getHtml} from "../../config/mailer/mailer.helper";
-import {ReservationStatus} from "../../entities/reservation.status.enum";
 import 'moment/locale/fr';
 import demandeRendezVous from "./htmlTemplates/demande-rendez-vous";
 import acceptationRendezVous from "./htmlTemplates/accepation-rendez-vous";
 import refusRendezVous from "./htmlTemplates/refus-rendez-vous";
-import {GenericRepository} from "../../shared/generic/generic.repository";
+import {GenericRepository} from 'src/shared/generic/generic.repository';
+import {Expert} from "../reservation/entities/expert.entity";
+import {Client} from "../reservation/entities/client.entity";
+import {Reservation} from "../reservation/entities/reservation.entity";
+import {MailerService} from "../shared/mailer/mailer.service";
+import {Notification} from "./entities/notification.entity";
+import {getHtml} from "../shared/mailer/mailer.helper";
+import {ReservationStatus} from "../reservation/entities/reservation.status.enum";
 import moment = require('moment');
 
 @Injectable()
@@ -28,7 +27,7 @@ export class NotificationService {
     private readonly notificationRepository: GenericRepository<Notification>;
 
     constructor(
-        @InjectModel(Notification.name) private notificationModel: INotificationModel,
+        @InjectModel(Notification.name) private notificationModel: Model<Notification>,
         @InjectModel(Expert.name) private expertModel: Model<Expert>,
         @InjectModel(Client.name) private clientModel: Model<Client>,
         @InjectModel(Reservation.name) private reservationModel: Model<Reservation>,

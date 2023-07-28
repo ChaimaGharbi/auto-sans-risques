@@ -1,7 +1,6 @@
 import {Module} from '@nestjs/common';
 import {MongooseModule} from '@nestjs/mongoose';
 import {PassportModule} from '@nestjs/passport';
-import {MailerService} from 'src/config/mailer/mailer.service';
 import {Client, ClientSchema} from './entities/client.entity';
 import {Expert, ExpertSchema} from './entities/expert.entity';
 import {Reservation, ReservationSchema} from './entities/reservation.entity';
@@ -9,6 +8,7 @@ import {ReservationController} from './reservation.controller';
 import {ReservationGateway} from './reservation.gateway';
 import {ReservationService} from './reservation.service';
 import {Notification, NotificationSchema} from '../notification/entities/notification.entity';
+import {MailerService} from "../shared/mailer/mailer.service";
 
 @Module({
     imports: [

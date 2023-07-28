@@ -8,7 +8,7 @@ import {ReclamationModule} from './reclamation/reclamation.module';
 import {ReservationModule} from './reservation/reservation.module';
 import {NestjsFormDataModule} from 'nestjs-form-data';
 import {BullModule} from '@nestjs/bull';
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 import {NotificationModule} from "./notification/notification.module";
 
 dotenv.config();
