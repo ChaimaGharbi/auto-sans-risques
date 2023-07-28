@@ -26,6 +26,7 @@ jobs:
           cd backend
           for dir in _gateway admin communication diagnosis user_management; do
             cd $dir
+            echo $dir
             docker build -t $DOCKER_USERNAME/$DOCKER_REPO:$dir .
             docker push $DOCKER_USERNAME/$DOCKER_REPO:$dir
             cd ..
