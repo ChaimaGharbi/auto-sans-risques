@@ -11,9 +11,8 @@ env:
   DOCKER_REPO: auto-sans-risque
 
 jobs:
-  build-and-push:
+  docker-connect:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -21,13 +20,106 @@ jobs:
       - name: Login to Docker Hub
         run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 
-      - name: Build and Push Images
+  gateway:
+    runs-on: ubuntu-latest
+    needs: docker-connect
+
+    steps:
+
+      - name: Build and Push Image
         run: |
-          cd backend
-          for dir in _gateway admin communication diagnosis user_management; do
-            cd $dir
-            echo $dir
-            docker build -t $DOCKER_USERNAME/$DOCKER_REPO:$dir .
-            docker push $DOCKER_USERNAME/$DOCKER_REPO:$dir
-            cd ..
+          cd backend/_gateway
+          docker build -t $DOCKER_USERNAME/$DOCKER_REPO:_gateway .
+          docker-compose -f docker-compose.yaml up --build --exit-code-from _gateway
+          
+            if [ $? -eq 0 ]; then
+              echo "Tests passed. Pushing the image."
+              docker push $DOCKER_USERNAME/$DOCKER_REPO:_gateway
+            else
+              echo "Tests failed. The image won't be pushed."
+            fi
+
+          done
+
+  admin:
+    runs-on: ubuntu-latest
+    needs: docker-connect
+
+    steps:
+
+      - name: Build and Push Image
+        run: |
+          cd backend/admin
+          docker build -t $DOCKER_USERNAME/$DOCKER_REPO:admin .
+          docker-compose -f docker-compose.yaml up --build --exit-code-from admin
+          
+            if [ $? -eq 0 ]; then
+              echo "Tests passed. Pushing the image."
+              docker push $DOCKER_USERNAME/$DOCKER_REPO:admin
+            else
+              echo "Tests failed. The image won't be pushed."
+            fi
+
+          done
+  communication:
+    runs-on: ubuntu-latest
+    needs: docker-connect
+
+    steps:
+
+      - name: Build and Push Image
+        run: |
+          cd backend/communication
+          docker build -t $DOCKER_USERNAME/$DOCKER_REPO:communication .
+          docker-compose -f docker-compose.yaml up --build --exit-code-from communication
+          
+            if [ $? -eq 0 ]; then
+              echo "Tests passed. Pushing the image."
+              docker push $DOCKER_USERNAME/$DOCKER_REPO:communication
+            else
+              echo "Tests failed. The image won't be pushed."
+            fi
+
+          done
+
+  diagnosis:
+    runs-on: ubuntu-latest
+    needs: docker-connect
+
+    steps:
+
+      - name: Build and Push Image
+        run: |
+          cd backend/diagnosis
+          docker build -t $DOCKER_USERNAME/$DOCKER_REPO:diagnosis .
+          docker-compose -f docker-compose.yaml up --build --exit-code-from diagnosis
+          
+            if [ $? -eq 0 ]; then
+              echo "Tests passed. Pushing the image."
+              docker push $DOCKER_USERNAME/$DOCKER_REPO:diagnosis
+            else
+              echo "Tests failed. The image won't be pushed."
+            fi
+
+          done
+
+  user_management:
+    runs-on: ubuntu-latest
+    needs: docker-connect
+
+    steps:
+
+      - name: Build and Push Image
+        run: |
+          cd backend/user_management
+          docker build -t $DOCKER_USERNAME/$DOCKER_REPO:user_management .
+          docker-compose -f docker-compose.yaml up --build --exit-code-from user_management
+          
+            if [ $? -eq 0 ]; then
+              echo "Tests passed. Pushing the image."
+              docker push $DOCKER_USERNAME/$DOCKER_REPO:user_management
+            else
+              echo "Tests failed. The image won't be pushed."
+            fi
+
           done
