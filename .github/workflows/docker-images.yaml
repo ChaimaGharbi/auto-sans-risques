@@ -28,7 +28,7 @@ jobs:
 
       - name: Build and Push Image
         run: |
-          cd ./backend/_gateway
+          cd ../../backend/_gateway
           docker build -t $DOCKER_USERNAME/$DOCKER_REPO:_gateway .
           docker-compose -f docker-compose.yaml up --build --exit-code-from _gateway
           
@@ -49,7 +49,7 @@ jobs:
 
       - name: Build and Push Image
         run: |
-          cd ./backend/admin
+          cd ../backend/admin
           docker build -t $DOCKER_USERNAME/$DOCKER_REPO:admin .
           docker-compose -f docker-compose.yaml up --build --exit-code-from admin
           
@@ -69,7 +69,7 @@ jobs:
 
       - name: Build and Push Image
         run: |
-          cd ./backend/communication
+          cd ../../backend/communication
           docker build -t $DOCKER_USERNAME/$DOCKER_REPO:communication .
           docker-compose -f docker-compose.yaml up --build --exit-code-from communication
           
@@ -90,7 +90,7 @@ jobs:
 
       - name: Build and Push Image
         run: |
-          cd ./backend/diagnosis
+          cd ../../backend/diagnosis
           docker build -t $DOCKER_USERNAME/$DOCKER_REPO:diagnosis .
           docker-compose -f docker-compose.yaml up --build --exit-code-from diagnosis
           
@@ -111,7 +111,7 @@ jobs:
 
       - name: Build and Push Image
         run: |
-          cd ./backend/user_management
+          cd ../../backend/user_management
           docker build -t $DOCKER_USERNAME/$DOCKER_REPO:user_management .
           docker-compose -f docker-compose.yaml up --build --exit-code-from user_management
           
