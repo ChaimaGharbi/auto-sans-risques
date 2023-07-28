@@ -20,6 +20,9 @@ jobs:
       - name: Login to Docker Hub
         run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 
+      - name: Choose Repo
+        run: cd backend
+
   gateway:
     runs-on: ubuntu-latest
     needs: docker-connect
@@ -28,7 +31,6 @@ jobs:
 
       - name: Build and Push Image
         run: |
-          cd backend
           cd _gateway
           docker build -t $DOCKER_USERNAME/$DOCKER_REPO:_gateway .
           docker-compose -f docker-compose.yaml up --build --exit-code-from _gateway
@@ -39,7 +41,7 @@ jobs:
             else
               echo "Tests failed. The image won't be pushed."
             fi
-
+          cd ..
           done
 
   admin:
@@ -50,7 +52,6 @@ jobs:
 
       - name: Build and Push Image
         run: |
-          cd backend
           cd admin
           docker build -t $DOCKER_USERNAME/$DOCKER_REPO:admin .
           docker-compose -f docker-compose.yaml up --build --exit-code-from admin
@@ -61,7 +62,7 @@ jobs:
             else
               echo "Tests failed. The image won't be pushed."
             fi
-
+          cd ..
           done
   communication:
     runs-on: ubuntu-latest
@@ -71,7 +72,6 @@ jobs:
 
       - name: Build and Push Image
         run: |
-          cd backend
           cd communication
           docker build -t $DOCKER_USERNAME/$DOCKER_REPO:communication .
           docker-compose -f docker-compose.yaml up --build --exit-code-from communication
@@ -82,7 +82,7 @@ jobs:
             else
               echo "Tests failed. The image won't be pushed."
             fi
-
+          cd ..
           done
 
   diagnosis:
@@ -93,7 +93,6 @@ jobs:
 
       - name: Build and Push Image
         run: |
-          cd backend
           cd diagnosis
           docker build -t $DOCKER_USERNAME/$DOCKER_REPO:diagnosis .
           docker-compose -f docker-compose.yaml up --build --exit-code-from diagnosis
@@ -104,7 +103,7 @@ jobs:
             else
               echo "Tests failed. The image won't be pushed."
             fi
-
+          cd ..
           done
 
   user_management:
@@ -115,7 +114,6 @@ jobs:
 
       - name: Build and Push Image
         run: |
-          cd backend
           cd user_management
           docker build -t $DOCKER_USERNAME/$DOCKER_REPO:user_management .
           docker-compose -f docker-compose.yaml up --build --exit-code-from user_management
@@ -126,4 +124,5 @@ jobs:
             else
               echo "Tests failed. The image won't be pushed."
             fi
+          cd ..
           done
