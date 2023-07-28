@@ -155,6 +155,10 @@ export class NotificationService {
   }
 
   async updateNotificationById(id) {
-    return this.notificationRepository.updateNotificationById(id);
+      try {
+          return await this.notificationModel.updateOne({_id: id}, {$set: {is_read: true}})
+      } catch (error) {
+          return new InternalServerErrorException(error);
+      }
   }
 }
