@@ -126,5 +126,4 @@ jobs:
             else
               echo "Tests failed. The image won't be pushed."
             fi
-
           done
