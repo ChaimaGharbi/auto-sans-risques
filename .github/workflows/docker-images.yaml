@@ -11,7 +11,7 @@ env:
   DOCKER_REPO: auto-sans-risque
 
 jobs:
-  docker-connect:
+  Docker Images:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
