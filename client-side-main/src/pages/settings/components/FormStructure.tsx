@@ -152,6 +152,8 @@ export function Input(props: Props) {
       props.validations?.some(v => v.message === 'Ce champ est obligatoire'),
     [props.validations]
   )
+  console.log(props);
+  
 
   return (
     <div className="p-4 grid gap-2">
@@ -213,6 +215,7 @@ export function CollectionsInput(props: Props) {
 
   const { collection, onChangeCurrent, add, current, remove, onChange } =
     useCollection(props.defaultValue)
+
 
   useEffect(() => {
     setValue(collection)

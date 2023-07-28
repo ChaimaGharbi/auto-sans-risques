@@ -11,11 +11,20 @@ import { Link } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { actions } from 'app/store/notifications'
+import { toast } from 'react-hot-toast'
 
-function link(msg, id) {
-  if (msg.toLowerCase().includes('veuillez confirmer ou annuler le rdv'))
-    return '/missions'
-  return `/reservations`
+function link(msg, id, status) {
+  if (msg.toLowerCase().includes('veuillez confirmer ou annuler le rdv')) {
+    if (status === 'ACCEPTEE') {
+      return `/ongoing/${id}`;
+    } else if (status === 'COMPLETEE') {
+      return '/reports';
+    } else if (status === 'EN_ATTENTE') {
+      return '/missions';
+    }
+    return '/notifications';
+  }
+  else return '/reservations'
 }
 
 function Badge({ children }) {
@@ -45,15 +54,15 @@ export default function Notifications() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const { data, loading } = useRecentNotifications()
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-
+  
   const dp = useDispatch()
 
 
   function handleIsRead(notificationId) {
     
     dp(actions.updateNotificationById(notificationId))
-    
-
+    const notif = data?.filter((notif) => notif._id === notificationId);
+    console.log(notif);
     const notificationElement = document.getElementById(notificationId)
     if (notificationElement) {
       const spanElement = notificationElement.querySelector('span')
@@ -100,7 +109,8 @@ export default function Notifications() {
         </If>
         <If test={!loading}>
           {!!data &&
-            data.map(({ _id, message, reservationId, is_read }) => (
+            data.map(({ _id, message, reservationId, is_read, reservation }) => (
+              
               <Dropdown.Item
                 key={_id}
                 id={_id}
@@ -111,13 +121,14 @@ export default function Notifications() {
                 }}
               >
                 <Link
-                  to={link(message, reservationId)} 
+                  to={link(message, reservationId, reservation?.[0]?.status)} 
                 >
                   <span
                     key={_id}
                     style={{ color: is_read ? 'gray' : 'black' }}
                     onClick={() => handleIsRead(_id)}
                   >
+
                     {windowWidth > 1024
                       ? `${message.substring(0, 70)}...`
                       : windowWidth > 600

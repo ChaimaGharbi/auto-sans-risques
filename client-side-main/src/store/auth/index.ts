@@ -86,7 +86,7 @@ interface User {
   isVerfied: boolean
   lat: number
   lng: number
-  profile: string
+  img: string
   ville: string
   role: 'CLIENT' | 'EXPERT'
   status: number

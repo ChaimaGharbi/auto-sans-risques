@@ -43,6 +43,8 @@ return {
 }}
 
 export const updateNotificationById = id => {
+  console.log(id);
+  
   return {
     type: constants.UPDATE_NOTIFICATION_BY_ID.success,
     payload: id,

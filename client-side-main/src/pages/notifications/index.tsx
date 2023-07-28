@@ -7,12 +7,21 @@ import { Link } from 'react-router-dom'
 import { PaginatedContent } from 'app/shared/components/paginated'
 import { useState } from 'react'
 import { useUpdateAreRead } from 'app/store/hooks'
+import { toast } from 'react-hot-toast'
 
 
-function link(msg, id) {
-  if (msg.toLowerCase().includes('veuillez confirmer ou annuler le rdv'))
-    return '/missions'
-  return `/ongoing/${id}`
+function link(msg, id, status) {
+  if (msg.toLowerCase().includes('veuillez confirmer ou annuler le rdv')) {
+    if (status === 'ACCEPTEE') {
+      return `/ongoing/${id}`;
+    } else if (status === 'COMPLETEE') {
+      return '/reports';
+    } else if (status === 'EN_ATTENTE') {
+      return '/missions';
+    }
+    return '/notifications';
+  }
+  else return '/reservations'
 }
 
 const Notifications = () => {
@@ -23,8 +32,10 @@ const Notifications = () => {
 
   const updateIsRead = useUpdateAreRead()
 
-  const handleIsRead = notificationId => {
-    updateIsRead(notificationId)
+  const handleIsRead = (notificationId, status) => {
+    updateIsRead(notificationId) 
+    if (status == 'REFUSEE')
+      toast.error('Cette demande a été déjà refusée!')
     console.log('done')
     console.log(data)
   }
@@ -67,18 +78,20 @@ const Notifications = () => {
                   onLoadMore={() => {}}
                   total={data?.length ? data.length : 0}
                   item={({ data }) => {
-                    const { _id, message, reservationId, is_read } = data
+                    const { _id, message, reservationId, is_read, reservation } = data
                     const notificationStyle = {
                       color: is_read ? 'gray' : 'black',
                     }
+                    console.log(reservation[0].status);
+                    
                     return (
                       <div key={_id} className="py-4 flex justify-between">
                         <div className="text-sm text-gray-800">
                           
                           <Link
-                            to={link(message, reservationId)}
+                            to={link(message, reservationId, reservation[0].status)}
                             className="text-primary"
-                            onClick={() => handleIsRead(_id)}
+                            onClick={() => handleIsRead(_id, reservation[0].status)}
                           >
                            <span style={notificationStyle}>{message}</span>
                           </Link>
@@ -87,6 +100,7 @@ const Notifications = () => {
                           {!is_read && (
                             <span className="inline-block w-2.5 h-2.5 rounded-full bg-blue-500 mr-5" />
                           )}
+                        
                         </div>
                       </div>
                     )

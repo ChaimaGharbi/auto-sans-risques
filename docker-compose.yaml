@@ -1,0 +1,15 @@
+version: '0.1'
+
+services:
+  backend:
+    image: dhouib/auto-sans-risque:backend
+    ports:
+      - 8080:8080
+    env_file:
+      - ./back-side-main/.env
+  frontend:
+    image: dhouib/auto-sans-risque:frontend
+    ports:
+      - 3000:3000
+    env_file:
+      - ./client-side-main/.env

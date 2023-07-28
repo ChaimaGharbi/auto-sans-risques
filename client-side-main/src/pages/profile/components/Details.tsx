@@ -29,8 +29,8 @@ const Details = props => {
           <div className="grid place-content-center ">
             <img
               src={
-                state.me.data.profile
-                  ? state.me.data.profile
+                state.me.data.img
+                  ? state.me.data.img
                   : '/img/default-profile.svg'
               }
               alt="profile"

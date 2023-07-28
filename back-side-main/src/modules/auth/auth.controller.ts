@@ -185,7 +185,7 @@ export class AuthController {
       cin: user.cin,
       diplome: user.diplome,
       signature: user.signature,
-      profile: user.img,
+      img: user.img,
       photoAtelier: user.photoAtelier,
       nb_missions: user.nb_missions,
       credit: user.credit,

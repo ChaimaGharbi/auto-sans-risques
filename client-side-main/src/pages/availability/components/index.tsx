@@ -59,10 +59,6 @@ export default function AvailabilityCalendar({
 
   const { me } = useGetUser()
 
-  const formats = {
-    weekdayFormat: (date, culture, localizer) => localizer.format(date, 'd', culture),
-  }
-
   return (
     <Calendar
       localizer={localizer}
@@ -82,7 +78,6 @@ export default function AvailabilityCalendar({
       min={new Date(2017, 10, 0, 6, 0, 0)}
       max={new Date(2017, 10, 0, 20, 0, 0)}
       toolbar={me.data?.recurrentAvailability ? false : true}
-      formats={formats}
     />
   )
 }
