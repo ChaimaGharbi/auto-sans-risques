@@ -1,6 +1,6 @@
 import {Body, Controller, Get, Param, Post, Put, Request, UseGuards, ValidationPipe} from '@nestjs/common';
 import {AuthGuard} from '@nestjs/passport';
-import {RolesGuard} from '../roles.guard';
+import {RolesGuard} from '../shared/roles.guard';
 import {filterReservationDto} from './dto/filterReservation.dto';
 import {reservationDto} from './dto/reservation.dto';
 import {ReservationService} from './reservation.service';

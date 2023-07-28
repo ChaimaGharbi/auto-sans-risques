@@ -8,7 +8,7 @@ import {Reservation, ReservationSchema} from './entities/reservation.entity';
 import {ReservationController} from './reservation.controller';
 import {ReservationGateway} from './reservation.gateway';
 import {ReservationService} from './reservation.service';
-import {Notification, NotificationSchema} from './entities/notification.entity';
+import {Notification, NotificationSchema} from '../notification/entities/notification.entity';
 
 @Module({
     imports: [

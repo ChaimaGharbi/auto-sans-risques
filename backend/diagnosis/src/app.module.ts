@@ -1,9 +1,5 @@
 import * as multer from 'multer';
-// import {AuthModule} from './auth/auth.module';
 import {AvisModule} from './avis/avis.module';
-import {ConfigModule} from './config/mongo/config.module';
-import {ConfigService} from './config/mongo/config.service';
-import {MailerModule} from './config/mailer/mailer.module';
 import {Module} from '@nestjs/common';
 import {MongooseModule} from '@nestjs/mongoose';
 import {MulterModule} from '@nestjs/platform-express';
@@ -12,14 +8,32 @@ import {ReclamationModule} from './reclamation/reclamation.module';
 import {ReservationModule} from './reservation/reservation.module';
 import {NestjsFormDataModule} from 'nestjs-form-data';
 import {BullModule} from '@nestjs/bull';
+import dotenv from 'dotenv';
+import {NotificationModule} from "./notification/notification.module";
+
+dotenv.config();
+
 
 @Module({
     imports: [
         NestjsFormDataModule,
-        ConfigModule,
+        // @ts-ignore
         MongooseModule.forRootAsync({
-            inject: [ConfigService],
-            useFactory: (configService: ConfigService) => configService.getMongoConfig()
+            useFactory: () => ({
+                uri: 'mongodb+srv://' +
+                    process.env.MONGO_USER +
+                    ':' +
+                    process.env.MONGO_PASSWORD +
+                    '@' +
+                    process.env.MONGO_HOST +
+                    '/' +
+                    process.env.MONGO_DATABASE +
+                    '?retryWrites=true&w=majority',
+                useNewUrlParser: true,
+                useCreateIndex: true,
+                useUnifiedTopology: true,
+                useFindAndModify: false
+            })
         }),
         BullModule.forRoot({
             redis: {
@@ -33,8 +47,6 @@ import {BullModule} from '@nestjs/bull';
                 timeout: 600000
             }
         }),
-        // AuthModule,
-        MailerModule,
         MulterModule.register({
             storage: multer.memoryStorage(),
             limits: {
@@ -45,6 +57,7 @@ import {BullModule} from '@nestjs/bull';
         RapportModule,
         ReservationModule,
         ReclamationModule,
+        NotificationModule,
     ],
     controllers: [],
     providers: []

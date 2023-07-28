@@ -2,13 +2,13 @@ import {Injectable, InternalServerErrorException, NotFoundException} from '@nest
 import {filterReservationDto} from './dto/filterReservation.dto';
 import {reservationDto} from './dto/reservation.dto';
 import {InjectModel} from "@nestjs/mongoose";
-import moment = require('moment');
 import {GenericRepository} from "../shared/generic/generic.repository";
 import {Reservation} from "./entities/reservation.entity";
 import {IReservationModel} from "./entities/reservation.interface";
-import {INotificationModel} from "./entities/notification.interface";
+import {INotificationModel} from "../notification/entities/notification.interface";
 import {ReservationStatus} from "./entities/reservation.status.enum";
-import {Notification} from "./entities/notification.entity";
+import {Notification} from "../notification/entities/notification.entity";
+import moment = require('moment');
 
 @Injectable()
 export class ReservationService {

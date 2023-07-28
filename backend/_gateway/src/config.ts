@@ -1,4 +1,4 @@
-const env = "dev"
+const env: string = "prod"
 const devOptions = {
     admin: {
         host: 'localhost',
@@ -39,8 +39,8 @@ const prodOptions = {
 export const options = env === "dev" ? devOptions : prodOptions
 
 export const routes = {
-    admin: ["admin"],
+    admin: ["admin", "moderator"],
     communication: ["pack", 'contact', 'assistance', 'article', 'ads'],
-    diagnosis: ['reservation', 'reclamation', 'rapport', 'avis'],
+    diagnosis: ['reservation', 'reclamation', 'rapport', 'avis', 'notification', 'stats'],
     user_management: ['payment', 'expert', 'client', 'auth', 'disponibilte', "models", "mark"]
 }

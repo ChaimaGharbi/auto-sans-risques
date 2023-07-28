@@ -14,7 +14,7 @@ import {
     ValidationPipe
 } from '@nestjs/common';
 import {AuthGuard} from '@nestjs/passport';
-import {RolesGuard} from '../roles.guard';
+import {RolesGuard} from '../shared/roles.guard';
 import {FilterQuestionDto} from './dto/filterQuestion.dto';
 import {FilterQuestionCtgDto} from './dto/filterQuestionCtg.dto';
 import {filterRapportDto} from './dto/filterRapport.dto';
