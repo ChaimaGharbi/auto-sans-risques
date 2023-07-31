@@ -1,0 +1,19 @@
+tree chaima:client-side-main
+
+.gitignore
+.prettierrc
+Dockerfile
+README.md
+TODO.md
+index.html
+main.todo
+package-lock.json
+package.json
+postcss.config.js
+public/
+src/
+tailwind.config.js
+tsconfig.json
+tsconfig.node.json
+vite.config.ts
+yarn.lock
