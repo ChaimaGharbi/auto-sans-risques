@@ -1,4 +1,4 @@
-const env: string = "prod"
+const env: string = "dev"
 const devOptions = {
     admin: {
         host: 'localhost',
@@ -42,5 +42,5 @@ export const routes = {
     admin: ["admin", "moderator"],
     communication: ["pack", 'contact', 'assistance', 'article', 'ads'],
     diagnosis: ['reservation', 'reclamation', 'rapport', 'avis', 'notification', 'stats'],
-    user_management: ['payment', 'expert', 'client', 'auth', 'disponibilte', "models", "mark"]
+    user_management: ['payment', 'expert', 'client', 'auth', 'disponibilite', "models", "mark"]
 }

@@ -97,11 +97,7 @@ export class AuthService {
 
             return createdUser;
         } catch (error) {
-            if (error instanceof HttpException) {
-                throw error;
-            } else {
-                throw new InternalServerErrorException("Erreur d'inscription!");
-            }
+            throw new InternalServerErrorException(error);
         }
     }
 
@@ -140,11 +136,7 @@ export class AuthService {
                     };
                 }
         } catch (error) {
-            if (error instanceof HttpException) {
-                throw error;
-            } else {
-                throw new InternalServerErrorException("Erreur d'inscription!");
-            }
+            throw new InternalServerErrorException(error);
         }
     }
 
@@ -194,9 +186,6 @@ export class AuthService {
             }
             return user;
         } catch (error) {
-            if (error instanceof HttpException) {
-                throw error;
-            }
             return new InternalServerErrorException("Server Error")
         }
     }

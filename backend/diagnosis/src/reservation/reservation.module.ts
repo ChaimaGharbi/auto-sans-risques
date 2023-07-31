@@ -9,6 +9,7 @@ import {ReservationGateway} from './reservation.gateway';
 import {ReservationService} from './reservation.service';
 import {Notification, NotificationSchema} from '../notification/entities/notification.entity';
 import {MailerService} from "../shared/mailer/mailer.service";
+import {JwtStrategy} from "../shared/jwt-strategy";
 
 @Module({
     imports: [
@@ -23,7 +24,7 @@ import {MailerService} from "../shared/mailer/mailer.service";
         ])
     ],
     controllers: [ReservationController],
-    providers: [ReservationService, MailerService, ReservationGateway],
+    providers: [ReservationService, MailerService, ReservationGateway, JwtStrategy],
     exports: [ReservationService]
 })
 export class ReservationModule {

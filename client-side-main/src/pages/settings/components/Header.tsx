@@ -1,6 +1,6 @@
-import { MdModeEditOutline } from 'react-icons/md'
-import { AiFillInfoCircle } from 'react-icons/ai'
-import { useGetUser, useUpdateToUpload } from 'app/store/hooks'
+import {MdModeEditOutline} from 'react-icons/md'
+import {AiFillInfoCircle} from 'react-icons/ai'
+import {useGetUser, useUpdateToUpload} from 'app/store/hooks'
 import If from 'app/shared/components/If'
 import toast from 'react-hot-toast'
 
@@ -57,17 +57,17 @@ export default function Header() {
         </label>
       </div>
 
-      <If test={me.data && !me.data.isVerfied}>
-        <div className="py-4 w-full grid place-content-center content-center lg:place-content-end lg:content-start">
-          <button
-            className="uppercase flex items-center space-x-3 justify-center w-52  py-3 rounded-lg bg-[#F49342] text-white text-xs font-roboto"
-            style={{
-              boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
-            }}
-          >
-            <AiFillInfoCircle className="text-xl" />
-            <span>En attente de validation</span>
-          </button>
+      <If test={me.data && !me.data.isVerified}>
+          <div className="py-4 w-full grid place-content-center content-center lg:place-content-end lg:content-start">
+              <button
+                  className="uppercase flex items-center space-x-3 justify-center w-52  py-3 rounded-lg bg-[#F49342] text-white text-xs font-roboto"
+                  style={{
+                      boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
+                  }}
+              >
+                  <AiFillInfoCircle className="text-xl"/>
+                  <span>En attente de validation</span>
+              </button>
         </div>
       </If>
     </div>

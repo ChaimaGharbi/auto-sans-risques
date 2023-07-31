@@ -1,4 +1,4 @@
-import axios, { getClient } from 'app/store/api'
+import {getClient} from 'app/store/api'
 
 export const getMissionsRequests = id =>
   getClient()
@@ -97,10 +97,11 @@ export const createReclamation = data =>
     .post('/reclamation', data)
     .then(({ data }) => data)
 
-export const createRapport = data =>
-  getClient()
-    .post('/rapport', data)
-    .then(({ data }) => data)
+export const createRapport = data => {
+    return getClient()
+        .post('/rapport', data)
+        .then(({data}) => data)
+}
 
 export const getMission = id =>
   getClient()

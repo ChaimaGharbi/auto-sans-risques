@@ -1,11 +1,11 @@
 import Rating from 'app/shared/components/Rating'
-import { useGetUser } from 'app/store/hooks'
-import { FaUserAlt } from 'react-icons/fa'
-import { Spinner } from 'app/shared/components/Loading'
+import {useGetUser} from 'app/store/hooks'
+import {FaUserAlt} from 'react-icons/fa'
+import {Spinner} from 'app/shared/components/Loading'
 import If from 'app/shared/components/If'
-import { MdModeEditOutline } from 'react-icons/md'
-import { Link } from 'react-router-dom'
-import { CreditCardIcon } from './CC.icon'
+import {MdModeEditOutline} from 'react-icons/md'
+import {Link} from 'react-router-dom'
+import {CreditCardIcon} from './CC.icon'
 
 const Details = props => {
   const state = useGetUser()
@@ -75,11 +75,11 @@ const Details = props => {
           <div className="font-roboto col-span-1 md:col-span-2 lg:col-span-1">
             <div
               className={` ${
-                state.me.data.isVerfied ? 'bg-[#0CD45C]' : 'bg-[#EC1313]'
+                state.me.data.isVerified ? 'bg-[#0CD45C]' : 'bg-[#EC1313]'
               } rounded-full py-3 text-white text-center uppercase font-semibold`}
             >
               Votre Compte est{' '}
-              {state.me.data.isVerfied ? 'verifié' : 'non verifié'}
+              {state.me.data.isVerified ? 'verifié' : 'non verifié'}
             </div>
             <div className="py-3 w-full flex items-center justify-between">
               <span className="uppercase px-3">CRédit missions</span>

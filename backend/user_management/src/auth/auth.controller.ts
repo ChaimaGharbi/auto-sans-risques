@@ -49,4 +49,9 @@ export class AuthController {
     async getUser(@GetUser() user) {
         return await this.authService.getUserByEmailAndRole(user.email, user.role)
     }
+
+    @Get('user/:email')
+    async getUserByEmail(@Param() params) {
+        return await this.authService.getUserByEmail(params.email)
+    }
 }
