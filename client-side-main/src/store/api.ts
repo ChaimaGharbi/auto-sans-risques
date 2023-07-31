@@ -6,9 +6,9 @@ export default axios.create({
   },
   baseURL:
     process.env.NODE_ENV === 'development'
-        ? 'http://localhost:8000'
-        : // : 'https://ktk-fc.herokuapp.com/',
-        'https://157.230.103.28:8080',
+      ? 'http://localhost:8000'
+      : // : 'https://ktk-fc.herokuapp.com/',
+        'http://149.202.50.65:8080',
 })
 
 export const getClient = () =>
@@ -17,9 +17,9 @@ export const getClient = () =>
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
     baseURL:
-        process.env.NODE_ENV === 'development'
-            ? 'http://localhost:8000'
-            : // : 'https://ktk-fc.herokuapp.com/',
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:8000'
+        : // : 'https://ktk-fc.herokuapp.com/',
 
-            'https://157.230.103.28:8080',
+          'http://149.202.50.65:8080',
   })

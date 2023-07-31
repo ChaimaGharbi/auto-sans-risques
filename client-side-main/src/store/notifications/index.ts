@@ -22,6 +22,10 @@ export interface NotificationsState {
   }
 }
 
+interface Reservation {
+  status: string
+}
+
 interface Notification {
   _id: string
   is_read: boolean
@@ -29,4 +33,5 @@ interface Notification {
   createdAt: string
   reservationId: string
   senderId: string
+  reservation: Reservation[]
 }

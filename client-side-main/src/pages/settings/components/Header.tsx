@@ -23,6 +23,9 @@ export default function Header() {
     upload(me.data?.role.toLowerCase(), formData)
   }
 
+  console.log(me.data);
+  
+
   return (
     <div className="flex flex-col-reverse  lg:grid lg:grid-cols-3 p-4">
       <div></div>
@@ -30,8 +33,8 @@ export default function Header() {
         <img
           className="w-52 h-52 rounded-md"
           src={
-            me.data?.profile
-              ? me.data?.profile
+            me.data?.img
+              ? me.data?.img
               : `https://avatars.dicebear.com/api/initials/${me.data?.fullName
                   .split(' ')
                   .join('-')}.svg`

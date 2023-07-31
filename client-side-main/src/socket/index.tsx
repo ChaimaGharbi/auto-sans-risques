@@ -21,7 +21,7 @@ export const SocketProvider = ({ children }) => {
   const publish = useReceiveNotification()
 
   useEffect(() => {
-    const socket = io('https://157.230.103.28:8080', {
+    const socket = io('http://149.202.50.65:8080', {
       transports: ['websocket'],
       query: {
         token: localStorage.getItem('token'),

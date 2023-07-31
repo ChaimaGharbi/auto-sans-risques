@@ -71,14 +71,14 @@ const Connect = () => {
 
       <div className="relative">
         <button onClick={toggleDropDown} className="grid place-content-center">
-          <If test={!!me.data?.profile}>
+          <If test={!!me.data?.img}>
             <img
-              src={me.data?.profile}
+              src={me.data?.img}
               alt="avatar"
               className="w-11 h-11 rounded-full mt-[1px]"
             />
           </If>
-          <If test={!me.data?.profile}>
+          <If test={!me.data?.img}>
             <Avatar className="m-0 text-2xl text-[#868686]" />
           </If>
         </button>

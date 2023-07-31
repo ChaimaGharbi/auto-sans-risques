@@ -47,7 +47,7 @@ const AboutPage = () => {
             </p>
           </div>
           <div className="w-full h-full grid place-content-center lg:order-1">
-            { /*<iframe
+            { <iframe
               className="w-[300px] h-[150px] sm:w-[400px] sm:h-[200px] md:w-[560px] md:h-[315px]"
               height="315"
               src="https://www.youtube.com/embed/ygTZZpVkmKg"
@@ -55,7 +55,7 @@ const AboutPage = () => {
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-  ></iframe> */}
+  ></iframe> }
           </div>
         </div>
 
