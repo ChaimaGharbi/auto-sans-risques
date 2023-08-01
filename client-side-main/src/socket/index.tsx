@@ -21,7 +21,7 @@ export const SocketProvider = ({ children }) => {
   const publish = useReceiveNotification()
 
   useEffect(() => {
-    const socket = io('http://149.202.50.65:8080', {
+    const socket = io('https://api.auto-sans-risque.com', {
       transports: ['websocket'],
       query: {
         token: localStorage.getItem('token'),

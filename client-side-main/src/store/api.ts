@@ -8,7 +8,7 @@ export default axios.create({
     process.env.NODE_ENV === 'development'
       ? 'http://localhost:8000'
       : // : 'https://ktk-fc.herokuapp.com/',
-        'https://149.202.50.65:8080',
+        'https://api.auto-sans-risque.com',
 })
 
 export const getClient = () =>
@@ -21,5 +21,5 @@ export const getClient = () =>
         ? 'http://localhost:8000'
         : // : 'https://ktk-fc.herokuapp.com/',
 
-          'https://149.202.50.65:8080',
+          'https://api.auto-sans-risque.com',
   })
