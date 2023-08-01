@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
+    "start": "react-scripts start",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
@@ -46,6 +47,7 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "react-schedule-meeting": "^4.2.0",
+    "react-scripts": "^5.0.1",
     "react-select": "^5.2.2",
     "react-share": "^4.4.0",
     "react-stepzilla": "^7.0.0",
@@ -75,5 +77,17 @@
     "tailwindcss": "^3.0.23",
     "typescript": "^4.5.4",
     "vite": "^2.8.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
