@@ -1,5 +1,5 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {User} from '../../admin/entities/user.entity';
+import {User} from '../../auth/entities/user.entity';
 import * as crypto from 'crypto';
 import * as bcrypt from 'bcrypt';
 

@@ -2,23 +2,23 @@ version: '3.8'
 
 services:
   frontend:
-    image: dhouib/auto-sans-risque:frontend
+    image: dhouib/auto-sans-risque:client-side-main
     ports:
       - "3000:3000"
     env_file:
       - ./client-side-main/.env
-
-  admin_panel:
-    image: dhouib/auto-sans-risque:admin
-    ports:
-      - "3001:3001"
-    depends_on:
-      - gateway
-    env_file:
-      - ./admin-main/.env
+  #
+  #  admin_panel:
+  #    image: dhouib/auto-sans-risque:admin-main
+  #    ports:
+  #      - "3001:3001"
+  #    depends_on:
+  #      - gateway
+  #    env_file:
+  #      - ./admin-main/.env
 
   gateway:
-    image: dhouib/auto-sans-risque:gateway
+    image: dhouib/auto-sans-risque:_gateway
     ports:
       - "8000:8000"
     depends_on:

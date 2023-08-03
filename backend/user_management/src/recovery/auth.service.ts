@@ -8,30 +8,22 @@ import {
 import {JwtService} from '@nestjs/jwt';
 import {Role} from 'src/auth/entities/user.roles.enum';
 import * as bcrypt from 'bcrypt';
-import * as crypto from 'crypto';
 import {InjectModel} from "@nestjs/mongoose";
 import {Client} from "../client/entities/client.entity";
 import {Model} from "mongoose";
 import {Expert} from "../expert/entities/expert.entity";
 import {MailerService} from 'src/shared/mailer/mailer.service';
 import {ExpertService} from "../expert/expert.service";
-import {GenericRepository} from "../shared/generic/generic.repository";
 import {getHtml} from "../shared/mailer/mailer.helper";
 import verifyEmail from "./htmlTemplates/verifyEmail";
 import resetPasswordConfirmation from "./htmlTemplates/resetPasswordConfirmation";
-import {Admin} from "../auth/entities/admin.entity";
-import {Moderator} from "../auth/entities/moderator.entity";
+import {Admin} from "../admin/entities/admin.entity";
+import {Moderator} from "../moderator/entities/moderator.entity";
 import {Token} from "../auth/entities/token.entity";
-import {User} from "../auth/entities/user.entity";
 
 
 @Injectable()
 export class AuthService {
-    private readonly clientRepository: GenericRepository<Client>;
-    private readonly expertRepository: GenericRepository<Expert>;
-    private readonly adminRepository: GenericRepository<Admin>;
-    private readonly moderatorRepository: GenericRepository<Moderator>;
-    private readonly tokenRepository: GenericRepository<Token>;
 
     constructor(
         @InjectModel(Client.name) private clientModel: Model<Client>,
@@ -43,63 +35,6 @@ export class AuthService {
         private expertService: ExpertService,
         private jwtService: JwtService,
     ) {
-        this.adminRepository = new GenericRepository(adminModel);
-        this.moderatorRepository = new GenericRepository(moderatorModel);
-        this.clientRepository = new GenericRepository(clientModel);
-        this.expertRepository = new GenericRepository(expertModel);
-        this.tokenRepository = new GenericRepository(tokenModel);
-    }
-
-    async sendVerificationEmail(user: User, role: Role) {
-        try {
-            const tokenExists = await this.tokenModel.findOne({userId: user._id});
-            let tokenMail;
-            if (!tokenExists) {
-                const token = await this.tokenRepository.create({
-                    userId: user._id,
-                    token: crypto.randomBytes(20).toString('hex')
-                });
-                tokenMail = token.token;
-            } else {
-                tokenMail = tokenExists.token;
-            }
-            const html = await getHtml(verifyEmail(user.fullName, tokenMail));
-            await this.mailerService.sendMail(user.email, user.fullName, 'Email Verification', html);
-            return {
-                message: 'A verification email has been sent to ' + user.email
-            };
-        } catch (error) {
-            if (error instanceof HttpException) {
-                throw error;
-            }
-            return new InternalServerErrorException("Server Error")
-        }
-    }
-    // Update
-    async updatePassword(id: string, oldPassword: string, newPassword: string, role: Role) {
-        try {
-            const repository = (role == Role.EXPERT) ?
-                this.expertRepository :
-                ((role == Role.CLIENT) ?
-                    this.clientRepository :
-                    null);
-            if (!repository) {
-                return false
-            }
-            const user = await repository.findById(id);
-
-            const isMatch = await bcrypt.compare(oldPassword, user.password);
-            if (!isMatch) {
-                throw new UnauthorizedException('Old password is incorrect');
-            }
-            await repository.update(id, {password: await this.hashPassword(newPassword, user.salt)});
-            return true;
-        } catch (error) {
-            if (error instanceof HttpException) {
-                throw error;
-            }
-            return new InternalServerErrorException("Server Error")
-        }
     }
 
     // Getters
@@ -132,22 +67,6 @@ export class AuthService {
                 throw error;
             }
             return new InternalServerErrorException("Server Error")
-        }
-    }
-
-    async getUserById(id) {
-        try {
-            let user: Client | Expert | Admin | Moderator = null;
-            user = await this.clientModel.findById(id).populate('user', '-password -salt').exec();
-            if (!user) {
-                user = await this.expertModel.findById(id).populate('specialitiesMarks').populate('specialitiesModels').exec();
-            }
-            return user;
-        } catch (error) {
-            if (error instanceof HttpException) {
-                throw error;
-            }
-            throw new InternalServerErrorException(error)
         }
     }
 

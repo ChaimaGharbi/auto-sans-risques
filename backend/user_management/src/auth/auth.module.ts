@@ -1,5 +1,5 @@
-import {Admin, AdminSchema} from 'src/auth/entities/admin.entity';
-import {Moderator, ModeratorSchema} from 'src/auth/entities/moderator.entity';
+import {Admin, AdminSchema} from 'src/admin/entities/admin.entity';
+import {Moderator, ModeratorSchema} from 'src/moderator/entities/moderator.entity';
 import {Client, ClientSchema} from 'src/client/entities/client.entity';
 import {Expert, ExpertSchema} from 'src/expert/entities/expert.entity';
 import {Token, TokenSchema} from 'src/auth/entities/token.entity';
