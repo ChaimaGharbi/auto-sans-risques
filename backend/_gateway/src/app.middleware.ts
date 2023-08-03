@@ -1,15 +1,14 @@
 import {Injectable, InternalServerErrorException, NestMiddleware} from '@nestjs/common';
 import {Request, Response} from 'express';
 import {createProxyMiddleware, fixRequestBody} from 'http-proxy-middleware';
-import {options, routes} from "./config";
+import {routes} from "./config";
 
 
 @Injectable()
 export class ReverseProxyMiddleware implements NestMiddleware {
     use(req: Request, res: Response, next: () => void) {
         try {
-            const config = this.getConfig(req.url)
-            const target = `http://${config.host}:${config.port}`
+            const target = this.getTarget(req.url)
 
             const proxy = createProxyMiddleware({
                 target,
@@ -23,19 +22,17 @@ export class ReverseProxyMiddleware implements NestMiddleware {
         }
     }
 
-    private getConfig(url) {
+    private getTarget(url) {
         let config
 
         const route = url.split('/')[1];
 
         for (const key in routes) {
             if (routes[key].includes(route)) {
-                config = options[key];
+                config = process.env[key];
                 break;
             }
         }
-        console.log(url)
-        console.log(config)
         if (!config) {
             throw new InternalServerErrorException("Unhandled Route");
         }
