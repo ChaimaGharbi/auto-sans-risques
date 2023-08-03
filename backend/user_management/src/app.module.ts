@@ -13,6 +13,8 @@ import {MarkModule} from "./mark/mark.module";
 import {ModelModule} from "./model/model.module";
 import {PaymentModule} from "./payment/payment.module";
 import {RecoveryModule} from "./recovery/auth.module";
+import {AdminModule} from "./admin/admin.module";
+import {ModeratorModule} from "./moderator/moderator.module";
 
 
 dotenv.config();
@@ -63,7 +65,9 @@ dotenv.config();
         MarkModule,
         ModelModule,
         PaymentModule,
-        RecoveryModule
+        RecoveryModule,
+        AdminModule,
+        ModeratorModule
     ],
     controllers: [],
     providers: []

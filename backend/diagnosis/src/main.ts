@@ -2,13 +2,12 @@ import {NestFactory} from '@nestjs/core';
 import {AppModule} from './app.module';
 import * as admin from 'firebase-admin';
 import {ServiceAccount} from 'firebase-admin';
-import * as fs from 'fs';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
     app.enableCors();
-    await app.listen(process.env.PORT || 8003);
+    await app.listen(process.env.PORT || 8002);
 
     const adminConfig: ServiceAccount = {
         projectId: process.env.FIREBASE_PROJECT_ID,
