@@ -13,6 +13,10 @@ env:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        directory: [ _gateway, admin, communication, diagnosis, user_management ]
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -20,14 +24,9 @@ jobs:
       - name: Login to Docker Hub
         run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 
-      - name: Build and Push Images
+      - name: Build and Push Image
         run: |
-          ls 
-          cd backend
-          for dir in _gateway admin communication diagnosis user_management; do
-            cd $dir
-            echo $dir
-            docker build -t $DOCKER_USERNAME/$DOCKER_REPO:$dir .
-            docker push $DOCKER_USERNAME/$DOCKER_REPO:$dir
-            cd ..
-          done
+          cd backend/${{ matrix.directory }}
+          echo ${{ matrix.directory }}
+          docker build -t $DOCKER_USERNAME/$DOCKER_REPO:${{ matrix.directory }} .
+          docker push $DOCKER_USERNAME/$DOCKER_REPO:${{ matrix.directory }}

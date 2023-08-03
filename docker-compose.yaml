@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: dhouib/auto-sans-risque:frontend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./client-side-main/.env
+
+  admin_panel:
+    image: dhouib/auto-sans-risque:admin
+    ports:
+      - "3001:3001"
+    depends_on:
+      - gateway
+    env_file:
+      - ./admin-main/.env
+
+  gateway:
+    image: dhouib/auto-sans-risque:gateway
+    ports:
+      - "8000:8000"
+    depends_on:
+      - communication
+      - diagnosis
+      - user_management
+    env_file:
+      - ./backend/_gateway/.env
+
+  communication:
+    image: dhouib/auto-sans-risque:communication
+    ports:
+      - "8001:8001"
+    env_file:
+      - ./backend/communication/.env
+
+  diagnosis:
+    image: dhouib/auto-sans-risque:diagnosis
+    ports:
+      - "8002:8002"
+    env_file:
+      - ./backend/diagnosis/.env
+
+  user_management:
+    image: dhouib/auto-sans-risque:user_management
+    ports:
+      - "8003:8003"
+    env_file:
+      - ./backend/user_management/.env
