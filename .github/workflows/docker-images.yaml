@@ -11,10 +11,8 @@ env:
   DOCKER_REPO: auto-sans-risque
 
 jobs:
-
   build-and-push-backend:
     runs-on: ubuntu-latest
-    needs: docker-login
     strategy:
       matrix:
         directory: [ _gateway, communication, diagnosis, user_management ]
@@ -35,7 +33,6 @@ jobs:
 
   build-and-push-frontend:
     runs-on: ubuntu-latest
-    needs: docker-login
     strategy:
       matrix:
         directory: [ client-side-main ]
