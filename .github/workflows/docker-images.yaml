@@ -11,11 +11,6 @@ env:
   DOCKER_REPO: auto-sans-risque
 
 jobs:
-  docker-login:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Login to Docker Hub
-        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
   build-and-push-backend:
     runs-on: ubuntu-latest
@@ -25,6 +20,9 @@ jobs:
         directory: [ _gateway, communication, diagnosis, user_management ]
 
     steps:
+      - name: Login to Docker Hub
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
       - name: Checkout Repository
         uses: actions/checkout@v2
 
@@ -43,6 +41,9 @@ jobs:
         directory: [ client-side-main ]
 
     steps:
+      - name: Login to Docker Hub
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
       - name: Checkout Repository
         uses: actions/checkout@v2
 
