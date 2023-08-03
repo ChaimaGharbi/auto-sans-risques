@@ -1,10 +1,10 @@
 import Container from 'app/shared/components/Container'
 import Card from './components/Card'
 import Breadcrumb from 'app/shared/components/Breadcrumb'
-import { useGetReportsForClient } from 'app/store/hooks'
+import {useGetReportsForClient} from 'app/store/hooks'
 import Loading from 'app/shared/components/Loading'
-import { PaginatedContent } from 'app/shared/components/paginated'
-import { useState } from 'react'
+import {PaginatedContent} from 'app/shared/components/paginated'
+import {useState} from 'react'
 
 const Reports = () => {
   const { data, loading } = useGetReportsForClient()
@@ -46,18 +46,19 @@ const Reports = () => {
                 onLoadMore={() => {}}
                 total={data?.length ? data.length : 0}
                 item={({ data }) => {
-                  const { _id, reason, typeCar, date, expert, link, status } =
-                    data
+                  const {_id, reason, typeCar, date, expert, link, status, rapportId} =
+                      data
 
                   return (
                     <Card
-                      key={_id}
-                      id={_id}
-                      status={status}
-                      comment={reason + ' - ' + typeCar}
-                      date={date}
-                      expert={expert[0]}
-                      link={link}
+                        key={_id}
+                        id={_id}
+                        status={status}
+                        comment={reason + ' - ' + typeCar}
+                        date={date}
+                        expert={expert[0]}
+                        link={link}
+                        report={rapportId}
                     />
                   )
                 }}

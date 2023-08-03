@@ -8,6 +8,7 @@ import {
     Put,
     Query,
     Request,
+    Res,
     UploadedFiles,
     UseGuards,
     UseInterceptors,
@@ -33,6 +34,15 @@ import * as path from 'path';
 @Controller('rapport')
 export class RapportController {
     constructor(private rapportService: RapportService) {
+    }
+
+
+    @Get('/pdf/:id')
+    async createPdf(@Param("id") id, @Res() res) {
+        await this.rapportService.createPdf(id)
+        const filePath = path.join(__dirname, `../pdfs/${id}-final.pdf`);
+        res.setHeader('Content-Type', 'application/pdf');
+        res.download(filePath)
     }
 
     /////////Rapport Crud /////////////////

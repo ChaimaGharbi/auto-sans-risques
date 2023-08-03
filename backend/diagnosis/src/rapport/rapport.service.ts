@@ -24,6 +24,7 @@ import {Rapport} from "./entities/rapport.entity";
 import {IRapportModel} from "./entities/rapport.interface";
 import {ReservationStatus} from "../reservation/entities/reservation.status.enum";
 
+
 @Injectable()
 export class RapportService {
     private readonly rapportRepository: GenericRepository<Rapport>
@@ -47,6 +48,33 @@ export class RapportService {
         this.questionCategoryRepository = new GenericRepository<QuestionCategory>(questionCategoryModel);
         this.questionRepository = new GenericRepository<Question>(questionModel);
         this.reponseRepository = new GenericRepository<Reponse>(reponseModel);
+    }
+
+    async createPdf(rapportId) {
+        try {
+            const rapport = await this.rapportModel.findById(rapportId).populate('expertId', {
+                fullName: 1,
+                signature: 1
+            });
+            const job = await this.pdfQueue.add('transcode', {
+                idRapport: rapportId,
+                expert: rapport.expertId,
+            },);
+            const response = await job.finished();
+            //  @ts-ignore
+            if (response !== "completed") {
+                throw new Error('PDF generation job is not completed');
+            }
+            return ('PDF generated, returning the PDF buffer');
+            // const filePath = path.join(__dirname, `../pdfs/${rapportId}-final.pdf`);
+            // console.log(filePath)
+            // const buffer = fs.readFileSync(filePath);
+            // fs.unlinkSync(filePath);
+            // return buffer;
+        } catch (error) {
+            console.error('Error creating PDF:', error);
+            throw error;
+        }
     }
 
     async uploadImages(id, images) {
@@ -393,10 +421,10 @@ export class RapportService {
                     fullName: 1,
                     signature: 1
                 });
-                const job = await this.pdfQueue.add('transcode', {
-                    idRapport: rapportId,
-                    expertId: rapport.expertId
-                });
+                // const job = await this.pdfQueue.add('transcode', {
+                //     idRapport: rapportId,
+                //     expertId: rapport.expertId
+                // });
 
                 const reservation = await this.reservationModel.findById(rapport.reservationId);
                 reservation.status = ReservationStatus.COMPLETEE;
