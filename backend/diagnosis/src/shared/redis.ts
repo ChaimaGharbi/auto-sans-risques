@@ -1,4 +1,8 @@
 import Redis from 'ioredis';
+import * as dotenv from 'dotenv';
+
+
+dotenv.config();
 
 const host = process.env.REDIS_HOST;
 const port = Number(process.env.REDIS_PORT);
@@ -31,6 +35,7 @@ export async function unregisterUser(userId: string) {
 
 export function getSocketId(userId: string) {
     try {
+        console.log(`${namespace}:${userId}`)
         return redis.get(`${namespace}:${userId}`);
     } catch (error) {
         console.log(error);

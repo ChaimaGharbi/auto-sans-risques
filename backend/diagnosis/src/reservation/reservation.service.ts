@@ -8,6 +8,8 @@ import {IReservationModel} from "./entities/reservation.interface";
 import {INotificationModel} from "../notification/entities/notification.interface";
 import {ReservationStatus} from "./entities/reservation.status.enum";
 import {Notification} from "../notification/entities/notification.entity";
+import {getSocketId} from "../shared/redis";
+import {ReservationGateway} from "./reservation.gateway";
 import moment = require('moment');
 
 @Injectable()
@@ -17,7 +19,8 @@ export class ReservationService {
 
     constructor(
         @InjectModel(Reservation.name) private reservationModel: IReservationModel,
-        @InjectModel(Notification.name) private notificationModel: INotificationModel
+        @InjectModel(Notification.name) private notificationModel: INotificationModel,
+        private reservationGateway: ReservationGateway
         /* @InjectModel(Expert.name) private expertModel: Model<Expert>,
       @InjectModel(Client.name) private clientModel: Model<Client>,
       private smsService: SmsService,
@@ -142,9 +145,9 @@ export class ReservationService {
         // }
     }
 
-    async createReservation(reservationDto: reservationDto, cb: (payload: any) => void) {
+    async createReservation(reservationDto: reservationDto) {
         try {
-            const reservation = await this.reservationModel.create(reservationDto);
+            const reservation = await this.reservationRepository.create(reservationDto);
 
             const formatedDate = moment(reservationDto.date).utcOffset('+0100').format('dddd, D MMMM YYYY, HH:mm');
 
@@ -154,9 +157,14 @@ export class ReservationService {
                 reservation._id,
                 `Le client ${reservationDto.fullName} demande votre assistance pour une mission de ${reservationDto.reason} pour la voiture ${reservationDto.typeCar} le ${formatedDate}, veuillez confirmer ou Annuler le RDV.`
             );
-
-            cb(notification);
-
+            const socketId = await getSocketId(notification.receiver);
+            console.log("socket", socketId)
+            if (socketId) {
+                this.reservationGateway.server.to(socketId).emit('api', {
+                    event: 'RESERVATION_CREATED',
+                    data: notification
+                });
+            }
             return reservation;
         } catch (e: any) {
             throw new InternalServerErrorException("Echec d'obtenir un rendez-vous!");

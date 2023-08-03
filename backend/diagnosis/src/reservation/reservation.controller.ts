@@ -17,15 +17,7 @@ export class ReservationController {
     // @Roles(Role.USER)
     // @UseGuards(AuthGuard(), RolesGuard)
     async createReservation(@Body(ValidationPipe) reservationDto: reservationDto) {
-        const reservation = await this.reservationService.createReservation(reservationDto, async payload => {
-            const socketId = await getSocketId(payload.receiver);
-            if (!socketId) return;
-            this.reservationGateway.server.to(socketId).emit('api', {
-                event: 'RESERVATION_CREATED',
-                data: payload
-            });
-        });
-        return reservation;
+        return await this.reservationService.createReservation(reservationDto);
     }
 
     @Post('/paginate')

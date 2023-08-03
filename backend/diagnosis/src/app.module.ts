@@ -10,6 +10,7 @@ import {NestjsFormDataModule} from 'nestjs-form-data';
 import {BullModule} from '@nestjs/bull';
 import * as dotenv from 'dotenv';
 import {NotificationModule} from "./notification/notification.module";
+import {PDFModule} from "./pdf_generator/pdf.module";
 
 dotenv.config();
 
@@ -58,6 +59,7 @@ dotenv.config();
         ReservationModule,
         ReclamationModule,
         NotificationModule,
+        PDFModule
     ],
     controllers: [],
     providers: []
