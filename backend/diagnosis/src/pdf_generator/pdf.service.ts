@@ -210,6 +210,17 @@ export class PdfService {
 
                 await tab.setContent(html);
                 console.log("PDF generated, saving it to disk");
+                const folderName = path.resolve(__dirname, `../pdfs`);
+                if (!fs.existsSync(folderName)) {
+                    try {
+                        fs.mkdirSync(folderName);
+                        console.log(`Folder '${folderName}' created successfully.`);
+                    } catch (err) {
+                        console.error('Error creating folder:', err);
+                    }
+                } else {
+                    console.log(`Folder '${folderName}' already exists.`);
+                }
                 const _path = path.resolve(__dirname, `../pdfs/${namePdf}.pdf`);
                 await tab.pdf({
                     printBackground: true,
@@ -287,6 +298,7 @@ export class PdfService {
                         console.info(tab);
                     }
                 );
+                return "completed"
             } catch (error) {
                 console.log(error);
             }

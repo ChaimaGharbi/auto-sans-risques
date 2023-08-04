@@ -13,14 +13,18 @@ const Card = ({status, id, expert, date, comment, link, report}) => {
   const [loading, setLoading] = useState(false)
   const [url, setUrl] = useState("")
   const handleLoad = async () => {
-    setLoading(true)
-    const pdf = await getClient()
-        .get(`/rapport/pdf/${report}`, {responseType: 'arraybuffer'})
-    console.log(pdf.data)
-    const blob = new Blob([pdf.data], {type: 'application/pdf'});
-    const url = URL.createObjectURL(blob);
-    setUrl(url)
-    setLoading(false)
+    try {
+      setLoading(true)
+      const pdf = await getClient()
+          .get(`/rapport/pdf/${report}`, {responseType: 'arraybuffer'})
+      const blob = new Blob([pdf.data], {type: 'application/pdf'});
+      const url = URL.createObjectURL(blob);
+      setUrl(url)
+    } catch (e) {
+      console.log(e)
+    } finally {
+      setLoading(false)
+    }
   }
   const handleDownload = () => {
     const link = document.createElement('a');

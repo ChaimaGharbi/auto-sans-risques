@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "all:start": "concurrently \"cd _gateway && npm run start:dev\" \"cd admin && npm run start:dev\" \"cd communication && npm run start:dev\" \"cd diagnosis && npm run start:dev\" \"cd user_management && npm run start:dev\"  ",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "all:start": "concurrently \"cd _gateway && npm run start:dev\" \"cd communication && npm run start:dev\" \"cd diagnosis && npm run start:dev\" \"cd user_management && npm run start:dev\" ",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
     "concurrently": "^7.6.0"
