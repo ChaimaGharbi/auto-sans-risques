@@ -1,3 +1,4 @@
+# Stage 1: Development
 FROM node:16 AS development
 
 WORKDIR /usr/src/app
@@ -8,29 +9,25 @@ RUN yarn install
 
 COPY --chown=node:node . .
 
-USER node
+# No need to specify USER here since we don't need to run anything in this stage.
 
-FROM node:16 AS build
+# Stage 2: Build
+FROM development AS build
+
+RUN yarn build
+
+# Stage 3: Production
+FROM node:16 AS production
 
 WORKDIR /usr/src/app
 
-COPY --chown=node:node package*.json yarn.lock ./
-
-COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
-
-COPY --chown=node:node . .
-
-RUN yarn build
+COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
+COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 
 ENV NODE_ENV production
 
 RUN yarn install --production --frozen-lockfile && yarn cache clean
 
 USER node
-
-FROM node:16 AS production
-
-COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
-COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 
 CMD [ "node", "dist/main.js" ]
