@@ -181,6 +181,7 @@ export class PdfService {
             const browser = await puppeteer.launch({
                 args: ["--no-sandbox", "--disable-setuid-sandbox"],
             });
+            console.log(browser)
             const tab = await browser.newPage();
 
             try {

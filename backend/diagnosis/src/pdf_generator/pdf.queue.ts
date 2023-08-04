@@ -28,6 +28,7 @@ export class PDFProcessor {
             const endTime = +new Date();
             const duration = endTime - startTime;
             console.log('transcode job completed in', duration, 'ms');
+            console.log(response)
             return response;
         } catch (error) {
             console.error('Error processing job:', error);
