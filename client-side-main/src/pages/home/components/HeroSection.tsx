@@ -46,7 +46,7 @@ const HeroSection = () => {
         </div>
 
         <div className="pt-5 w-full max-w-xl md:max-w-3xl  xl:max-w-5xl huge:max-w-[140rem] ">
-          <div className="grid  grid-cols-1 md:grid-cols-2 gap-4 px-4 content-start">
+          AutoComplete={}<div className="grid  grid-cols-1 md:grid-cols-2 gap-4 px-4 content-start">
             <AutoComplete
               onChange={handleChangeInput}
               className="col-span-1 md:col-span-2"

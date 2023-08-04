@@ -152,7 +152,6 @@ export function Input(props: Props) {
       props.validations?.some(v => v.message === 'Ce champ est obligatoire'),
     [props.validations]
   )
-  console.log(props);
   
 
   return (
