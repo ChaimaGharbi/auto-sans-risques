@@ -61,16 +61,13 @@ export class RapportService {
                 expert: rapport.expertId,
             },);
             const response = await job.finished();
+
             //  @ts-ignore
             if (response !== "completed") {
                 throw new Error('PDF generation job is not completed');
             }
+
             return ('PDF generated, returning the PDF buffer');
-            // const filePath = path.join(__dirname, `../pdfs/${rapportId}-final.pdf`);
-            // console.log(filePath)
-            // const buffer = fs.readFileSync(filePath);
-            // fs.unlinkSync(filePath);
-            // return buffer;
         } catch (error) {
             console.error('Error creating PDF:', error);
             throw error;

@@ -3,6 +3,7 @@ import {
     Controller,
     Delete,
     Get,
+    NotFoundException,
     Param,
     Post,
     Put,
@@ -30,6 +31,7 @@ import {niemandsUploadImage} from 'src/shared/upload.files';
 import {FilesInterceptor} from '@nestjs/platform-express';
 
 import * as path from 'path';
+import * as fs from "fs";
 
 @Controller('rapport')
 export class RapportController {
@@ -39,10 +41,20 @@ export class RapportController {
 
     @Get('/pdf/:id')
     async createPdf(@Param("id") id, @Res() res) {
-        await this.rapportService.createPdf(id)
-        const filePath = path.join(__dirname, `../pdfs/${id}-final.pdf`);
-        res.setHeader('Content-Type', 'application/pdf');
-        res.download(filePath)
+        try {
+            await this.rapportService.createPdf(id)
+            const filePath = path.join(__dirname, `../pdfs/${id}-final.pdf`);
+            console.log(filePath)
+            if (!fs.existsSync(filePath)) {
+                console.log("nah")
+                throw "pdf not found"
+            }
+            res.setHeader('Content-Type', 'application/pdf');
+            res.download(filePath)
+        } catch (e) {
+            console.log("not-found", e)
+            throw new NotFoundException(e)
+        }
     }
 
     /////////Rapport Crud /////////////////

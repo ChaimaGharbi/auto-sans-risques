@@ -23,12 +23,12 @@ export class PDFProcessor {
             const rapportToEdit = await this.rapportModel.findById(job.data.idRapport);
             if (!rapportToEdit) return;
 
-            await this.pdfGenerator.generatePDF(job.data.content, namePdf);
+            const response = await this.pdfGenerator.generatePDF(job.data.content, namePdf);
 
             const endTime = +new Date();
             const duration = endTime - startTime;
             console.log('transcode job completed in', duration, 'ms');
-            return "completed";
+            return response;
         } catch (error) {
             console.error('Error processing job:', error);
             return error;

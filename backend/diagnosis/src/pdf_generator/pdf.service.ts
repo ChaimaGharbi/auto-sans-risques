@@ -128,6 +128,28 @@ export class PdfService {
         };
     }
 
+    async mergePDFs(list, namePdf, browser, tab): Promise<void> {
+        const outputPdfPath = path.join(__dirname, `../pdfs/${namePdf}-final.pdf`);
+
+        return new Promise((resolve, reject) => {
+            pdfMerge(list, outputPdfPath, async (err) => {
+                if (err) {
+                    console.log(err);
+                    reject(new Error(err.message));
+                } else {
+                    console.log("Successfully merged!");
+
+                    // Assuming 'browser' and 'tab' are defined somewhere in your code
+                    await browser.close();
+
+                    console.info(tab);
+
+                    resolve();
+                }
+            });
+        });
+    }
+
     async generatePDF(_pages, namePdf) {
         try {
             console.log("started");
@@ -213,7 +235,7 @@ export class PdfService {
                 const folderName = path.resolve(__dirname, `../pdfs`);
                 if (!fs.existsSync(folderName)) {
                     try {
-                        fs.mkdirSync(folderName);
+                        await fs.promises.mkdir(folderName);
                         console.log(`Folder '${folderName}' created successfully.`);
                     } catch (err) {
                         console.error('Error creating folder:', err);
@@ -269,57 +291,18 @@ export class PdfService {
                     path.join(__dirname, `../pdfs/${namePdf}.pdf`),
                     path.join(__dirname, `../pdfs/${namePdf}-last.pdf`),
                 ];
+                if (fs.existsSync(folderName))
+                    await this.mergePDFs(list, namePdf, browser, tab);
 
-                await pdfMerge(
-                    list,
-                    path.join(__dirname, `../pdfs/${namePdf}-final.pdf`),
-                    async (err) => {
-                        if (err) {
-                            console.log(err);
-                            return;
-                        }
-                        console.log("Successfully merged!");
-                        // path of bf
-                        console.log("PDF saved to disk, closing browser");
-                        await browser.close();
-                        console.log("Browser closed, returning the path to the pdf");
-
-                        // const url = await uploadFile(
-                        //     path.resolve(__dirname, `.../pdfs/${namePdf}-final.pdf`),
-                        //     namePdf + this.random(),
-                        //     "rapport",
-                        //     [
-                        //         path.resolve(__dirname, `.../pdfs/${namePdf}.pdf`),
-                        //         path.resolve(__dirname, `.../pdfs/${namePdf}-last.pdf`),
-                        //     ]
-                        // );
-                        // console.log(url);
-                        // cb(url);
-                        console.info(tab);
-                    }
-                );
                 return "completed"
+
             } catch (error) {
                 console.log(error);
+                throw new Error(error.message);
             }
-
-            // try {
-            //   pdfMerge(pdfList, rapportPdfPath, async (err) => {
-            //     if (err) throw new Error(err.message);
-            //     console.log("Successfully merged!");
-            //     const data = fs.readFileSync(`${__dirname}` + `/${namePdf}.pdf`);
-            //     // const result = await uploadFile(data, `${namePdf}.pdf`, "rapport");
-            //     // console.log(result);
-            //     for (let i = 0; i < pdfList.length; i++) {
-            //       // fs.unlinkSync("./page" + i + ".pdf");
-            //     }
-            //     // ;
-            //   });
-            // } catch (error) {
-            //   console.log(error);
-            // }
         } catch (error) {
             console.log(error);
+            return "error"
         }
     };
 
