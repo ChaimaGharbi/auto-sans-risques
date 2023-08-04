@@ -259,7 +259,7 @@ export class ExpertRepository {
           fullName: expert.fullName,
           spec: expert.specialite,
           tel: expert.tel,
-          address: expert.adresse,
+          address: expert.address,
           gouv: expert.ville,
           note: expert.note,
           email: expert.email,
@@ -310,7 +310,7 @@ export class ExpertRepository {
 
       expert.fullName = pick(expertDto.fullName, expert.fullName);
       expert.tel = pick(expertDto.tel, expert.tel);
-      expert.adresse = pick(expertDto.adresse, expert.adresse);
+      expert.address = pick(expertDto.adresse, expert.address);
       expert.ville = pick(expertDto.ville, expert.ville);
       expert.specialite = pick(expertDto.specialite, expert.specialite);
       expert.propos = pick(expertDto.propos, expert.propos);

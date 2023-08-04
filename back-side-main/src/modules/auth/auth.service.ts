@@ -12,6 +12,8 @@ export class AuthService {
   constructor(private userRepository: UserRepository, private jwtService: JwtService) {}
 
   async signUp(signupCrendentialsDto: SignupCredentialsDto, role: Role) {
+    console.log(signupCrendentialsDto);
+    
     return await this.userRepository.signUp(signupCrendentialsDto, role);
   }
 

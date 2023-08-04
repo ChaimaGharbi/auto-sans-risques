@@ -10,7 +10,7 @@ import { Types } from 'mongoose';
 @Schema({ timestamps: true })
 export class Expert extends User {
   @Prop()
-  adresse: string;
+  address: string;
 
   @Prop()
   specialite: string[];

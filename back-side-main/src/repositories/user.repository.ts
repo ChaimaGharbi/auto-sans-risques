@@ -187,7 +187,8 @@ export class UserRepository {
       newUser.salt = salt;
 
       const createdUser = await newUser.save();
-
+      console.log(createdUser);
+      
       await this.sendVerificationEmail(createdUser, role);
 
       return createdUser;

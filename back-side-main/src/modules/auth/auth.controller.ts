@@ -56,6 +56,8 @@ export class AuthController {
   @Post('/signup')
   signup(@Body(ValidationPipe) signupCredentialsDto: SignupCredentialsDto) {
     const role = signupCredentialsDto.role;
+    console.log(signupCredentialsDto);
+    
     return this.authService.signUp(signupCredentialsDto, role);
   }
   @Post('/signin')
