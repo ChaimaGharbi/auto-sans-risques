@@ -22,5 +22,7 @@ COPY --from=builder /usr/src/app/dist ./dist
 
 ENV NODE_ENV production
 
+RUN yarn global add vite
+
 CMD [ "yarn","preview" ]
 
