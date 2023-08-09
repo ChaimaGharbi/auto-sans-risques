@@ -1,8 +1,9 @@
-FROM node:16 AS builder
+FROM node:16 AS build
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package*.json yarn.lock ./
+
 RUN yarn install
 
 COPY . .
@@ -11,15 +12,8 @@ RUN yarn build
 
 FROM node:16-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package*.json yarn.lock ./
+COPY --from=build /app/build ./build
 
-RUN yarn install --production --frozen-lockfile && yarn cache clean
-
-COPY --from=builder /usr/src/app/dist ./dist
-
-ENV NODE_ENV production
-
-CMD [ "yarn","serve" ]
-
+CMD ["yarn", "serve"]
