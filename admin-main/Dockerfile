@@ -1,36 +1,25 @@
-FROM node:14 AS development
+FROM node:16 AS builder
 
 WORKDIR /usr/src/app
 
-COPY --chown=node:node package*.json yarn.lock ./
-
+COPY package*.json yarn.lock ./
 RUN yarn install
 
-COPY --chown=node:node . .
-
-USER node
-
-FROM node:14 AS build
-
-WORKDIR /usr/src/app
-
-COPY --chown=node:node package*.json yarn.lock ./
-
-COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
-
-COPY --chown=node:node . .
+COPY . .
 
 RUN yarn build
 
-FROM node:14 AS production
+FROM node:16-alpine
 
-WORKDIR /usr
+WORKDIR /usr/src/app
 
-COPY --from=build /usr/src/app/node_modules ./node_modules
-COPY --from=build /usr/src/app/dist ./dist
-
-ENV NODE_ENV production
+COPY package*.json yarn.lock ./
 
 RUN yarn install --production --frozen-lockfile && yarn cache clean
 
-CMD ["yarn", "serve"]
+COPY --from=builder /usr/src/app/dist ./dist
+
+ENV NODE_ENV production
+
+CMD [ "yarn","serve" ]
+
