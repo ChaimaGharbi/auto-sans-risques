@@ -1,4 +1,4 @@
-FROM node:16 AS development
+FROM node:14 AS development
 
 WORKDIR /usr/src/app
 
@@ -10,7 +10,7 @@ COPY --chown=node:node . .
 
 USER node
 
-FROM node:16 AS build
+FROM node:14 AS build
 
 WORKDIR /usr/src/app
 
@@ -24,7 +24,7 @@ RUN yarn build
 
 USER node
 
-FROM node:16 AS production
+FROM node:14 AS production
 
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
