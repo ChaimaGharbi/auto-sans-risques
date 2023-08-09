@@ -7,15 +7,15 @@ services:
       - "3000:3000"
     env_file:
       - ./client-side-main/.env
-  #
-  #  admin_panel:
-  #    image: dhouib/auto-sans-risque:admin-main
-  #    ports:
-  #      - "3001:3001"
-  #    depends_on:
-  #      - gateway
-  #    env_file:
-  #      - ./admin-main/.env
+
+  admin_panel:
+    image: dhouib/auto-sans-risque:admin-main
+    ports:
+      - "3001:3001"
+    depends_on:
+      - gateway
+    env_file:
+      - ./admin-main/.env
 
   gateway:
     image: dhouib/auto-sans-risque:_gateway

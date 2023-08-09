@@ -33,4 +33,4 @@ ENV NODE_ENV production
 
 RUN yarn install --production --frozen-lockfile && yarn cache clean
 
-CMD ["yarn", "preview"]
+CMD ["yarn", "serve"]

@@ -179,6 +179,7 @@ export class PdfService {
             console.log("Launch puppeteer");
 
             const browser = await puppeteer.launch({
+                headless: 'new',
                 args: ["--no-sandbox", "--disable-setuid-sandbox"],
             });
             console.log(browser)
