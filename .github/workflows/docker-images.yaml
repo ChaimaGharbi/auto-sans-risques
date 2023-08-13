@@ -59,17 +59,14 @@ jobs:
       SSH_USER: ubuntu
       SSH_PASSWORD: DfspT4ND42aQ
     steps:
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "$VPS_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H $VPS_IP >> ~/.ssh/known_hosts
-
       - name: Connect to VPS and Deploy
+        env:
+          SSH_USER: your_ssh_user
         run: |
-          ssh -i ~/.ssh/id_rsa user@${VPS_IP} 'cd /home/auto-sans-risque-docker && docker-compose pull && docker-compose up -d'
+          sshpass -p $SSH_PASSWORD ssh $SSH_USER@${VPS_IP} 'cd /home/auto-sans-risque-docker && docker-compose pull && docker-compose up -d'
 
       - name: Clean up unnecessary images
+        env:
+          SSH_USER: your_ssh_user
         run: |
-          ssh -i ~/.ssh/id_rsa user@${VPS_IP} 'docker image prune -af'
+          sshpass -p $SSH_PASSWORD ssh $SSH_USER@${VPS_IP} 'docker image prune -af'
