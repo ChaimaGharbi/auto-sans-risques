@@ -61,14 +61,11 @@ jobs:
     steps:
       - name: Install sshpass
         run: sudo apt-get update && sudo apt-get install -y sshpass
+
       - name: Connect to VPS and Deploy
-        env:
-          SSH_USER: your_ssh_user
         run: |
-          sshpass -p $"SSH_PASSWORD" ssh -o StrictHostKeyChecking=no -v $SSH_USER@${VPS_IP} 'cd /home/auto-sans-risque-docker && echo "Connected" && sudo docker-compose pull && sudo docker-compose up -d'
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no -v $SSH_USER@${VPS_IP} 'cd /home/auto-sans-risque-docker && echo "Connected" && sudo docker-compose pull && sudo docker-compose up -d'
 
       - name: Clean up unnecessary images
-        env:
-          SSH_USER: your_ssh_user
         run: |
-          sshpass -p $"SSH_PASSWORD" ssh -o StrictHostKeyChecking=no -v $SSH_USER@${VPS_IP} 'sudo docker image prune -af'
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no -v $SSH_USER@${VPS_IP} 'docker image prune -af'
