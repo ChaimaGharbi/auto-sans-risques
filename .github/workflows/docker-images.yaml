@@ -68,4 +68,4 @@ jobs:
 
       - name: Clean up unnecessary images
         run: |
-          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no -v $SSH_USER@${VPS_IP} 'docker image prune -af'
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no -v $SSH_USER@${VPS_IP} 'sudo docker image prune -af'
