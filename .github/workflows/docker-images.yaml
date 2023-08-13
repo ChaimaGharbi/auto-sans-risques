@@ -59,6 +59,8 @@ jobs:
       SSH_USER: ubuntu
       SSH_PASSWORD: DfspT4ND42aQ
     steps:
+      - name: Install sshpass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
       - name: Connect to VPS and Deploy
         env:
           SSH_USER: your_ssh_user
