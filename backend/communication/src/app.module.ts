@@ -5,11 +5,9 @@ import {MulterModule} from '@nestjs/platform-express';
 import {AdsModule} from './ads/ads.module';
 import {ArticleModule} from "./article/article.module";
 import {ContactModule} from "./contact/contact.module";
-import * as dotenv from 'dotenv';
 import {AssistanceModule} from "./assistance/assistance.module";
 import {PackModule} from "./pack/pack.module";
 
-dotenv.config();
 
 @Module({
     imports: [

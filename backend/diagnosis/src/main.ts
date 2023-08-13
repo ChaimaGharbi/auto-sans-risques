@@ -9,6 +9,7 @@ async function bootstrap() {
     dotenv.config();
     app.enableCors();
     await app.listen(process.env.PORT || 8002);
+    console.log(`Application is running on: ${await app.getUrl()}`);
 
     const adminConfig: ServiceAccount = {
         projectId: process.env.FIREBASE_PROJECT_ID,

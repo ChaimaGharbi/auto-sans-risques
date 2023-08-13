@@ -177,12 +177,11 @@ export class PdfService {
             console.log({expert});
 
             console.log("Launch puppeteer");
-
+            console.log("/usr/bin/chromium-browser")
             const browser = await puppeteer.launch({
                 headless: 'new',
                 args: ["--no-sandbox", "--disable-setuid-sandbox"],
-                ignoreDefaultArgs: ['--disable-extensions'],
-                executablePath: '/usr/bin/google-chrome',
+                ignoreDefaultArgs: ['--disable-extensions']
             });
 
             console.log("Create new page")
