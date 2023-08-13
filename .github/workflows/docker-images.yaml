@@ -53,7 +53,7 @@ jobs:
 
   deploy-to-vps:
     runs-on: ubuntu-latest
-    depends-on: [ build-and-push-backend, build-and-push-frontend ]
+    needs: [ build-and-push-backend, build-and-push-frontend ]
     env:
       VPS_IP: 149.202.50.65
       SSH_USER: ubuntu
