@@ -1,10 +1,11 @@
 import axios from 'axios'
 
+
 export default axios.create({
     headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
-    baseURL: process.env.BACKEND_URL,
+    baseURL: import.meta.env.VITE_BACKEND_URL,
 })
 
 export const getClient = () =>
@@ -12,5 +13,5 @@ export const getClient = () =>
       headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
-      baseURL: process.env.BACKEND_URL,
+      baseURL: import.meta.env.VITE_BACKEND_URL,
   })
