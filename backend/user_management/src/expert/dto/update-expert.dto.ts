@@ -3,7 +3,7 @@ import {PartialType} from "@nestjs/mapped-types";
 class UpdateExpert {
     fullName: string;
     tel: string;
-    adresse: string;
+    address: string;
     ville: string;
     specialite: string[];
     propos: string;

@@ -67,4 +67,10 @@ export class DisponibiliteController {
 
         return this.disponibilteService.fetchDisposByExpertId(id);
     }
+
+    @Delete('/remove/:id')
+  async deleteDisposById(@Param() params) {
+    const id = params.id;
+    return this.disponibilteService.deleteDisponibiliteById(id);
+  }
 }
