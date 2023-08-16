@@ -34,7 +34,7 @@ const Card = ({ link, comment, date, client, report }) => {
           <>
             <button
               onClick={handleDownload}
-              className="flex items-center space-x-3 justify-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white hover:text-white font-roboto"
+              className="flex items-center space-x-3 justify-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white hover:text-white font-rubik"
               style={{
                 boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
               }}
@@ -44,7 +44,7 @@ const Card = ({ link, comment, date, client, report }) => {
             </button>
             <button
               onClick={viewPdf}
-              className="uppercase flex items-center space-x-3 justify-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white hover:text-white font-roboto"
+              className="uppercase flex items-center space-x-3 justify-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white hover:text-white font-rubik"
               style={{
                 boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
               }}
@@ -54,7 +54,7 @@ const Card = ({ link, comment, date, client, report }) => {
             </button>
           </>
         ) : (
-          <span className="text-xs font-roboto capitalize">
+          <span className="text-xs font-rubik capitalize">
             en cours de génération
           </span>
         )}
@@ -75,13 +75,13 @@ const User = props => {
           <Avatar className="m-0 w-14 h-14 text-[#868686]" />
         </If>
         <div className="grid ">
-          <h1 className="font-medium m-0 font-roboto">{fullName}</h1>
-          <span className="text-[#47495A] uppercase font-roboto">
+          <h1 className="font-medium m-0 font-rubik">{fullName}</h1>
+          <span className="text-[#47495A] uppercase font-rubik">
             {moment(date).locale('fr').format('DD MMMM YYYY - HH:mm')}
           </span>
         </div>
       </div>
-      <p className="font-medium font-roboto text-[#212B36]">{commentaire}</p>
+      <p className="font-medium font-rubik text-[#212B36]">{commentaire}</p>
     </div>
   )
 }

@@ -2,6 +2,7 @@ import {
   useRecentNotifications,
   useNewNotifications,
   useClearNotification,
+  updateNotifById,
 } from 'app/store/hooks'
 import * as Dropdown from '../Dropdown'
 import { Notification } from './Icons'
@@ -55,12 +56,11 @@ export default function Notifications() {
   const { data, loading } = useRecentNotifications()
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   
-  const dp = useDispatch()
-
+  const updateIsRead = updateNotifById()
 
   function handleIsRead(notificationId) {
+    updateIsRead(notificationId)
     
-    dp(actions.updateNotificationById(notificationId))
     const notif = data?.filter((notif) => notif._id === notificationId);
     console.log(notif);
     const notificationElement = document.getElementById(notificationId)
@@ -72,6 +72,7 @@ export default function Notifications() {
         setIsDropdownOpen(false)
       }
     }
+
   }
 
   useEffect(() => {
@@ -88,6 +89,8 @@ export default function Notifications() {
 
   const clear = useClearNotification()
 
+  console.log(data);
+  
   return (
     <Dropdown.DropdownMenu
       onOpenChange={v => {

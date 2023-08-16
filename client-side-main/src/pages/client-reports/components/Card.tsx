@@ -38,7 +38,7 @@ const Card = ({ status, id, expert, date, comment, link }) => {
       <div className="ml-auto grid  gap-3 w-full xs:w-auto">
         <If test={status === 'ACCEPTEE'}>
           <div
-            className="uppercase flex items-center space-x-3 justify-center w-full xs:w-56 py-3 rounded-lg bg-[#F49342] text-white text-xs font-roboto"
+            className="uppercase flex items-center space-x-3 justify-center w-full xs:w-56 py-3 rounded-lg bg-[#F49342] text-white text-xs font-rubik"
             style={{
               boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
             }}
@@ -51,7 +51,7 @@ const Card = ({ status, id, expert, date, comment, link }) => {
         <If test={status === 'COMPLETEE'}>
           <button
             onClick={handleDownload}
-            className="flex items-center space-x-3 justify-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white text-xs font-roboto"
+            className="flex items-center space-x-3 justify-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white text-xs font-rubik"
             style={{
               boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
             }}
@@ -62,7 +62,7 @@ const Card = ({ status, id, expert, date, comment, link }) => {
 
           <button
             onClick={viewPdf} // call the handleOpenPdfViewer function when clicked
-            className="uppercase flex items-center space-x-3 justify-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white text-xs font-roboto"
+            className="uppercase flex items-center space-x-3 justify-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white text-xs font-rubik"
             style={{
               boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
             }}
@@ -92,14 +92,14 @@ const User = props => {
         </If>
 
         <div className="grid ">
-          <h1 className="font-medium m-0 font-roboto">{fullName}</h1>
-          <span className="text-[#47495A] uppercase font-roboto">
+          <h1 className="font-medium m-0 font-rubik">{fullName}</h1>
+          <span className="text-[#47495A] uppercase font-rubik">
             {moment(date).locale('fr').format('DD MMMM YYYY - HH:mm')}
           </span>
         </div>
       </div>
 
-      <p className="font-medium font-roboto text-[#212B36]">{commentaire}</p>
+      <p className="font-medium font-rubik text-[#212B36]">{commentaire}</p>
     </div>
   )
 }

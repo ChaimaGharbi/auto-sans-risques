@@ -1,4 +1,4 @@
-import {DatePicker} from 'react-rainbow-components'
+import { DatePicker } from 'react-rainbow-components'
 import { useState } from 'react'
 
 interface Props {
@@ -19,13 +19,12 @@ export default function Picker({
 }: Props) {
   return (
     <DatePicker
-    
-    locale='fr'
+      locale="fr"
       {...props}
       icon={<CalendarIcon />}
       className={`${
         useClassName
-          ? 'dt-picker font-mulish w-full h-12 huge:h-20 !text-lg !text-black bg-white !rounded-md focus:outline-none focus:bg-white focus:text-gray-900 cursor-pointer grid content-center'
+          ? 'dt-picker font-rubik w-full h-12 huge:h-20 !text-lg !text-black bg-white !rounded-md focus:outline-none focus:bg-white focus:text-gray-900 cursor-pointer grid content-center'
           : ''
       } ${className}`}
       value={props.value ? new Date(Number(props.value)) : undefined}

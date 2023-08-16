@@ -16,7 +16,7 @@ const Card = ({ status, id, comment, date, expert }) => {
       <div className="ml-auto flex flex-wrap items-center justify-end gap-3 w-full xs:w-auto">
         <If test={status === 'COMPLETEE'}>
           <div
-            className="uppercase flex items-center justify-center space-x-3 text-center w-full xs:w-56 py-3 rounded-lg bg-[#05fe54] text-white text-xs font-roboto hover:text-white"
+            className="uppercase flex items-center justify-center space-x-3 text-center w-full xs:w-56 py-3 rounded-lg bg-[#05fe54] text-white text-xs font-rubik hover:text-white"
             style={{
               boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
             }}
@@ -27,7 +27,7 @@ const Card = ({ status, id, comment, date, expert }) => {
         </If>
         <If test={status === 'ACCEPTEE'}>
           <div
-            className="uppercase flex items-center justify-center space-x-3 text-center w-full xs:w-56 py-3 rounded-lg bg-[#48E03B] text-white text-xs font-roboto hover:text-white"
+            className="uppercase flex items-center justify-center space-x-3 text-center w-full xs:w-56 py-3 rounded-lg bg-[#48E03B] text-white text-xs font-rubik hover:text-white"
             style={{
               boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
             }}
@@ -38,7 +38,7 @@ const Card = ({ status, id, comment, date, expert }) => {
         </If>
         <If test={status === 'REFUSEE'}>
           <div
-            className="uppercase flex items-center justify-center space-x-3 text-center w-full xs:w-56 py-3 rounded-lg bg-[#FF6D64] text-white text-xs font-roboto hover:text-white"
+            className="uppercase flex items-center justify-center space-x-3 text-center w-full xs:w-56 py-3 rounded-lg bg-[#FF6D64] text-white text-xs font-rubik hover:text-white"
             style={{
               boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
             }}
@@ -50,7 +50,7 @@ const Card = ({ status, id, comment, date, expert }) => {
 
         <If test={status === 'EN_ATTENTE'}>
           <div
-            className="uppercase flex items-center justify-center space-x-3 text-center w-full xs:w-56 py-3 rounded-lg bg-[#F49342] text-white text-xs font-roboto hover:text-white"
+            className="uppercase flex items-center justify-center space-x-3 text-center w-full xs:w-56 py-3 rounded-lg bg-[#F49342] text-white text-xs font-rubik hover:text-white"
             style={{
               boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
             }}
@@ -62,7 +62,7 @@ const Card = ({ status, id, comment, date, expert }) => {
 
         <If test={status === 'EN_COURS'}>
           <div
-            className="uppercase flex items-center justify-center space-x-3 text-center w-full xs:w-56 py-3 rounded-lg bg-[#F49342] text-white text-xs font-roboto hover:text-white"
+            className="uppercase flex items-center justify-center space-x-3 text-center w-full xs:w-56 py-3 rounded-lg bg-[#F49342] text-white text-xs font-rubik hover:text-white"
             style={{
               boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
             }}
@@ -74,7 +74,7 @@ const Card = ({ status, id, comment, date, expert }) => {
 
         <If test={status === 'ANNULEE'}>
           <div
-            className="uppercase flex items-center justify-center space-x-3 text-center w-full xs:w-56 py-3 rounded-lg bg-[#FF6D64] text-white text-xs font-roboto hover:text-white"
+            className="uppercase flex items-center justify-center space-x-3 text-center w-full xs:w-56 py-3 rounded-lg bg-[#FF6D64] text-white text-xs font-rubik hover:text-white"
             style={{
               boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
             }}
@@ -90,7 +90,7 @@ const Card = ({ status, id, comment, date, expert }) => {
 
 const User = props => {
   const { image, commentaire, fullName, date } = props
-
+  console.log(props)
   return (
     <div className="grid py-2">
       <div className="flex items-center space-x-4 py-2 ">
@@ -102,14 +102,14 @@ const User = props => {
         </If>
 
         <div className="grid ">
-          <h1 className="font-medium m-0 font-roboto">{fullName}</h1>
-          <span className="text-[#47495A] uppercase font-roboto">
+          <h1 className="font-medium m-0 font-rubik">{fullName}</h1>
+          <span className="text-[#47495A] uppercase font-rubik">
             {moment(date).locale('fr').format('DD MMMM YYYY - HH:mm')}
           </span>
         </div>
       </div>
 
-      <p className="font-medium font-roboto text-[#212B36]">{commentaire}</p>
+      <p className="font-medium font-rubik text-[#212B36]">{commentaire}</p>
     </div>
   )
 }

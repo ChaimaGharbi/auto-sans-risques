@@ -90,6 +90,8 @@ export const useGetMission = () => {
     (state: { reservations: ReservationsState }) => state.reservations.mission
   )
   const { id } = useParams()
+  console.log(useParams());
+  
   const dp = useDispatch()
   useEffect(() => {
     dp(actions.getMission(id))
@@ -181,11 +183,11 @@ export const useMissionRequest = () => {
 
   return {
     ...state,
-    acceptMission: (id: string) => {
-      dp(actions.acceptMission(id))
+    acceptMission: (id: string, expertId: string) => {
+      dp(actions.acceptMission(id, expertId))
     },
-    rejectMission: (id: string) => {
-      dp(actions.rejectMission(id))
+    rejectMission: (id: string, expertId: string) => {
+      dp(actions.rejectMission(id, expertId))
     },
   }
 }

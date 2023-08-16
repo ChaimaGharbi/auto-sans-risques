@@ -9,7 +9,7 @@ export default function UploadImages() {
       <div className="grid gap-4 divide-y">
         <div className="grid py-3">
           <div>
-            <span className="font-roboto px-10">
+            <span className="font-rubik px-10">
               Importer des images pour le véhicule
             </span>
           </div>

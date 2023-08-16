@@ -8,8 +8,8 @@ const Card = ({ status, title, date, id }) => {
   return (
     <div className="flex md:items-center space-y-4 md:space-y-0 py-5 justify-between flex-col md:flex-row ">
       <div className="grid ">
-        <h1 className="font-medium m-0 font-roboto">Sujet : {title}</h1>
-        <span className="text-[#47495A] uppercase font-roboto">
+        <h1 className="font-medium m-0 font-rubik">Sujet : {title}</h1>
+        <span className="text-[#47495A] uppercase font-rubik">
           {moment(date).locale('fr').format('DD MMMM YYYY - HH:mm')}
         </span>
       </div>
@@ -17,7 +17,7 @@ const Card = ({ status, title, date, id }) => {
       <div className="ml-auto flex flex-wrap items-center justify-end gap-3 w-full xs:w-auto">
         <If test={status === 'RESOLU'}>
           <div
-            className="text-xs text-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white uppercase font-roboto hover:text-white block"
+            className="text-xs text-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white uppercase font-rubik hover:text-white block"
             style={{
               boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
             }}
@@ -27,7 +27,7 @@ const Card = ({ status, title, date, id }) => {
         </If>
         <If test={status === 'EN_COURS'}>
           <div
-            className="text-xs flex items-center space-x-3 text-center w-full xs:w-56 py-3 rounded-lg bg-[#F49342] text-white uppercase font-roboto hover:text-white justify-center"
+            className="text-xs flex items-center space-x-3 text-center w-full xs:w-56 py-3 rounded-lg bg-[#F49342] text-white uppercase font-rubik hover:text-white justify-center"
             style={{
               boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
             }}
@@ -38,7 +38,7 @@ const Card = ({ status, title, date, id }) => {
         </If>
         <If test={status === 'EN_ATTENTE'}>
           <div
-            className="uppercase flex items-center justify-center space-x-3 text-center w-full xs:w-56 py-3 rounded-lg bg-[#F49342] text-white text-xs font-roboto hover:text-white"
+            className="uppercase flex items-center justify-center space-x-3 text-center w-full xs:w-56 py-3 rounded-lg bg-[#F49342] text-white text-xs font-rubik hover:text-white"
             style={{
               boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
             }}
@@ -64,14 +64,14 @@ const User = props => {
           alt="profile"
         />
         <div className="grid ">
-          <h1 className="font-medium m-0 font-roboto">{fullName}</h1>
-          <span className="text-[#47495A] uppercase font-roboto">
+          <h1 className="font-medium m-0 font-rubik">{fullName}</h1>
+          <span className="text-[#47495A] uppercase font-rubik">
             14 SEPTEMBRE 2020 - 09:30
           </span>
         </div>
       </div>
 
-      <p className="font-medium font-roboto text-[#212B36]">{commentaire}</p>
+      <p className="font-medium font-rubik text-[#212B36]">{commentaire}</p>
     </div>
   )
 }

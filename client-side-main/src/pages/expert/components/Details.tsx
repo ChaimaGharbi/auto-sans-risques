@@ -14,6 +14,8 @@ const Details = props => {
     )
   }
 
+  console.log(state.data);
+  
   return (
     <div className="col-span-2 bg-white  rounded-sm pb-10">
       <div className="uppercase bg-primary p-4 lg:px-6 md:px-6 block  text-white font-medium ">
@@ -25,8 +27,8 @@ const Details = props => {
           <div className="grid place-content-center">
             <img
               src={
-                state.data.profile
-                  ? state.data.profile
+                state.data.img
+                  ? state.data.img
                   : '/img/default-profile.svg'
               }
               alt="profile"

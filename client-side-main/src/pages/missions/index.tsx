@@ -12,6 +12,8 @@ const Missions = () => {
   const [page, setPage] = useState(1)
   const pageSize = 3
 
+  console.log(data);
+  
   return (
     <Container>
       <div className="py-20">
@@ -49,7 +51,7 @@ const Missions = () => {
                   onLoadMore={() => {}}
                   total={data?.length ? data.length : 0}
                   item={({ data }) => {
-                    const { _id, reason, typeCar, date, client } = data
+                    const { _id, reason, typeCar, date, client, expertId } = data
 
                     return (
                       <Card
@@ -58,6 +60,7 @@ const Missions = () => {
                         comment={reason + ' - ' + typeCar}
                         date={date}
                         client={client[0]}
+                        expertId={expertId}
                       />
                     )
                   }}

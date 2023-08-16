@@ -9,7 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Rubik', sans-serif;
   position: relative;
   left: 6vmin;
   text-align: center;
@@ -126,7 +126,7 @@ h1 {
 }
 
 .wrong-para {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Rubik', sans-serif;
   position: absolute;
   bottom: 15vmin;
   padding: 3vmin 12vmin 3vmin 3vmin;

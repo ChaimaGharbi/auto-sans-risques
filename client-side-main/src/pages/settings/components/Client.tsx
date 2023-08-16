@@ -39,16 +39,6 @@ export default function ClientsForm() {
               placeholder="55555555"
               validations={[validators.required, validators.phone]}
             />
-
-            <Input
-              defaultValue={data?.email}
-              name="email"
-              type="email"
-              label="Email"
-              placeholder="mondher@gmail.com"
-              validations={[validators.required, validators.email]}
-            />
-
             <Input
               defaultValue={data?.address}
               name="adresse"

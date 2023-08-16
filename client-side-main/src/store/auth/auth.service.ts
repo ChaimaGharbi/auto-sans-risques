@@ -24,7 +24,8 @@ export const signup = data => {
 export const getMe = () => {
   return getClient()
     .get(`/auth/me`)
-    .then(({ data }) => data)
+    .then(({ data }) => {console.log(data);
+    return data})
 }
 
 export const updatePassword = (

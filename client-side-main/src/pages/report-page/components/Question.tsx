@@ -13,7 +13,7 @@ export default function Question({ type, q, choices: _choices, ...props }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 py-3">
       <div>
-        <span className="font-roboto">{q}</span>
+        <span className="font-rubik">{q}</span>
       </div>
       <div className="grid">
         <div className="grid ">

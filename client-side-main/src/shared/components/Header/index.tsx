@@ -36,35 +36,36 @@ const Header = () => {
       >
         <div className="grid place-content-center h-full justify-end xxs:justify-center">
           <div className="flex flex-col items-start h-full space-y-3">
-            <Link onClick={handleCloseMenu} to="/home">
-              Acceuil
+            <Link onClick={handleCloseMenu} to="/home" className="text-[#4EACFE]">
+              Accueil
             </Link>
-            <Link onClick={handleCloseMenu} to="/about">
-              A Propos
+            <Link onClick={handleCloseMenu} to="/about" className="text-[#4EACFE]">
+             À Propos
             </Link>
-            <Link onClick={handleCloseMenu} to="/services">
+            <Link onClick={handleCloseMenu} to="/services" className="text-[#4EACFE]">
               Nos Services
             </Link>
             <Link
               shouldMatch={false}
               onClick={handleCloseMenuAssist}
               to="/home?to=assistance"
+              className="text-[#4EACFE]"
             >
               Assistance
             </Link>
-            <Link onClick={handleCloseMenu} to="/voiture_certifiee">
+            <Link onClick={handleCloseMenu} to="/voiture_certifiee" className="text-[#4EACFE]">
               Voiture Certifiée
             </Link>
-            <Link onClick={handleCloseMenu} to="/contact">
-              Contacts
+            <Link onClick={handleCloseMenu} to="/contact" className="text-[#4EACFE]" >
+              Contact
             </Link>
           </div>
         </div>
       </div>
 
-      <nav className="bg-white pb-1 border-b-2 fixed z-[2001] w-full">
+      <nav className="bg-[#4EACFE] fixed z-[2001] w-full 5-[6rem] border-b-2 py-4">
         <Container>
-          <div className="flex items-center justify-between sm:py-4 space-x-1">
+          <div className="flex items-center justify-between space-x-1">
             <div className="md:hidden">
               <MobileViewMenu
                 isMenuOpen={isMenuOpen}
@@ -77,24 +78,25 @@ const Header = () => {
 
               <div className="hidden md:block sm:ml-6 ">
                 <div className="flex space-x-1 lg:space-x-4  items-center h-full">
-                  <Link onClick={handleCloseMenu} to="/about">
-                    A Propos
+                  <Link onClick={handleCloseMenu} to="/about" className='text-white'>
+                  À Propos
                   </Link>
-                  <Link onClick={handleCloseMenu} to="/services">
+                  <Link onClick={handleCloseMenu} to="/services" className='text-white'>
                     Nos Services
                   </Link>
                   <Link
                     shouldMatch={false}
                     onClick={handleCloseMenuAssist}
                     to="/home?to=assistance"
+                    className='text-white'
                   >
                     Assistance
                   </Link>
-                  <Link onClick={handleCloseMenu} to="/voiture_certifiee">
+                  <Link onClick={handleCloseMenu} to="/voiture_certifiee" className='text-white'>
                     Voiture Certifiée
                   </Link>
-                  <Link onClick={handleCloseMenu} to="/contact">
-                    Contacts
+                  <Link onClick={handleCloseMenu} to="/contact" className='text-white'>
+                    Contact
                   </Link>
                 </div>
               </div>

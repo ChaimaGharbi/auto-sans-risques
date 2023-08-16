@@ -29,6 +29,7 @@ html{
 
 body {
   pointer-events: auto !important;
+  font-family: 'Rubik', sans-serif !important;
 }
 
 .custom-inner-shadow {

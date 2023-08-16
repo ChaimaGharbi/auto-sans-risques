@@ -83,6 +83,8 @@ export const reservationsReducer = new Reducer(initialState)
     state.acceptMission.loading = false
     state.acceptMission.errors = []
     toast.success('Mission accepted')
+    console.log(action.payload);
+    
     state.missionsRequests.data =
       state.missionsRequests.data?.filter(
         mission => mission._id !== action.payload
@@ -102,7 +104,7 @@ export const reservationsReducer = new Reducer(initialState)
     toast.success('Mission rejected')
     state.missionsRequests.data =
       state.missionsRequests.data?.filter(
-        mission => mission._id !== action.payload
+        mission => mission._id !== action.payload.id
       ) || []
   })
   .on(constants.REJECT_MISSION.failure, state => {

@@ -29,7 +29,7 @@ export default function Reclamation({ expertId, reservationId }) {
   return (
     <>
       <button
-        className="uppercase flex items-center gap-3 justify-center w-full xs:w-56 py-3 rounded-lg bg-[#AFAFAF] text-white text-xs font-roboto"
+        className="uppercase flex items-center gap-3 justify-center w-full xs:w-56 py-3 rounded-lg bg-[#AFAFAF] text-white text-xs font-rubik"
         style={{
           boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
         }}

@@ -73,3 +73,13 @@ export const useUpdateAreRead = () => {
 
   return updateIsRead
 }
+
+export const updateNotifById = () => {
+  const dp = useDispatch()
+
+  const updateNotifById = (id)=>  {
+    dp(actions.updateNotificationById(id))
+  }
+
+  return updateNotifById
+}

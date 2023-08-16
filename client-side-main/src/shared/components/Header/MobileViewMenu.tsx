@@ -8,7 +8,7 @@ const MobileViewMenu = props => {
 
   return (
     <button
-      className="p-2 lg:p-0 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+      className="p-2 lg:p-0 rounded-md text-white hover:text-white  focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
       aria-expanded="false"
       onClick={() => props.setIsMenuOpen(isIt => !isIt)}
     >

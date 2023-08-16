@@ -5,73 +5,72 @@ const AboutPage = () => {
   return (
     <Container>
       <div className="py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 py-10">
+        <div className="grid grid-cols-1 py-10 my-10">
           <div className="w-full h-full grid place-content-center text-center ">
             <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl !m-0">
-              Vous achetez ou <br className="hidden md:block" /> vendez une
-              voiture occasion?
+              Imaginez-vous acheter ou vendre une voiture sans le moindre souci.
+             
             </h1>
+            <br />
             <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl text-primary !m-0">
-              Obtenez le meilleur conseil.
+            C'est exactement ce que nous faisons possible avec nos
+              services spécialisés.
             </h1>
 
-            <h4 className="!m-4 text-xs sm:text-base">
-              Nous mettons à votre disposition nos savoir-faire et nos{' '}
-              <br className="hidden md:block" />
-              meilleurs experts pour réussir votre choix
-            </h4>
-          </div>
-          <div className="w-full h-full grid place-content-center">
-            <img src="/about-1.png" alt="about" />
+            
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 py-10">
           <div className="w-full h-full grid place-content-center lg:order-2 p-4">
-            <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl !my-4">
-              <span>À-PROPOS</span>
-              <span className="text-primary px-3">AUTO SANS RISQUE</span>
+            <h1 className="font-bold text-2xl sm:text-3xl md:text-5xl !mb-4">
+              <span className="text-primary pr-3">À Propos</span>
+              <span>de Nous</span>
             </h1>
 
-            <p className="text-xs sm:text-base max-w-lg">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
+            <p className="text-base max-w-2xl">
+              Bienvenue chez Auto Sans Risque, votre allié de confiance dans
+              l'univers automobile. Nous sommes bien plus qu'une plateforme :
+              nous sommes une passerelle vers des décisions éclairées et des
+              expériences sans tracas lors de l'achat et de la vente de voitures
+              d'occasion en Tunisie.
+              <br />
+              <br />
+              Notre passion pour l'automobile et notre engagement envers
+              l'excellence nous ont conduit à créer Auto Sans Risque. Avec une
+              équipe d'experts en automobile et une technologie innovante à
+              notre disposition, nous sommes là pour vous guider à chaque étape
+              du processus, vous offrant une tranquillité d'esprit inestimable.
             </p>
           </div>
           <div className="w-full h-full grid place-content-center lg:order-1">
-            { <iframe
-              className="w-[300px] h-[150px] sm:w-[400px] sm:h-[200px] md:w-[560px] md:h-[315px]"
-              height="315"
-              src="https://www.youtube.com/embed/ygTZZpVkmKg"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-  ></iframe> }
+            {
+              <iframe
+                className="w-[300px] h-[150px] sm:w-[400px] sm:h-[200px] md:w-[485px] md:h-[315px]"
+                height="315"
+                src="https://www.youtube.com/embed/Y4sZuy3FCpo"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            }
           </div>
         </div>
 
         <div className="py-10 text-center">
           <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl !my-4">
-            NOS SERVICES
+            Nos Services
           </h1>
-          <p className="text-xs sm:text-base max-w-lg mx-auto">
-            Trouver des l'expert en qui vous pouvez faire confiance lors de
-            l'achat ou de vente de votre véhicule.
+          <p className="text-xs sm:text-base  mx-auto">
+            Trouver l'expert en qui vous pouvez faire confiance lors de l'achat
+            ou de vente de votre véhicule.
           </p>
 
           <div className="flex items-top flex-wrap justify-evenly gap-10 py-10">
-            <Service label="Diagnostique à l'achat" src="/sv1.png" />
-            <Service label="Certification de votre véhicule" src="/sv2.png" />
-            <Service label="Recommandation de véhicule" src="/sv3.png" />
+            <Service label="Diagnostic d'Achat" src="/sv1.png" />
+            <Service label="Diagnostic de Vente" src="/sv2.png" />
+            <Service label="Vente par Recommandation" src="/sv3.png" />
           </div>
         </div>
       </div>

@@ -67,6 +67,8 @@ const Review = props => {
     setImage({ isOpened: false, src: '' })
   }
 
+  console.log(props);
+  
   return (
     <>
       <If test={image.isOpened === true}>
@@ -107,7 +109,7 @@ const Review = props => {
         </div>
 
         <h3 className="py-2 m-0">
-          Noté le {moment().locale('fr').format('DD MMMM YYYY')}
+          Noté le {moment(props.date).locale('fr').format('DD MMMM YYYY')}
         </h3>
 
         <p>{props.commentaire}</p>

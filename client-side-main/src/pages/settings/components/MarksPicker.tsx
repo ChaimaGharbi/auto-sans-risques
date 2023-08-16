@@ -113,7 +113,7 @@ function MarksInput({closeModal}) {
   }
 
   return (
-    <Popover className="grid grid-cols-2 gap-4 h-96 overflow-auto  scroll- w-96">
+    <Popover className="grid grid-row-2 xsx:grid-cols-2 gap-4 h-96 overflow-auto scroll- overflow-x-scroll xsx:w-96">
       <div>
         <h1 className="text-lg font-bold text-gray-900 mb-2">Modéles</h1>
 
