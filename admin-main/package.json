@@ -4,7 +4,7 @@
     "private": true,
     "homepage": ".",
     "scripts": {
-        "serve": "cp-cli build _site/react/preview/react/react-new/demo1 && serve",
+        "serve": "cp-cli build _site/react/preview/react/react-new/demo1 && serve -l 3001",
         "start": "craco start",
         "build": "craco build",
         "test": "craco test",

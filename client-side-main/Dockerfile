@@ -1,28 +1,12 @@
-FROM node:16 AS builder
+FROM node:16
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package*.json yarn.lock ./
+COPY package.json yarn.lock ./
 
 RUN yarn install
 
 COPY . .
 
-RUN yarn build
-
-FROM node:16-alpine
-
-WORKDIR /usr/src/app
-
-COPY package*.json yarn.lock ./
-
-RUN yarn install --production --frozen-lockfile && yarn cache clean
-
-COPY --from=builder /usr/src/app/dist ./dist
-
-ENV NODE_ENV production
-
-RUN yarn global add vite
-
-CMD [ "yarn","preview" ]
+CMD ["yarn", "dev"]
 

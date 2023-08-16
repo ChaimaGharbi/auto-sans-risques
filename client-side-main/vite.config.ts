@@ -11,16 +11,11 @@ export default defineConfig({
   },
   plugins: [react()],
   server: {
-    watch: {
-      usePolling: true,
-    },
-    host: true,
-    strictPort: true,
-    port: 3000,
-  },
-  preview: {
-    host: true,
-    strictPort: true,
-    port: 3000,
-  },
+      watch: {
+          usePolling: true,
+      },
+      host: true,
+      strictPort: true,
+      port: 3000,
+  }
 })

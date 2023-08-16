@@ -177,12 +177,14 @@ export class PdfService {
             console.log({expert});
 
             console.log("Launch puppeteer");
-
+            console.log("/usr/bin/chromium-browser")
             const browser = await puppeteer.launch({
                 headless: 'new',
                 args: ["--no-sandbox", "--disable-setuid-sandbox"],
+                ignoreDefaultArgs: ['--disable-extensions']
             });
-            console.log(browser)
+
+            console.log("Create new page")
             const tab = await browser.newPage();
 
             try {

@@ -50,3 +50,22 @@ jobs:
           echo ${{ matrix.directory }}
           docker build -t $DOCKER_USERNAME/$DOCKER_REPO:${{ matrix.directory }} .
           docker push $DOCKER_USERNAME/$DOCKER_REPO:${{ matrix.directory }}
+
+  deploy-to-vps:
+    runs-on: ubuntu-latest
+    needs: [ build-and-push-backend, build-and-push-frontend ]
+    env:
+      VPS_IP: 149.202.50.65
+      SSH_USER: ubuntu
+      SSH_PASSWORD: DfspT4ND42aQ
+    steps:
+      - name: Install sshpass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+
+      - name: Connect to VPS and Deploy
+        run: |
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no -v $SSH_USER@${VPS_IP} 'cd /home/auto-sans-risque-docker && echo "Connected" && sudo docker-compose pull && sudo docker-compose up -d'
+
+      - name: Clean up unnecessary images
+        run: |
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no -v $SSH_USER@${VPS_IP} 'sudo docker image prune -af'

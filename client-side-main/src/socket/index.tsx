@@ -1,6 +1,7 @@
-import { createContext, useEffect, useState } from 'react'
-import io, { Socket } from 'socket.io-client'
-import { useReceiveNotification } from 'app/store/hooks'
+import {createContext, useEffect, useState} from 'react'
+import io, {Socket} from 'socket.io-client'
+import {useReceiveNotification} from 'app/store/hooks'
+
 interface SocketContextProps {
   socket: Socket | null
   on: (event: string, callback: (data: any) => void) => void
@@ -21,7 +22,7 @@ export const SocketProvider = ({ children }) => {
   const publish = useReceiveNotification()
 
   useEffect(() => {
-    const socket = io('http://149.202.50.65:8080', {
+    const socket = io(import.meta.env.VITE_SOCKET_URL, {
       transports: ['websocket'],
       query: {
         token: localStorage.getItem('token'),

@@ -1,25 +1,17 @@
 import axios from 'axios'
 
+
 export default axios.create({
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem('token')}`,
-  },
-  baseURL:
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:8000'
-      : // : 'https://ktk-fc.herokuapp.com/',
-        'http://149.202.50.65:8080',
+    headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+    baseURL: import.meta.env.VITE_BACKEND_URL,
 })
 
 export const getClient = () =>
   axios.create({
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-    baseURL:
-      process.env.NODE_ENV === 'development'
-        ? 'http://localhost:8000'
-        : // : 'https://ktk-fc.herokuapp.com/',
-
-          'http://149.202.50.65:8080',
+      headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      baseURL: import.meta.env.VITE_BACKEND_URL,
   })
