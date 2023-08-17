@@ -19,8 +19,13 @@ RUN yarn build
 # Use a lightweight Nginx image to serve the app
 FROM nginx:alpine
 
-# Copy the build output to the Nginx document root
-COPY --from=build /app/dist /usr/share/nginx/html
+ENV NODE_ENV production
+
+COPY --from=build /app/build /usr/share/nginx/html
+# Add your nginx.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Expose port
+EXPOSE 80
 
 # Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
