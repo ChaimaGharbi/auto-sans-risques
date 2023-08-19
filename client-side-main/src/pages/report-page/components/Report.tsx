@@ -43,7 +43,7 @@ export default function Report({ comment, date, client }) {
               <div key={step._id} className="grid place-content-center">
                 <button
                   className={`
-                font-black text-[#788995] uppercase font-roboto px-2 py-4 cursor-pointer
+                font-black text-[#788995] uppercase font-rubik px-2 py-4 cursor-pointer
                 ${
                   step.category_name === form.currentStep?.name
                     ? 'border-b-4 border-primary !text-primary'
@@ -83,7 +83,7 @@ export default function Report({ comment, date, client }) {
                   disabled={
                     (!form.isStepValid && form.isSubmitted) || !!loading
                   }
-                  className="text-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white font-black font-roboto hover:text-white block shadow-button disabled:bg-opacity-20 disabled:shadow-none"
+                  className="text-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white font-black font-rubik hover:text-white block shadow-button disabled:bg-opacity-20 disabled:shadow-none"
                   onClick={goToTop}
                 >
                   SUIVANT
@@ -96,13 +96,13 @@ export default function Report({ comment, date, client }) {
                     form.prevStep()
                     goToTop()
                   }}
-                  className="text-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white font-black font-roboto hover:text-white block shadow-button disabled:bg-opacity-20 disabled:shadow-none"
+                  className="text-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white font-black font-rubik hover:text-white block shadow-button disabled:bg-opacity-20 disabled:shadow-none"
                   disabled={!!loading}
                 >
                   RETOUR
                 </button>
                 <button
-                  className="text-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white font-black font-roboto hover:text-white block shadow-button disabled:bg-opacity-20 disabled:shadow-none"
+                  className="text-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white font-black font-rubik hover:text-white block shadow-button disabled:bg-opacity-20 disabled:shadow-none"
                   type="submit"
                   disabled={
                     (!form.isValid && form.isSubmitted) ||
@@ -120,13 +120,13 @@ export default function Report({ comment, date, client }) {
                     form.prevStep()
                     goToTop()
                   }}
-                  className="text-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white font-black font-roboto hover:text-white block shadow-button disabled:bg-opacity-20 disabled:shadow-none"
+                  className="text-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white font-black font-rubik hover:text-white block shadow-button disabled:bg-opacity-20 disabled:shadow-none"
                   disabled={!!loading}
                 >
                   Previous
                 </button>
                 <button
-                  className="text-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white font-black font-roboto hover:text-white block shadow-button disabled:bg-opacity-20 disabled:shadow-none"
+                  className="text-center w-full xs:w-56 py-3 rounded-lg bg-primary text-white font-black font-rubik hover:text-white block shadow-button disabled:bg-opacity-20 disabled:shadow-none"
                   type="submit"
                   disabled={
                     (!form.isStepValid && form.isSubmitted) || !!loading
@@ -154,13 +154,13 @@ const User = ({ image, commentaire, fullName, date }) => {
           <Avatar className="m-0 w-14 h-14 text-[#868686]" />
         </If>
         <div className="grid ">
-          <h1 className="font-medium m-0 font-roboto">{fullName}</h1>
-          <span className="text-[#47495A] uppercase font-roboto">
+          <h1 className="font-medium m-0 font-rubik">{fullName}</h1>
+          <span className="text-[#47495A] uppercase font-rubik">
             {moment(date).locale('fr').format('DD MMMM YYYY - HH:mm')}
           </span>
         </div>
       </div>
-      <p className="font-medium font-roboto text-[#212B36]">{commentaire}</p>
+      <p className="font-medium font-rubik text-[#212B36]">{commentaire}</p>
     </div>
   )
 }

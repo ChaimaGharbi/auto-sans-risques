@@ -16,8 +16,8 @@ export default function AddressInfo() {
         />
 
         <Input
-          type="governerates"
-          name="governerates"
+          type="ville"
+          name="ville"
           validations={[validators.required]}
         />
       </div>

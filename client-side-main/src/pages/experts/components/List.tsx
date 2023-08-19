@@ -8,6 +8,8 @@ const List = () => {
   // TODO: Pagination
   const { state, pagination } = useGetExperts()
   
+  console.log(state);
+  
 
   const handlePageChange = (page ) => {
     pagination.onchange(page)
@@ -45,7 +47,7 @@ const List = () => {
                 img={expert.img}
                 speciality={expert.specialite}
                 city={expert.ville}
-                address={expert.adresse}
+                address={expert.address}
                 note={expert.note}
               />
             ))}

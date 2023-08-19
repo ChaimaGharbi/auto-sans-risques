@@ -3,8 +3,8 @@ import If from 'app/shared/components/If'
 import { useEffect, useMemo, useState } from 'react'
 import { useCreateResponse, useResponse } from 'app/store/hooks'
 import { useDebounce } from 'use-debounce'
-import {BsCheckCircleFill as Saved} from 'react-icons/bs'
-import {CgSpinner as Spinner} from 'react-icons/cg'
+import { BsCheckCircleFill as Saved } from 'react-icons/bs'
+import { CgSpinner as Spinner } from 'react-icons/cg'
 
 export default function TextInput(props: InputProps) {
   const response = useResponse(props.questionId)
@@ -38,7 +38,7 @@ export default function TextInput(props: InputProps) {
     <div className="grid gap-2">
       <label
         htmlFor={id}
-        className="uppercase font-black font-roboto text-xs text-[#D4D9DD]"
+        className="uppercase font-black font-rubik text-xs text-[#D4D9DD]"
       >
         {props.label}
       </label>

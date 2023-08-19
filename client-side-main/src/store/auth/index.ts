@@ -83,8 +83,8 @@ interface User {
   email: string
   fullName: string
   gouv: string
-    isVerified: boolean
-    lat: number
+  isVerified: boolean
+  lat: number
   lng: number
   img: string
   ville: string

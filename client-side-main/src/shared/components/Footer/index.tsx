@@ -7,10 +7,8 @@ import {
 import Container from '../Container'
 // TODO: Links to social media and contact info
 const Footer = () => {
-
-  
   return (
-    <div className="bg-[#F1F3F7] font-roboto py-20">
+    <div className="bg-[#F1F3F7] font-rubik py-20">
       <Container>
         <div className="container mx-auto pt-8 pb-4">
           <div className=" px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4      overflow-hidden sm:-mx-1 md:-mx-px lg:-mx-2 xl:-mx-2 ">
@@ -74,18 +72,18 @@ const Footer = () => {
               <h4 className="text-black font-bold">Politique</h4>
               <ul className="nav navbar-nav">
                 <li id="navi-2" className="leading-7 text-sm">
-                  <a className="text-gray-500 text-small" href="/page-1">
+                  <a className="text-gray-500 text-small" href="/cgu">
                     Mentions légales{' '}
                   </a>
                 </li>
                 <li id="navi-2" className="leading-7 text-sm">
-                  <a className="text-gray-500 text-small" href="/page-2">
+                  <a className="text-gray-500 text-small" href="/cgu">
                     Politique de confidentialité
                   </a>
                 </li>
                 <li id="navi-3" className="leading-7 text-sm">
-                  <a className="text-gray-500 text-small" href="/page-2">
-                    Security
+                  <a className="text-gray-500 text-small" href="/cgu">
+                    CGU
                   </a>
                 </li>
               </ul>

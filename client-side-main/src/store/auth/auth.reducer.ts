@@ -215,9 +215,12 @@ export const authenticationReducer = new Reducer(initialState)
       constants.UPDATE_EXPERTS_DATA.success,
       constants.UPDATE_CLIENTS_DATA.success,
     ],
-    state => {
+    (state, action) => {
       state.updateExpertsData.loading = false
       state.updateExpertsData.errors = []
+      console.log(action.payload);
+      
+      //state.me.data = action.payload;
       toast.success('Votre profil a été mis à jour avec succès')
     }
   )

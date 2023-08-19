@@ -45,9 +45,9 @@ export const getCompletedMissions = id =>
     })
     .then(({ data }) => data)
 
-export const updateReservation = (id, etat) =>
+export const updateReservation = ({id, expertId}, etat) =>
   getClient()
-    .put(`/reservation/updateStatus/${id}/${etat}`)
+    .put(`/reservation/updateStatus/${id}/${etat}`, {expertId})
     .then(({ data }) => data)
 
 export const getMyReservations = id =>

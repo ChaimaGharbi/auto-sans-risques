@@ -74,7 +74,7 @@ const Filter = (props: Props) => {
               value={filter.dateRange[0] || ''}
               onChange={e => handleStartDateChange(e)}
               placeholder="À partir de"
-              className="!font-mulish dt-picker w-full !h-12 huge:!h-20 !text-lg !text-black !bg-white !rounded-md focus:!outline-none focus:!bg-white focus:!text-gray-900 cursor-pointer"
+              className="!font-rubik dt-picker w-full !h-12 huge:!h-20 !text-lg !text-black !bg-white !rounded-md focus:!outline-none focus:!bg-white focus:!text-gray-900 cursor-pointer"
               style={{
                 background: 'linear-gradient(180deg, #FFFFFF 0%, #F9FAFB 100%)',
                 border: '1px solid #C4CDD5',
@@ -85,7 +85,7 @@ const Filter = (props: Props) => {
               value={filter.dateRange[1] || ''}
               onChange={e => handleEndDateChange(e)}
               placeholder="Jusqu'à"
-              className="!font-mulish dt-picker w-full !h-12 huge:!h-20 !text-lg !text-black !bg-white !rounded-md focus:!outline-none focus:!bg-white focus:!text-gray-900 cursor-pointer"
+              className="!font-rubik dt-picker w-full !h-12 huge:!h-20 !text-lg !text-black !bg-white !rounded-md focus:!outline-none focus:!bg-white focus:!text-gray-900 cursor-pointer"
               style={{
                 background: 'linear-gradient(180deg, #FFFFFF 0%, #F9FAFB 100%)',
                 border: '1px solid #C4CDD5',

@@ -35,14 +35,14 @@ const Map = props => {
           zoom={12}
           center={props.center}
         >
-          {props.data.map((marker, idx) => (
+          {props.data?.map((marker, idx) => (
             <Marker
               key={idx}
               position={{
                 lat: marker.lat,
                 lng: marker.lng,
               }}
-              icon="/marker.svg"
+              //icon="/marker.svg"
               onClick={() => {
                 setOpenModal(true)
                 setLoadedModal(props.data.find(item => item._id === marker._id))

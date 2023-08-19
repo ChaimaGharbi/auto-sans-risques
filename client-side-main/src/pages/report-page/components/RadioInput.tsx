@@ -4,8 +4,8 @@ import { Radio } from 'antd'
 import { useEffect, useMemo, useState } from 'react'
 import { useCreateResponse, useResponse } from 'app/store/hooks'
 import { useDebounce } from 'use-debounce'
-import {BsCheckCircleFill as Saved} from 'react-icons/bs'
-import {CgSpinner as Spinner} from 'react-icons/cg'
+import { BsCheckCircleFill as Saved } from 'react-icons/bs'
+import { CgSpinner as Spinner } from 'react-icons/cg'
 
 export default function RadioInput(props: InputProps) {
   const response = useResponse(props.questionId)
@@ -50,7 +50,7 @@ export default function RadioInput(props: InputProps) {
       <div className="flex items-center justify-between">
         <label
           htmlFor={id}
-          className="uppercase font-black font-roboto text-xs text-[#D4D9DD]"
+          className="uppercase font-black font-rubik text-xs text-[#D4D9DD]"
         >
           Choisir une option
         </label>
@@ -73,7 +73,7 @@ export default function RadioInput(props: InputProps) {
       >
         {props.options?.map(option => (
           <div className="grid py-2" key={option.key}>
-            <Radio value={option.key} className="flex  font-roboto">
+            <Radio value={option.key} className="flex  font-rubik">
               {option.label}
             </Radio>
           </div>
@@ -85,7 +85,7 @@ export default function RadioInput(props: InputProps) {
       <div className="mt-4 grid gap-2">
         <label
           htmlFor={id}
-          className="uppercase font-black font-roboto text-xs text-[#D4D9DD]"
+          className="uppercase font-black font-rubik text-xs text-[#D4D9DD]"
         >
           Commentaire
         </label>

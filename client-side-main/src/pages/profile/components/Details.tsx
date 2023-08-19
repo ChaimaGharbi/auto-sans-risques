@@ -9,7 +9,7 @@ import {CreditCardIcon} from './CC.icon'
 
 const Details = props => {
   const state = useGetUser()
-  console.log(state.me.data)
+
   if (state.me.loading || !state.me.data) {
     return (
       <div className="col-span-2 grid place-content-center">
@@ -17,6 +17,7 @@ const Details = props => {
       </div>
     )
   }
+  console.log(state.me.data)
 
   return (
     <div className="col-span-2 bg-white  rounded-sm pb-10">
@@ -34,7 +35,7 @@ const Details = props => {
                   : '/img/default-profile.svg'
               }
               alt="profile"
-              className="max-h-96"
+              className="w-full h-56 lg:h-64 xl:h-80 bg-gray-300 object-cover"
             />
           </div>
           <div className="grid">
@@ -72,7 +73,7 @@ const Details = props => {
               </div>
             </div>
           </div>
-          <div className="font-roboto col-span-1 md:col-span-2 lg:col-span-1">
+          <div className="font-rubik col-span-1 md:col-span-2 lg:col-span-1">
             <div
               className={` ${
                 state.me.data.isVerified ? 'bg-[#0CD45C]' : 'bg-[#EC1313]'

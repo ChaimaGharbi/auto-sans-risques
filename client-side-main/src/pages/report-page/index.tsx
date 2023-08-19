@@ -7,7 +7,8 @@ import If from 'app/shared/components/If'
 
 const OngoingMissions = () => {
   const { loading, data } = useGetMission()
-
+  console.log(data);
+  
   if (loading || !data) return <Loading />
 
   return (

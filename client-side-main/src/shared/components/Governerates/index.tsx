@@ -1,7 +1,7 @@
 import Select from 'react-select'
 
 const Governerates = ({ onChange }) => {
-  const options = governerates.map(g => ({ value: g, label: g }))
+  const options = ville.map(g => ({ value: g, label: g }))
 
   return (
     <Select
@@ -32,7 +32,7 @@ const Governerates = ({ onChange }) => {
   )
 }
 
-const governerates = [
+const ville = [
   'Tunis',
   'Ariana',
   'Manouba',

@@ -37,7 +37,7 @@ export function ClientsUIProvider({clientsUIEvents, children}) {
     nb_missions: 0,
     createdAt: "",
     isActive: "",
-    isVerfied: 1
+    isVerified: 1
   };
 
   const value = {

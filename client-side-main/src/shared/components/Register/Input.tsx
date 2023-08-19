@@ -94,7 +94,7 @@ export default function Input(props: Props) {
       </div>
     )
 
-  if (props.type === 'governerates')
+  if (props.type === 'ville')
     return (
       <div>
         <Governerates onChange={v => setValue(v)} />
@@ -150,7 +150,7 @@ interface Props extends FieldProps {
     | HTMLInputTypeAttribute
     | 'select'
     | 'textarea'
-    | 'governerates'
+    | 'ville'
     | 'position'
   label?: string
   options?: { key: string; label: string }[]

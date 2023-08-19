@@ -88,13 +88,13 @@ export const notificationsReducer = new Reducer(initialState)
   .on(constants.UPDATE_NOTIFICATION_BY_ID.success, (state, action) => {
     ;(state.all.loading = false),
       state.all.data?.map(notification => {
-        if (notification._id == action.payload) notification.is_read = true
+        if (notification._id == action.payload._id) notification.is_read = true
       })
       state.recent.data?.map(notification => {
-        if (notification._id == action.payload) notification.is_read = true
+        if (notification._id == action.payload._id) notification.is_read = true
       })
       state.newOnes.data?.map(notification => {
-        if (notification._id == action.payload) notification.is_read = true
+        if (notification._id == action.payload._id) notification.is_read = true
       })
   })
   .on(constants.UPDATE_NOTIFICATION_BY_ID.failure, state => {

@@ -252,6 +252,7 @@ const AppRoutes = () => {
       <Route path="/contact" element={<routes.ContactPage />} />
       <Route path="/services" element={<routes.ServicesPage />} />
       <Route path="*" element={<routes.NotFoundPage />} />
+      <Route path='/cgu' element={<routes.CguPage/>}></Route>
     </Routes>
   )
 }

@@ -15,18 +15,18 @@ import { IoLocationSharp as Location } from 'react-icons/io5'
 const OurLocation = () => {
   return (
     <Container>
-      <div className="font-roboto grid grid-cols-1 md:grid-cols-2">
+      <div className="font-rubik grid grid-cols-1 md:grid-cols-2">
         <div className="p-10 flex flex-col space-y-5">
           <div className="font-bold text-2xl">Siège social</div>
           <div className="flex items-center space-x-4">
             <span>{<Location className="h-6 w-6" />}</span>
             <div className="text-lg text-gray-900">
-              Immeuble Astra, rue du Lac Victoria Les Berges du Lac 1 - 1053
+              Centre Urbain Nord, BP 676, 1080 Tunis Cedex, Tunisie
             </div>
           </div>
           <div className="flex items-center space-x-4">
             <span>{<Phone className="h-5 w-5" />}</span>
-            <div className="text-lg text-gray-900">+216 98 343 361</div>
+            <div className="text-lg text-gray-900">+216 94 49 49 49</div>
           </div>
           <div className="h-10"></div>
           <div className="">
@@ -35,22 +35,22 @@ const OurLocation = () => {
               dernières nouvelles{' '}
             </div>
             <div className="flex space-x-4">
-            <a
-                href="https://www.facebook.com/AutoSansRisque"
-                target="_blank"
-            >
-              <Facebook fontSize={25} color="#000000" /></a>
+              <a href="https://www.facebook.com/AutoSansRisque" target="_blank">
+                <Facebook fontSize={25} color="#000000" />
+              </a>
               <a
-                  href="https://www.instagram.com/autosansrisque/"
-                  target="_blank"
-                >
-              <Instagram fontSize={25} color="#000000" /></a>
+                href="https://www.instagram.com/autosansrisque/"
+                target="_blank"
+              >
+                <Instagram fontSize={25} color="#000000" />
+              </a>
               <Youtube fontSize={25} color="#000000" />
               <a
-                  href="https://www.linkedin.com/company/auto-sans-risque/about/"
-                  target="_blank"
-                >
-              <LinkedIn fontSize={25} color="#000000" /></a>
+                href="https://www.youtube.com/@autosansrisque/about"
+                target="_blank"
+              >
+                <LinkedIn fontSize={25} color="#000000" />
+              </a>
             </div>
           </div>
         </div>

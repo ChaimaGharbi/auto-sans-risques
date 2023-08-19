@@ -28,7 +28,7 @@ function InputPicker(props) {
     <div>
       <Picker
         placeholder="Jusqu'au"
-        className="!font-mulish dt-picker w-full !h-12 huge:!h-20 !text-lg !text-black !bg-white !rounded-md focus:!outline-none focus:!bg-white focus:!text-gray-900 cursor-pointer border border-[#C4CDD5]"
+        className="!font-rubik dt-picker w-full !h-12 huge:!h-20 !text-lg !text-black !bg-white !rounded-md focus:!outline-none focus:!bg-white focus:!text-gray-900 cursor-pointer border border-[#C4CDD5]"
         value={value ?? ''}
         onChange={e => setValue(e)}
         id={id}

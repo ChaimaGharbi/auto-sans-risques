@@ -21,7 +21,7 @@ export const constants = {
   CREATE_RAPPORT: async('CREATE_RAPPORT'),
 }
 
-export const getMission = id => ({
+export const getMission = (id) => ({
   type: constants.GET_MISSION.request,
   payload: id,
 })
@@ -54,14 +54,14 @@ export const getMyReservations = id => ({
   payload: id,
 })
 
-export const acceptMission = id => ({
+export const acceptMission = (id, expertId) => ({
   type: constants.ACCEPT_MISSION.request,
-  payload: id,
+  payload: {id, expertId},
 })
 
-export const rejectMission = id => ({
+export const rejectMission = (id, expertId) => ({
   type: constants.REJECT_MISSION.request,
-  payload: id,
+  payload: {id, expertId},
 })
 
 export const getMissionsRequests = id => ({

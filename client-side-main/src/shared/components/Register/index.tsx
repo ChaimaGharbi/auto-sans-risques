@@ -13,6 +13,9 @@ export default function MultiStepForm({ switchToLogin }) {
 
   const onSubmit = data => {
     data.role = data.role
+    console.log(data);
+    data.lng = JSON.parse(data.position)[1];
+    data.lat =  JSON.parse(data.position)[0];
     signup(data)
   }
 
@@ -27,7 +30,7 @@ export default function MultiStepForm({ switchToLogin }) {
           <GeneralInfo />
           <Role />
           <AddressInfo />
-          <ExpertInfo matchRole={form.values.role === 'Expert'} />
+          <ExpertInfo matchRole={form.values.role === 'EXPERT'} />
           <div className="grid grid-cols-2 py-3">
             <If test={form.isFirstStep}>
               <div />

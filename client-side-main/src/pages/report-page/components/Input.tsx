@@ -17,7 +17,7 @@ interface InputProps extends FieldProps {
     | HTMLInputTypeAttribute
     | 'select'
     | 'textarea'
-    | 'governerates'
+    | 'ville'
     | 'position'
   options?: { key: string; label: string }[]
   className?: string

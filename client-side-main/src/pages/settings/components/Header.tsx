@@ -1,6 +1,6 @@
-import {MdModeEditOutline} from 'react-icons/md'
-import {AiFillInfoCircle} from 'react-icons/ai'
-import {useGetUser, useUpdateToUpload} from 'app/store/hooks'
+import { MdModeEditOutline } from 'react-icons/md'
+import { AiFillInfoCircle } from 'react-icons/ai'
+import { useGetUser, useUpdateToUpload } from 'app/store/hooks'
 import If from 'app/shared/components/If'
 import toast from 'react-hot-toast'
 
@@ -23,8 +23,7 @@ export default function Header() {
     upload(me.data?.role.toLowerCase(), formData)
   }
 
-  console.log(me.data);
-  
+  console.log(me.data)
 
   return (
     <div className="flex flex-col-reverse  lg:grid lg:grid-cols-3 p-4">
@@ -58,16 +57,16 @@ export default function Header() {
       </div>
 
       <If test={me.data && !me.data.isVerified}>
-          <div className="py-4 w-full grid place-content-center content-center lg:place-content-end lg:content-start">
-              <button
-                  className="uppercase flex items-center space-x-3 justify-center w-52  py-3 rounded-lg bg-[#F49342] text-white text-xs font-roboto"
-                  style={{
-                      boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
-                  }}
-              >
-                  <AiFillInfoCircle className="text-xl"/>
-                  <span>En attente de validation</span>
-              </button>
+        <div className="py-4 w-full grid place-content-center content-center lg:place-content-end lg:content-start">
+          <button
+            className="uppercase flex items-center space-x-3 justify-center w-52  py-3 rounded-lg bg-[#F49342] text-white text-xs font-rubik"
+            style={{
+              boxShadow: '0px 7px 34px rgba(78, 173, 255, 0.3)',
+            }}
+          >
+            <AiFillInfoCircle className="text-xl" />
+            <span>En attente de validation</span>
+          </button>
         </div>
       </If>
     </div>

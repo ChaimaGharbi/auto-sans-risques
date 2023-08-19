@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from 'react'
 import Picker from 'app/shared/components/Datepicker'
 import { useCreateResponse, useResponse } from 'app/store/hooks'
 import { useDebounce } from 'use-debounce'
-import {BsCheckCircleFill as Saved} from 'react-icons/bs'
-import {CgSpinner as Spinner} from 'react-icons/cg'
+import { BsCheckCircleFill as Saved } from 'react-icons/bs'
+import { CgSpinner as Spinner } from 'react-icons/cg'
 
 export default function DateInput(props: InputProps) {
   const response = useResponse(props.questionId)
@@ -43,14 +43,14 @@ export default function DateInput(props: InputProps) {
     <div className="grid gap-2">
       <label
         htmlFor={id}
-        className="uppercase font-black font-roboto text-xs text-[#D4D9DD]"
+        className="uppercase font-black font-rubik text-xs text-[#D4D9DD]"
       >
         {props.label}
       </label>
       <div className="dt-picker-2 rounded bg-[#F0F0F0] w-full p-4 text-sm flex items-center justify-between">
         <Picker
           useClassName={false}
-          className="font-mulish bg-[#F0F0F0] w-full text-sm placeholder-[#BFBFBF]! focus:outline-none!"
+          className="font-rubik bg-[#F0F0F0] w-full text-sm placeholder-[#BFBFBF]! focus:outline-none!"
           value={value ?? ''}
           onChange={setValue}
           id={id}

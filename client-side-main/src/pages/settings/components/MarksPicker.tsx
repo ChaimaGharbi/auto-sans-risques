@@ -3,6 +3,7 @@ import If from 'app/shared/components/If'
 import { useGetUser, useModels, useUpdateExpert } from 'app/store/hooks'
 import { useEffect, useMemo, useState } from 'react'
 
+
 export default function MarksPicker() {
   const [open, setOpen] = useState(false)
 
@@ -18,14 +19,14 @@ export default function MarksPicker() {
           onClick={() => setOpen(false)}
         ></div>
         <div className="rounded-md shadow p-4 fixed top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2  bg-white z-[2004]">
-          <MarksInput />
+          <MarksInput  closeModal={() => setOpen(false)}  />
         </div>
       </If>
     </div>
   )
 }
 
-function MarksInput() {
+function MarksInput({closeModal}) {
   const { data, loading } = useModels()
   const { update } = useUpdateExpert()
   const { me } = useGetUser()
@@ -108,10 +109,11 @@ function MarksInput() {
       specialitiesModels: pickedModels,
       specialitiesMarks: Object.values(modelMarks).flat(),
     })
+    closeModal(); 
   }
 
   return (
-    <Popover className="grid grid-cols-2 gap-4 h-96 overflow-auto  scroll- w-96">
+    <Popover className="grid grid-row-2 xsx:grid-cols-2 gap-4 h-96 overflow-auto scroll- overflow-x-scroll xsx:w-96">
       <div>
         <h1 className="text-lg font-bold text-gray-900 mb-2">Modéles</h1>
 

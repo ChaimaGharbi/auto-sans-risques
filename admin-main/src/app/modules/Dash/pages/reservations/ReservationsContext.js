@@ -39,7 +39,7 @@ export function ReservationsUIProvider({reservationsUIEvents, children}) {
     createdAt: "",
     isActive: "",
     provision: 0,
-    isVerfied: 1
+    isVerified: 1
   };
 
   const value = {

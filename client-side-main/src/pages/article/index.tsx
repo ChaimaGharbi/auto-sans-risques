@@ -10,8 +10,7 @@ import { Helmet } from 'react-helmet-async'
 const ArticlePage = () => {
   const article = useArticle()
   if (article.loading || !article.data) return <Container>Loading...</Container>
-  console.log(window.location.href);
-  
+  console.log(window.location.href)
 
   return (
     <>
@@ -25,7 +24,7 @@ const ArticlePage = () => {
         <meta property="og:image:alt" content={article.data.title} />
       </Helmet>
       <Container>
-        <div className="py-20 font-roboto">
+        <div className="py-20 font-rubik">
           <Breadcrumb
             path={[
               { path: '', label: 'Accueil' },

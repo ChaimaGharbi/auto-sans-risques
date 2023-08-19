@@ -48,8 +48,8 @@ const Connect = () => {
         <LoginModal open={modalOpen} onClose={closeModal} />
         {/* //       <AuthModal showModal={showModal} closeModal={() => setShowModal(false)} /> */}
 
-        <button onClick={toggleModal} className="button w-32 md:w-40 lg:w-60">
-          Mon Espace
+        <button onClick={toggleModal} className="button w-32 md:w-40 lg:w-60 bg-white text-[#4EACFE]">
+          Mon Compte
         </button>
       </>
     )

@@ -6,8 +6,7 @@ import ModelsAndMarks, {
   MarksPicker,
 } from 'app/shared/components/ModelsAndMarks'
 import Picker from 'app/shared/components/Datepicker'
-import {useEffect} from 'react'
-
+import { useEffect } from 'react'
 
 import { Location } from './Icons'
 
@@ -24,11 +23,8 @@ const HeroSection = () => {
   } = useSearchForm()
 
   useEffect(() => {
-  
-    console.log(query);
-    
+    console.log(query)
   }, [query])
-  
 
   return (
     <div
@@ -37,12 +33,10 @@ const HeroSection = () => {
     >
       <div className="bg-black/30 grid content-center justify-items-center  h-full ">
         <div className="py-2 text-2xl lg:text-4xl xl:text-5xl huge:text-7xl text-white text-center font-bold w-full">
-          Vous cherchez un expert pour votre voiture ?
+        Votre tranquillité automobile commence ici
         </div>
-
-        <div className="text-lg lg:text-xl xl:text-2xl huge:text-5xl  pt-3 lg:pt-6 text-white   mx-10 lg:mx-32 lg:mt-4 font-semibold">
-          Achetez en toute sécurité le véhicule d'un particulier, contrôlé par
-          l'un de nos experts
+        <div className="text-lg lg:text-xl xl:text-2xl huge:text-5xl  pb-6 text-white  mx-10 lg:mx-32  font-semibold text-center	" >
+         Réservez un rendez-vous avec nos experts et choisissez votre voiture d'occasion en toute connaissance.
         </div>
 
         <div className="pt-5 w-full max-w-xl md:max-w-3xl  xl:max-w-5xl huge:max-w-[140rem] ">
@@ -57,20 +51,20 @@ const HeroSection = () => {
                 name="location"
                 suffix={<Location />}
                 placeholder="La ville où se trouve la voiture"
-                className="!font-mulish w-full !h-12 huge:!h-20 !text-lg !text-black !bg-white !rounded-md focus:!outline-none focus:!bg-white focus:!text-gray-900 cursor-pointer"
+                className="!font-rubik w-full !h-12 huge:!h-20 !text-lg !text-black !bg-white !rounded-md focus:!outline-none focus:!bg-white focus:!text-gray-900 cursor-pointer"
               />
             </AutoComplete>
             <Picker
               value={startDate}
               onChange={e => handleStartDateChange(e)}
               placeholder="À partir de"
-              className="!font-mulish dt-picker w-full !h-12 huge:!h-20 !text-lg !text-black !bg-white !rounded-md focus:!outline-none focus:!bg-white focus:!text-gray-900 cursor-pointer"
+              className="!font-rubik dt-picker w-full !h-12 huge:!h-20 !text-lg !text-black !bg-white !rounded-md focus:!outline-none focus:!bg-white focus:!text-gray-900 cursor-pointer"
             />
             <Picker
               value={endDate}
               onChange={e => handleEndDateChange(e)}
               placeholder="Jusqu'au"
-              className="!font-mulish dt-picker w-full !h-12 huge:!h-20 !text-lg !text-black !bg-white !rounded-md focus:!outline-none focus:!bg-white focus:!text-gray-900 cursor-pointer"
+              className="!font-rubik dt-picker w-full !h-12 huge:!h-20 !text-lg !text-black !bg-white !rounded-md focus:!outline-none focus:!bg-white focus:!text-gray-900 cursor-pointer"
             />
 
             <MarksPicker
@@ -84,7 +78,7 @@ const HeroSection = () => {
               to={`/experts?${query}`}
               className="col-span-1 md:col-span-2 button grid place-content-center  huge:!h-20   text-lg huge:text-2xl "
             >
-              Lancer la recherche
+              Chercher un expert
             </Link>
           </div>
         </div>

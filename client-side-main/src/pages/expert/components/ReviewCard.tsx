@@ -49,8 +49,8 @@ const ReviewCard = () => {
       expertId: id,
       clientId: me?.data?._id,
     })
-    console.log(res.data);
-    
+    console.log(res.data)
+
     dp(actions.addReview(res.data))
     setLoading(false)
     setOpenModal(false)
@@ -83,7 +83,7 @@ const ReviewCard = () => {
                   alt="top star"
                   className="w-14 mx-auto"
                 />
-                <p className="font-roboto text-center">
+                <p className="font-rubik text-center">
                   Pour accéder à votre rapport, merci d'attribuer une note sur
                   la mission
                 </p>
@@ -110,7 +110,8 @@ const ReviewCard = () => {
                   validations={[
                     {
                       rule: isMinLength(8),
-                      message: 'Ce champs doit au minimum contenir 8 caracteres',
+                      message:
+                        'Ce champs doit au minimum contenir 8 caracteres',
                     },
                     {
                       rule: isRequired(),

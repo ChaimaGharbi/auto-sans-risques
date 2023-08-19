@@ -11,7 +11,7 @@ const Blog = () => {
   // const { articles, categories, handleChangeCategory, pagination } =
 
   const { categories, handleSwitchGategory, articles, pagination } = useBlog()
-  console.log(articles);
+  console.log(articles)
 
   return (
     <Container>
@@ -24,7 +24,7 @@ const Blog = () => {
         sport auto, entretien et conseil pratique).
       </div>
       <If test={articles.data?.length === 0}>
-      <SkeletonLoading></SkeletonLoading>
+        <SkeletonLoading></SkeletonLoading>
       </If>
       <div className="text-center pb-5 flex justify-center flex-wrap">
         <If test={categories.loading}>
@@ -54,7 +54,7 @@ const Blog = () => {
                 key={article._id}
                 to={`/article/${article._id}`}
                 className="cursor-pointer"
-                onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               >
                 <div className="overflow-hidden">
                   <img
@@ -109,7 +109,7 @@ const Blog = () => {
 const CategoryTag = props => (
   <button
     {...props}
-    className="capitalize px-2 py-1 mx-1.5 text-[#09A4D8] bg-[#EBF8FC] rounded-md font-black font-roboto"
+    className="capitalize px-2 py-1 mx-1.5 text-[#09A4D8] bg-[#EBF8FC] rounded-md font-black font-rubik"
   />
 )
 
